@@ -1,0 +1,3729 @@
+﻿Journal of Cybersecurity , 2025, tyaf005 
+https://doi.org/10.1093/cybsec/tyaf005 
+
+Research Paper 
+
+Software security in practice: knowledge and 
+
+motivation 
+
+Hala Assal 1 , * , 2
+  Srivathsan G. Morkonda  
+
+ , 2
+ Muhammad Zaid Arif  
+
+ , 
+Sonia Chiasson2 
+
+ 
+
+1 Department of Systems and Computer Engineering, 1125 Colonel By Drive, Ottawa, ON, K1S 5B6, Canada. 
+2 School of Computer Science, Carleton University, 1125 Colonel By Drive, Ottawa, ON, K1S 5B6, Canada 
+∗Corresponding author. Department of Systems and Computer Engineering, Carleton University, 1125 Colonel By Drive, 
+Ottawa, ON, K1S 5B6, Canada. E-mail: Hala.Assal@carleton.ca 
+
+Received 7 October 2024; revised 12 December 2024; accepted 14 February 2025 
+
+Abstract 
+Developing secure software remains a challenge for developers despite the availability of security resources and 
+secure development tools. Common factors affecting software security include the developer’s security awareness 
+and the rationales behind their development decisions with respect to security. In this work, we conducted inter- 
+views with software developers to examine how developers in organizations acquire security knowledge, and what 
+factors motivate or prevent developers from adopting software security practices. Our analysis reveals that devel- 
+opers’ security knowledge and motivations are intertwined aspects that are both important for promoting security in 
+development teams. We identified a variety of learning opportunities used by developers and employers for increas- 
+ing security awareness, including in-context learning activities preferred by developers. Based on our application of 
+the self-determination theory, better security outcomes are expected when developers are internally driven toward 
+security, rather than motivated by external factors; this aligns with our interpretation of participants’ descriptions 
+relating to security outcomes within their teams. Based on our analysis, we provide ideas on how to motivate devel- 
+opers to internalize security and improve their security practices. 
+
+Keywords: usable security; software security; software developers; interview; security knowledge; security motivation 
+
+I m  
+
+S  m  
+
+w  s  
+
+c  c  
+
+t  o  
+
+(  u  
+
+t  n  
+
+n  p  
+
+v  o  
+
+i  v  
+
+d  e  
+
+c  r  
+
+b  P  
+
+c  h  
+
+i [  
+
+ p  
+
+a  h
+
+©
+A
+m
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+ntroduction 
+
+oftware developers are not necessarily security experts, yet they are
+idely held responsible for developing secure applications. Many se-
+
+urity initiatives and tools have been proposed to support the in-
+egration of security in the Software Development Lifecycle (SDLC)
+e.g.[ 1–7 ]). Despite these efforts, vulnerabilities persist [ 8 ,9 ] and with
+he proliferation of software in all aspects of our lives, security vul-
+erabilities can have a devastating impact on users’ livelihood (e.g.
+ulnerabilities in cars [ 10 ,11 ], in medical wearable devices [ 12 ], or
+n home appliances [ 13 ]). Formally, a software vulnerability can be
+efined as “a weakness in an information system, system security pro-
+edure, internal control, or implementation that could be exploited
+y a threat source.” [ 14 ]. Vulnerabilities could be unintentional or
+ould be introduced to a system by a malicious developer; the latter
+s out of the scope of this paper. 
+
+Many reasons have been suggested for the prevalence of vulner-
+bilities. For example, a common problem for security is the the un-
+The Author(s) 2025. Published by Oxford University Press. This is an Open Access article
+ttribution-NonCommercial License ( https://creativecommons.org/licenses/by-nc/4.0/ ), wh
+edium, provided the original work is properly cited. For commercial re-use, please contac
+otivated user property [ 15 ], where security is generally not a pri-
+ary goal for users; this concept also applies to software developers
+
+ince security is rarely their primary objective [ 16–19 ]. While secure
+oding guidelines could be useful, developers are generally unaware
+f such guidelines [ 5 ], or are not mandated by their companies to
+se them [ 20–22 ]. Besides, developers might lack security knowledge
+ecessary to prevent vulnerabilities [ 23–25 ]. And even when they do
+ossess some security knowledge, developers may lack the ability [ 26 ]
+r expertise [ 25 ,27 ] to apply this knowledge to identify and address
+ulnerabilities in their applications. In this context, security knowl-
+dge refers to information that increases developers’ software secu-
+ity awareness, and helps them avoid, identify, or fix security issues.
+revious usable security research has focused on developers and the
+uman factors of software security [ 16–19 ]. For example, Acar et al.
+ 16 ] developed a research agenda that focuses on proposing and im-
+roving security tools and methodologies, as well as understanding
+ow developers view and deal with software security. 
+ distributed under the terms of the Creative Commons 1 
+
+ich permits non-commercial re-use, distribution, and reproduction in any 
+t journals.permissions@oup.com 
+
+
+
+2 Assal et al. 
+
+Figure 1. Third generation activity theory with two interacting activity systems [ 35 ]. 
+
+ 
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+We conducted an interview study with professional software de- 
+velopers. In an accompanying paper [ 28 ], we analyzed a portion of 
+this data to explore real-life software security practices and identified 
+factors that may influence these practices. In this current paper, we 
+address different research questions and analyze the full dataset using 
+the Grounded Theory methodology. Herein, we focus on how devel- 
+opers learn about security, and factors that motivate (or deter) devel- 
+opers from addressing software security. We presented early discus- 
+sion about the motivations and amotivations related to software se- 
+curity at the 2018 SOUPS Workshop on Security Information Work- 
+ers [ 29 ]). In this paper, we pursue the following research questions: 
+
+RQ1: How do developers acquire knowledge relating to software 
+security? 
+
+RQ2: What are developers’ motivations towards adopting soft- 
+ware security practices? 
+
+Initially, we set out to explore developers’ knowledge of software 
+security and how they acquire this knowledge ( RQ 1 ). However, dur- 
+ing preliminary data analysis, we found that even those with the nec- 
+essary security knowledge may lack motivation to adopt software se- 
+curity practices. This led us to explore the second research question 
+( RQ 2 ). 
+
+Through this work, we identify opportunities and strategies for 
+acquiring security knowledge (Section “Knowledge acquisition tax- 
+onomy”), and explore factors influencing developers’ motivation to- 
+ward adopting security practices (Section “Motivation for software 
+security”). Our data analysis also revealed that security knowledge 
+and motivation are two intertwined aspects that may influence se- 
+curity practices; motivation in itself is not enough if the developer 
+lacks security knowledge and, as it turns out, security knowledge it- 
+self affects motivation. In addition, we found several factors that may 
+induce developers’ amotivation (i.e. lack of drive to engage) toward 
+security, despite their security knowledge and belief of its importance.
+Thus, besides offering technical support for developers with security 
+tools and libraries, our data shows the importance of having devel- 
+opers internalize software security practices and act with volition to- 
+ward it (Section “Internalizing software security”). 
+
+Related work and background 
+
+Developers may recognise the need for integrating security within 
+the SDLC [ 30 ], yet they may be unable to follow security practices 
+due to insufficient security knowledge or due to workplace factors 
+such as a lack of security culture [ 28 ,31 ]. In this paper, we focus on 
+how software developers gain security knowledge, as well as their 
+motivations toward adopting software security practices. 
+
+We begin this section by providing a brief background on two 
+theories that we use to explain the results (in sections “Knowledge 
+acquisition taxonomy” and “Motivation for software security”), fol- 
+lowed by a review of existing literature on factors affecting secure 
+software development practices. 
+
+Theoretical background on activity theory 
+
+In the section “Multiple activity systems interacting within project 
+teams,” we use Activity Theory [ 32 ,33 ] to describe the interactions 
+between the different teams working on developing a software prod- 
+uct, their often conflicting objectives and perspectives, and how these 
+multiple perspectives can enhance/impede the security of their soft- 
+ware. Here, we provide a brief primer on Activity Theory. 
+
+Activity theory [ 32 ,33 ] can be defined as “a philosophical and 
+cross-disciplinary framework for studying different forms of hu- 
+man practices as development processes, with both individual and 
+social levels interlinked at the same time ” [ 34 ]. Engeström pro- 
+posed the “activity system model” [ 33 ,34 ] that describes a three-way 
+relationship between a subject (e.g. a developer), their object (e.g. de- 
+veloping software) and their community (e.g. a development team). 
+
+The “third generation of activity theory” expands the original 
+theory by considering two activity systems as the minimal unit of 
+analysis [ 35 ]. It aims to understand discussions, perspectives, and in- 
+teractions between multiple activity systems. Of particular relevance 
+to this paper is the principle of multi-voicedness [ 35 ]. Rather than a 
+homogeneous system, activity theory views an activity system as con- 
+sisting of multiple perspectives, traditions, and interests [ 35 ,36 ]. This 
+multi-voicedness is magnified when multiple activity systems interact 
+as it brings multiple viewpoints closer. 
+
+As will be discussed in the section “Multiple activity systems in- 
+teracting within project teams,” in software development organiza- 
+tions, the development activity can be considered as one activity sys- 
+tem while the security testing activity is a second independent activ- 
+ity system (Fig. 1 ). Each activity system involves different objectives,
+priorities (e.g. functionality for developers, and security for security 
+testers), and perspectives. 
+
+Theoretical background on Self-Determination Theory 
+
+In the section “Motivation for software security,” we use the Self- 
+Determination Theory (SDT) to explain what motivates developers 
+
+
+
+Software security in practice 3 
+
+a  e  
+
+s i  
+
+ S  
+
+v  p  
+
+t  i  
+
+c  d  
+
+t  b  
+
+B  z  
+
+d  B  
+
+t  o  
+
+t  a  
+
+c  l  
+
+p  d  
+
+s  fi  
+
+t  s  
+
+[  t  
+
+f [  
+
+ c  
+
+v  e  
+
+t  p  
+
+f  [  
+
+t  e  
+
+c  i  
+
+a  t  
+
+a  t
+n  
+
+d  F
+d  O  
+
+t a  
+
+ m  
+
+t  t  
+
+c  w  
+
+t  [  
+
+a  k  
+
+b  n  
+
+l  R  
+
+M  s  
+
+d  w  
+
+t  c  
+
+i  d  
+
+r  c  
+
+t  A  
+
+s  c  
+
+t  t  
+
+a  m  
+
+i  p  
+
+b m  
+
+l  
+
+n  
+
+S w  
+
+S c  
+
+S  w
+t  
+
+C  
+
+e  S
+p  S
+c  P  
+
+o  s  
+
+a  c  
+
+i  s  
+
+p  t  
+
+s  t  
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+nd their teams to address software security, as well as explain rea-
+ons for lacking software security motivation. 
+
+SDT [ 37 ,38 ] is a cognitive framework for studying human moti-
+ation in learning environments such as classrooms and organiza-
+ions. SDT identified distinct types of motivation, each with clear
+onsequences on an individual’s potential to thrive [ 39 ] in relation
+o learning, performance, personal experience, or well-being [ 38 ].
+ehaviors are “autonomously” motivated when they are fully self-
+etermined, whereas “controlled” behaviors are those driven by ex-
+ernal or internal pressures or an obligation to act [ 38 ,39 ]; in our con-
+ext, a developer who performs security activities out of self-interest
+haracterizes fully autonomous behavior, whereas a developer who
+erforms security activities only to comply with regulations repre-
+ents controlled behavior. SDT uses the autonomy-control continuum
+o differentiate types of motivation with respect to their regulation
+ 39 ], as described next (and later depicted in the section “Motivation
+or software security,” Fig. 4 ). 
+
+Amotivation (at the far left of this continuum) is the lack of moti-
+ation to act, where the person does not act at all or acts without in-
+ent [ 38 ]. Amotivation has three forms. The first form is when people
+eel they cannot effectively achieve the desired outcome, e.g. because
+hey are not competent to do it [ 38–40 ], such as when they lack se-
+urity knowledge. The second form of amotivation occurs when the
+ction lacks interest, relevance, or value to the person [ 38–40 ], such
+s when they do not perceive security to be their responsibility. Fi-
+ally, the third form is when amotivation to a behavior is actually a
+efiance and motivation to oppose said behavior [ 39 ]. For example, a
+eveloper refuses to use a security tool because it requires modifying
+heir existing workflows. 
+
+To the right of amotivation, the continuum presents the different
+ypes of motivations based on the actor’s degree of autonomy when
+arrying out the activity; we describe these motivations in the con-
+ext of software security practices. External regulation is the least
+utonomous and most external to the developer (e.g. motivated only
+y fear of losing business opportunities), whereas introjected regu-
+ation refers to motivations that result from self-pressure and ego.
+
+ore autonomously, identified regulation occurs when the developer
+eems security as personally important. Integrated regulation is when
+he developer fully accepts the goal of the activity and acts toward
+t with volition (e.g. to protect users’ privacy and security). On the
+ightmost end of the spectrum, the most autonomous is intrinsic mo-
+ivation , where security activities are performed purely for the plea-
+ure and satisfaction that result from the challenge they present to
+he developer. SDT suggests that more autonomous motivation styles
+re associated with positive outcomes, such as increased engagement,
+mproved performance, encouraging creativity, more cognitive flexi-
+ility, and better learning [ 38 ,40 ]. 
+
+ecure software development practices 
+ecurity within the SDLC 
+
+ecurity best practices recommend integrating security throughout
+he SDLC and starting from the early stages [ 28 ,41 ,42 ]. Assal and
+hiasson [ 28 ] discuss practical strategies for integrating security in
+ach stage of the SDLC, e.g. by identifying security requirements and
+erforming threat modeling in the design stage, and integrating se-
+urity in the post-development testing stage. The authors also point
+ut the importance of considering security of third-party libraries
+nd monitoring for vulnerabilities [ 28 ]. When security is a prior-
+ty, it should influence decisions throughout the SDLC. For exam-
+le, developers could consider more secure programming languages
+uch as Rust that prevent certain classes of vulnerabilities [ 43 ]. How-
+ver, previous work suggests that security tends to be considered only
+n certain development stages rather than integrated throughout the
+DLC. Assal and Chiasson [ 28 ] found that development teams often
+rioritize security only in the latter stages of the SDLC such as dur-
+
+ng code reviews and post-development testing. They also found that
+eviation from security best practices (e.g. the principle of security-
+y-design) are influenced by workplace factors such as the organi-
+ation’s development hierarchy, and developers’ security knowledge.
+raz and Bacchelli [ 31 ] examined code review practices in specific
+rganizations, and found that security considerations were largely
+bsent during code reviews. They suggested that developers might be
+acking motivation to consider security during code reviews because
+evelopers had insufficient security knowledge or because of insuf-
+cient employer-driven security training. Many studies about secure
+oftware development (e.g. [ 44–46 ]) have found that developers need
+o be explicitly reminded to consider security. For example, Braz et al.
+ 44 ] suggested that simply prompting code reviewers to focus on se-
+urity can increase detection of vulnerabilities. Interestingly, develop-
+rs may also inadvertently (and possibly unknowingly) follow secure
+ractices as an unintentional by-product of completing other tasks
+ 47 ] but this haphazard approach is clearly unreliable. In summary,
+xisting research has focused on how security practices are included
+n the SDLC; our work extends the literature by exploring what mo-
+ivates developers with respect to software security, and identifies ac-
+ivities that can help improve developers’ security knowledge. 
+
+actors influencing adoption of secure development solutions 
+ther research has focused on understanding factors influencing the
+
+doption of available tools that support secure software develop-
+ent. Besides developers’ security expertise and skills [ 28 ,48 ], adop-
+
+ion tends to be impacted by the organization’s overall culture to-
+ard security and by the context of the application being developed
+
+ 21 ,22 ,49–51 ]. For example, developers (even those with security
+nowledge) may lack resources or the autonomy within their orga-
+ization to improve their applications’ security and privacy [ 50 ,52 ].
+elatedly, Danilova et al. [ 53 ] found that when security tools (e.g.
+
+tatic analysis tools) are incompatible with developers’ preferences,
+orkflows, or their roles within the organizations, the developers per-
+
+eive the security warnings from these tools as unuseful. However,
+evelopers tend to be more receptive when the security warnings in-
+lude code examples for vulnerabilities and solutions [ 54 ]. Similarly,
+car et al. [ 55 ] suggested that including working code samples and
+omprehensive Application Programming Interface (API) documen-
+ation would improve the adoption of cryptographic APIs and lead to
+ore secure code. Fulton et al. [ 43 ] found that although developers
+erceived positive security benefits from the memory-safe program-
+ing language Rust, they were reluctant to adopt it due to its steep
+
+earning curve. These findings suggest that security adoption depends
+ot only on developers’ security knowledge or their willingness to-
+ard security but also on organizational norms and usability of se-
+
+urity tools. Thus, it is important to consider these diverse factors
+hen encouraging security adoption. 
+
+ecurity knowledge and skills 
+ources of security knowledge 
+revious research has explored the impact of specific knowledge
+ources used by developers for learning about software security in-
+luding online developer forums and code documentation. Having
+ecurity knowledge is often a key driver of security-related activi-
+ies in development teams [ 56 ,57 ], but the quality of the informa-
+ion source can significantly impact whether developers succeed at
+
+
+
+4 Assal et al. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+producing secure code. Developers tend to depend heavily on the 
+online Question and Answer developer-focused forum Stack Over- 
+flow [ 58 ] as an easy-to-use programming resource, however, it often 
+leads to insecure code [ 59 ,60 ]. A comparative study by Acar et al.
+[ 60 ] on Android application development found that relying on of- 
+ficial Android documentation and textbooks led developers to pro- 
+duce more secure code while developers relying on Stack Overflow 
+
+produced more functional but less secure code. Sadly, many security- 
+related posts on Stack Overflow tend to remain unanswered or have 
+answers that are not “accepted” (i.e. not marked as satisfactory by 
+the user asking the question) [ 61 ], raising doubts about the efficacy 
+of such forums for software security. Developers also rely on col- 
+leagues as sources of security knowledge. Through an ethnographic 
+study, Tuladhar et al. [ 57 ] observed that developers acquire security 
+knowledge when collaborating with other developers on the specific 
+applications they develop. These studies show that developers rely on 
+the knowledge resources that are available to them which may be of 
+varying quality and may not necessarily align with security best prac- 
+tices. In the section “Knowledge acquisition taxonomy,” we discuss 
+security knowledge acquisition activities in detail. 
+
+Security awareness among developers 
+Other works have focused on understanding and improving devel- 
+opers’ security awareness. Gasiba et al. [ 5 ] found that developers are 
+generally not aware of secure coding guidelines, which aim to pro- 
+mote security knowledge. Votipka et al. [ 25 ] found that the lack of 
+security knowledge was a primary contributor to the introduction 
+of vulnerabilities regardless of development experience. In addition,
+even when developers are aware of security concepts, they may not 
+know how to apply the concepts correctly in order to achieve the 
+intended security goals [ 25 ]. Lopez et al. [ 30 ] suggested a different 
+view that developers do possess basic security knowledge but they 
+lack control of development activities that provide opportunities to 
+extend their security knowledge. They recommended that develop- 
+ers combine online discussions about security on sites such as Stack 
+Overflow with social interactions about security in their development 
+teams to extend security knowledge and promote a security culture 
+within the organization. There also exist studies that focused on im- 
+proving developers’ programming knowledge in general (i.e. not spe- 
+cific to security), for example, using “in-context” code annotations 
+[ 62 ] or using dedicated knowledge-sharing platforms [ 63 ]; similar 
+approaches could potentially also help improve developers’ security 
+knowledge but this has not yet been explored. Beyond those discussed 
+above, our work identifies additional security knowledge sources and 
+development activities that help increase developers’ security knowl- 
+edge, and proposes an overall taxonomy allowing for comparison. 
+
+Developer challenges and moti vator s 
+Challenges faced by developers 
+Building secure software is challenging, especially when develop- 
+ers without adequate security knowledge are expected to implement 
+code that might affect the security of the software [ 17 ,60 ]. Mokhberi 
+and Beznosov [ 19 ] reviewed previous studies focused on the chal- 
+lenges faced by developers in secure software development and sug- 
+gested that organizational and human factors tend to have a larger 
+impact than technological factors, e.g. developers favor security tool 
+adoption when supported by a manager who prioritizes security and 
+by an organization that provides access to security resources. Tahaei 
+and Vaniea [ 18 ] surveyed existing literature on “developer-centered 
+security” (a secure software development approach with emphasis 
+on the needs of developers [ 64 ]) and discussed the importance of 
+workplace context and organizational incentives when considering 
+developers’ security needs. A common challenge highlighted by both 
+surveys relates to security often being considered a secondary func- 
+tion which causes developers to sacrifice security for other functional 
+requirements [ 18 ,19 ]. Poller et al. [ 65 ] found that developers may 
+be reluctant to change their security practices due to various orga- 
+nizational factors such as existing development procedures and as- 
+signed roles. These studies show that barriers to secure development 
+practices are much more nuanced than simply a lack of usable se- 
+curity tools and that several important socio-organizational factors 
+also need to be considered. 
+
+Understanding developer motivations 
+In an early study on security motivations within organizations, Woon 
+and Kankanhalli [ 66 ] found that developers’ intentions to perform 
+
+security actions were aligned with the developers having positive atti- 
+tudes and perceptions of the usefulness of security. More recent work 
+on identifying developers’ security motivations have focused on in- 
+dependent app developers. For example, Van der Linden et al. [ 47 ] 
+examined the relationships between mobile app developers’ security 
+rationale and their security behavior, and observed that app develop- 
+ers were particularly concerned about security in specific scenarios 
+such as when collecting personal data of users or when storing pass- 
+word hashes. Weir et al. [ 67 ] found that Android app developers tend 
+to perform security-enhancing activities when they perceive a need 
+for security and when they also have access to security experts. Ryan 
+et al. [ 51 ] characterized developers into four security archetypes that 
+explain developers’ security behaviors. The authors suggested that 
+developers’ security behavior is primarily influenced by self-interest 
+and environmental support. Through our interviews and data anal- 
+ysis herein, we found additional factors that fit into a wide spectrum 
+
+of motivators and amotivators described in the section “Motivation 
+for software security.” While there has been a considerable focus on 
+the challenges faced by independent developers, there has been little 
+focus on understanding what motivates or demotivates developers 
+with respect to security within organizational contexts. Our study 
+begins to fill this research gap. 
+
+Interventions for motivating developers 
+Other work has proposed interventions to motivate developers to- 
+ward adopting security practices, including on-the-job training ac- 
+tivities [ 5 ,6 ,68 ], cybersecurity games [ 69 ,70 ] and in-context educa-
+tion [ 26 ,68 ]. Weir et al. [ 6 ] demonstrated that a series of low-cost
+facilitated workshops can motivate developers to adopt effective se- 
+curity practices. Relatedly, Lopez et al. [ 69 ] designed guidelines for 
+engaging with developers about security; they recommended using 
+scenario-based games and workshops to motivate discussions about 
+security. Gasiba et al. [ 5 ] suggested various training activities within 
+development teams in order to raise awareness about secure coding 
+guidelines. They also designed a cybersecurity game [ 70 ] targeted to 
+developers in industrial environments. To support developers in the 
+correct use of cryptographic APIs, Gorski et al. [ 71 ] proposed de- 
+signing security warnings using concise messages and including code 
+examples for different use cases. Thomas et al. [ 68 ] recommended 
+tailoring training activities to focus on the specific types of security 
+issues developers are likely to encounter in their code, and to ad- 
+dress developers’ weakness in security knowledge. Ford et al. [ 72 ] 
+recommended matching development tasks based on developer per- 
+sonalities, which may also be useful for security-related tasks. The 
+variety of interventions considered in these studies suggest that there 
+is no one-size-fits-all solution. In this paper, we take a more holistic 
+view by describing a number of activities organizations can adopt 
+
+
+
+Software security in practice 5 
+
+Table 1. Participant demographics. 
+
+Participant Company and team 
+
+ID Gender Age Years Title SK Company size Team size 
+
+P1 F 30 1 Software engineer 4 Large enterprise 20 
+P2 M 34 15 Software engineer 5 Large enterprise 12 
+P3 M 33 10 Software engineer 4 Large enterprise 10 
+P4 M 38 21 Software developer 4 SME 7 
+P5 M 34 12 Product manager 5 Large enterprise 7 
+P6 F 26 3 Software engineering analyst 3 Large enterprise 12 
+P7 M 33 4 Senior web engineer 4 SME 3 
+P8 M 34 5 Software developer 3 Large enterprise 20 
+P9 M 33 8 Software engineer 2 SME 5 
+P10 M 37 20 Principal software engineer 5 SME 10 
+P11 M 38 15 Senior software developer 2 SME 8 
+P12 M 26 3 Software developer 2 SME 4 
+P13 F 27 5 Junior software developer 4 Large enterprise 7 
+
+Years: years of experience in development. 
+SK: self-rating of security knowledge 1 (no knowledge) to 5 (expert). SME: Small–medium enterprise. 
+
+b  s  
+
+a b  
+
+u  
+
+a  
+
+S (  
+
+I d  
+
+ 
+
+o f  
+
+p
+
+I D
+W  W  
+
+v  t  
+
+d  d  
+
+w  c  
+
+t  c  
+
+c  s  
+
+a  w  
+
+a  d  
+
+g  s  
+
+q  t  
+
+c  W  
+
+v  q  
+
+a  m  
+
+o  o  
+
+a  w  
+
+s  l  
+
+G  c  
+
+p a
+ 
+
+w  
+
+P k  
+
+O  i  
+
+t  c  
+
+p  t  
+
+s  p  
+
+u  h
+u   
+
+p  i  
+
+a  c  
+
+b  i  
+
+w  i  
+
+n  l  
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+ased on their needs and constraints to promote security-enhancing
+ctivities. 
+
+tudy design and methodology 
+
+n this section, we present the study design, data analysis methodol-
+gy, participant demographics, and study limitations. 
+
+nterview study design 
+
+e designed and conducted an IRB-approved semi-structured inter-
+iew study with professional software developers. The interview ad-
+ressed five main topics: general development activities, attitude to-
+ard security, security knowledge, security processes, and software
+
+esting activities (see Appendix A for the interview script). We re-
+ruited participants through posts on software development forums
+nd relevant social media groups, as well as through announcements
+mong professional contacts. Participants received a $20 Amazon
+ift card as compensation. Participants completed a demographics
+uestionnaire before their one-on-one interviews. Interviews were
+onducted in-person ( n = 3 ) or remotely, e.g. through phone calls or
+ideoconferencing ( n = 10 ), lasted approximately one hour, and were
+udio recorded and later transcribed for analysis. A total of 3 waves
+f data collection took place, each followed by preliminary analysis
+nd preliminary conclusions [ 73 ]. We concluded recruitment upon
+aturation (i.e. when new data did not provide more insights) as per
+laser and Strauss’s [ 73 ] recommendation. In total, we recruited 13
+rofessional software developers for our study. 
+
+articipant demographics 
+ur 13 participants answered our interview questions in the con-
+
+ext of 15 companies; two participants reflected on their current and
+revious companies. We did not have multiple participants from the
+ame company. Participants self-identified their roles and the prod-
+cts with which they are involved. We then classified their responses
+sing Forward and Lethbridge’s [ 74 ] software taxonomy. Partici-
+ants in our dataset worked on various types of applications: web
+pplications and services like e-finance, online productivity, online
+ooking, website content management, and social networking, as
+ell as software like embedded software, kernels, design and engi-
+eering software, support utilities, and information management and
+upport systems. The organizations mentioned in the dataset were all
+ased in North America. All participants included in the study hold
+niversity degrees, have had courses in software programming, and
+re employed as developers with an average of 9.35 years experience
+ Md = 8 ). The recruitment did not prioritize any specific software
+evelopment methodology. Participants reported following a Water-
+all model or variations of the Agile methodology. See Table 1 for
+articipant demographics. 
+
+ata analysis approach 
+
+e used Strauss and Corbin’s Grounded Theory methodology [ 75 ]
+o analyze our interviews. Our analysis took into consideration the
+ifferent stages of the SDLC, and how security was (or was not) in-
+luded in each stage. For example, during our analysis of participants’
+ode review processes, we paid particular attention to whether/how
+ecurity was addressed during these reviews. This included, analyzing
+hether security was prioritized during the reviews or if it was ad-
+ressed in an ad-hoc manner, the reviewers’ security expertise, how
+ecurity considerations were raised and addressed, and how recep-
+ive different team members were to discussing and addressing .0s.
+
+e performed open-coding through examining the answer to each
+uestion in the interview script and assigning codes describing the
+ain themes or ideas discussed. The main researcher performed the
+pen-coding, however, codes were discussed with a second researcher
+henever a new code was created. Open coding was done using At-
+
+as.ti ( https:// atlasti.com/ interview- analysis- tools ) on 600 unique ex-
+erpts and resulted in a total of 170 open codes. We italicize and use
+ different font for our codes when reporting. 
+
+For example, “Learning from peers ” is an open code that
+e created when participants indicated that they acquire security
+nowledge through interaction with their colleagues. In the follow-
+
+ng quote, P8 explains how all his security knowledge came from
+olleagues in the company where he works. He said, “I guess up un-
+il now, any knowledge I have got of [software security] has just been
+urely from peers, or anytime we bring in a new employee and they
+ave more knowledge about it. That’s where I kinda learn it from. ”
+
+Following open coding, we performed axial coding by look-
+ng for patterns, relationships, and connections between the open
+odes. We wrote each of the codes on a Post-It note, grouped sim-
+lar ones, and looked for relationships, such as categorical or causal-
+ty relationships. Even though this process was possible using At-
+as.ti, we preferred using Post-It notes to allow us to be more im-
+
+
+
+6 Assal et al. 
+
+Figure 2. Axial coding process. Left: first round of axial coding, right: looking for relationships and connections. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+mersed in the data, have an overview of the codes and categories,
+and have the ability to move them around as needed, as shown in 
+Fig. 2 . 
+
+The last step in coding was selective coding, where we worked 
+toward integrating and refining the categories, and identifying a core 
+category that represents the overall theme of the research [ 75 ]. To 
+achieve this, we examined the categories, while referring back to the 
+interview scripts (raw data), abstracting the main issue and asking 
+ourselves: “what comes through although it might not be said di- 
+rectly? ” [ 75 ]. 
+
+Through being immersed in the data and as the analysis contin- 
+ued, a core category relating to the concept of internalizing and ac- 
+cepting security activities and behaviors began to emerge. We will 
+discuss this further in the section “Internalizing software security.”
+
+Knowledge acquisition taxonomy 
+
+Through our analysis of the interview data, we identified different op- 
+portunities for acquiring and sharing security knowledge. We found 
+that these opportunities can be grouped based on distinct character- 
+istics (discussed below), which we organize into a taxonomy. In Ta- 
+ble 2 , we present the knowledge acquisition taxonomy: a taxonomy 
+of the activities described by our participants that we have identified 
+as opportunities for knowledge acquisition. We represent the type 
+of learning associated with the activity horizontally across the table,
+and the initiator of the activity (i.e. the initiator of the learning op- 
+portunity) vertically. 
+
+Types of learning 
+
+We classified the learning opportunities identified in our data ac- 
+cording to their level of formality. “Formal” learning is always or- 
+ganized and structured, has learning objectives, and is always inten- 
+tional from the learner’s perspective [ 76–79 ]. Conversely, “informal”
+learning is neither organized nor structured, does not have specific 
+objectives, and happens as a by-product of other activities [ 76 ,77 ,79 ].
+“Semi-formal” learning opportunities identified in our data fall 
+between these two, where learning lacks one or more aspects of for- 
+mal learning while being more organized and structured than infor- 
+mal learning [ 76 ,77 ,79 ]. 
+
+Activity initiator 
+This is the entity with the motivation to start the activity, thus the 
+security learning opportunity. This can be the employer (e.g. when 
+the employer organizes mandatory activities that the developer at- 
+tends for compliance), or the developers (i.e. in activities that the de- 
+veloper is self-motivated to initiate without direct encouragement or 
+mandate). Some activities are initiated by both the employer and the 
+developer, e.g. optional activities the employer sets up in which de- 
+velopers can choose to participate, even though they would not have 
+initiated the activity on their own. Thus, activity initiation is along an 
+employer—developer spectrum, where initiation tends to be more in- 
+ternal to, and self-motivated by, the developer as we move toward the 
+developer end of the spectrum. We note that developers disinterested 
+in security may still perform activities in the taxonomy’s third row 
+
+(i.e. developer-initiated activities) as part of completing job-related 
+tasks; however, our analysis shows that they are likely to procrasti- 
+nate with respect to these activities. We discuss developer motivations 
+in more detail in the section “Motivation for software security.”
+
+Features 
+We have identified five different features for each learning opportu- 
+nity/activity. 
+ Relative cost ( $ , $$ ) . The symbol $ indicates that the activity is 
+
+relatively low cost and $$ indicates higher cost. Obviously, the 
+cost one company finds reasonable may be expensive for another.
+
+
+
+Software security in practice 7 
+
+Table 2. Knowledge acquisition taxonomy. The taxonomy presents security knowledge acquisition opportunities and features associated 
+
+with each opportunity. See inline for their description. 
+
+$ - lower cost; $$ - higher cost. 
+E - learning is the developer’s explicit objective; B - learning is a by-product of another activity. 
+
+- high subject-matter expertise (lower expertise when grayed out). 
+- activity is part of the SDLC (not part of the SDLC when grayed out). 
+- knowledge source is external to the company (source is internal when grayed out). 
+
+ F
+ F  
+
+(  
+
+ f  
+
+ a  
+
+ (
+
+ 
+
+A
+ 
+
+T  
+
+ 
+
+i  
+
+ 
+
+o  
+
+ 
+
+s  
+
+t  
+
+ 
+
+i  
+
+ 
+
+p  
+
+r  
+
+ 
+
+t  
+
+ 
+
+p  
+
+h  
+
+i
+ 
+
+ t  
+
+d  k  
+
+t  a  
+
+a  i  
+
+n  b  
+
+t  t  
+
+c  u  
+
+a d  
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+Thus, this characteristic should be used to compare activities
+relative to each other, rather than, e.g. finding the most reason-
+ably priced activity. 
+
+ Fit in the developer’s objective ( E , B ). We use E to indicate
+that learning is the developer’s explicit objective for the activ-
+ity, whereas B indicates that learning is a by-product of another
+activity. 
+
+ Source expertise ( ). A indicates that the source of informa-
+tion has high subject-matter expertise. It is grayed-out ( ) when
+the source of information varies in their level of expertise. Note
+that advancement in knowledge can occur through discussions
+and sharing of interpretations, even if the teacher does not have
+higher expertise than the learner [ 80 ]. 
+
+ Fit in the SDLC ( ). A indicates that the activity is performed
+as part of the developer’s tasks (thus part of the SDLC). It is
+grayed-out ( ) when the activity is not part of the SDLC. 
+
+ Knowledge source ( ). A indicates that knowledge is flowing
+to the company from external sources. It is grayed-out ( ) when
+knowledge is shared within the company. 
+
+We built this taxonomy based on our analysis of the interview
+ata. Though other activities may exist that are not included in the
+axonomy, the taxonomy allows for exploring and reasoning about
+ctivities that induce learning in the context of software security. We
+ext describe and provide context for each activity presented in the
+axonomy. Table B1 in Appendix B shows which participants dis-
+ussed each activity categorized in the taxonomy; it highlights that
+ll opportunities were discussed by multiple individuals. 
+ormal learning 
+
+or all formal learning opportunities identified, learning is explicit
+ E ) from the developer’s perspective. In addition, the source of in-
+ormation, be it an instructor in a training session or an author of
+ training manual, is assumed to have high subject-matter expertise
+ ). 
+
+ttending mandatory training ($$E ) 
+his formal learning refers to one-time or regularly scheduled train-
+
+ng activities that employers require developers to complete as part
+f their job. Formal security training is usually expected as the first
+tep for a secure SDLC [ 7 ]. Most participants mentioned that they at-
+ended mandatory security training when they started their job but,
+n most cases, the training focused on general security topics (e.g.
+asswords and phishing), and on best practices while using company
+esources or sharing company code. Three participants reported at-
+ending mandatory on-boarding training that explicitly included as-
+ects of software security. In addition to attendance, P1 mentioned
+er company requiring that developers successfully pass exams relat-
+
+ng to the training topics. 
+Beyond initial mandatory training, P5’s company also requires at-
+
+endance at regularly scheduled training sessions. P5 explains, “We
+ept doing [mandatory training], and it’s been quite effective. So as
+ result of it being effective, we scaled down the frequency at which
+t needs to be done. But it’s not because it’s less important, it’s just
+ecause people started to get it more.” Linking training frequency
+o security outcomes could lead developers to find the training more
+seful and be more attentive to it. The rationale may be that when
+evelopers are more attentive, they can spend less time on additional
+
+
+
+8 Assal et al. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+training and they can get go back to their development work more 
+quickly. In the section “Internalizing software security,” we discuss 
+how valuing security can impact developers’ performance and pro- 
+mote software security. 
+
+Attending employer-sponsored talks ($E ) 
+Our data analysis shows that employer-sponsored talks are typically 
+technical and have specific learning objectives (e.g. introducing a new 
+
+security API). This type of learning opportunity is initiated by both 
+the employer (for hosting the talk) and the developer (for deciding to 
+attend). These talks are usually given by employees sharing expertise 
+with colleagues, thus knowledge sources are internal to the company.
+P3 mentioned that his company sometimes invites external experts as 
+well. 
+
+Referring to optional material ($E ) 
+Some companies provide optional security knowledge resources (e.g.
+reading material, or video lectures) prepared by in-house experts; 
+similar to the employer-sponsored talks above, these activities are 
+initiated by both the employer (for offering the material) and the de- 
+veloper (for seeking the material). P3 explained, “they do have an 
+infrastructure, so that people can easily find actual courses taught by 
+colleagues at this very institution. [...] They have a series of sort of 
+self seminars, so these are like slideshows or online videos that we 
+can look at.” P1 mentioned that their material is accompanied by 
+an assessment test that allows the developer to self-test their knowl- 
+edge and the company to recognize the developer’s level of security 
+knowledge. 
+
+Taking courses ($-$$E ) 
+Some participants explained that they took courses or even acquired 
+a graduate degree to increase or maintain their security knowledge.
+Their companies did not require or even encourage them to do so,
+thus the initiation of this learning opportunity is internal to the de- 
+veloper. P11 explained, “For me, I like taking courses [...] I mean [...] 
+something [that] shows me all the types of vulnerabilities I need to re- 
+ally be thinking about when I am working on my applications.” The 
+cost of this activity varies; an online course is likely less expensive 
+than an on-site course, and both are less expensive than a graduate 
+degree. Knowledge here is flowing to the company from an external 
+source (the institute offering the course or graduate degree). 
+
+Semi-formal learning 
+
+The semi-formal learning opportunities listed here vary in their de- 
+gree of structure, the presence of learning goals, and the experience 
+of the information source. Learning may be the developer’s explicit 
+objective ( E ) or a by-product ( B ) of development activities. 
+
+Receiving in-context support ($B ) 
+Some participants mentioned learning about security through differ- 
+ent forms of in-context support received while working on their tasks 
+( ). Thus, learning from these activities is a by-product ( B ) of the de- 
+velopment task. For example, participants discussed that if a security 
+tester identifies an issue in their code, the tester would then provide 
+the developer with the specific steps to follow to reproduce the issue,
+as well as an explanation of the issue and possible fixes. One partic- 
+ipant also mentioned that his company pairs developers with more 
+senior colleagues to disseminate security knowledge across the devel- 
+opment team. P9 explained that the intention is “to make sure that 
+the junior [developer] doesn’t feel, you know, like they are left alone 
+on the issue or they are frustrated or stuck. [They] have somebody to 
+kinda guide them through the work that they are doing step by step.”
+On the other hand, P9’s previous company took this even further and 
+formed a “security council” from in-house experts to provide security 
+guidance. The council keeps developers updated on relevant issues to 
+consider during implementation, and developers are expected to con- 
+sult this council, e.g. when they need advice. P9 explained, “If there is 
+anything that we flag up as ‘ok this might have security implications’,
+then it goes to them to say ‘ok, do you guys find anything? [Do] you 
+have any comments on the design? Is there anything maybe we didn’t 
+think of?’ ”
+
+Using CR as a learning tool ($B ) 
+Code review is a typical SDLC step where implemented code is in- 
+spected by reviewers (possibly including the author of the code); these 
+reviewers typically involve developers, but can also involve testers, se- 
+curity experts, and other project team members. During code review,
+the reviewers collectively aim to find or address code issues, which 
+is typically primarily focused on functionality issues, but can also 
+address security bugs [ 28 ]. Similar to the in-context learning activi- 
+ties described above, code reviews allow developers to gain security 
+knowledge while working on their tasks ( ), and security learning 
+is a by-product ( B ) of the development task. P1 explained that upon 
+finding a security issue, reviewers take this opportunity to teach the 
+developer about its implications and how to fix it. This can happen 
+face-to-face or through documented code review feedback. She said,
+“[Reviewers ] just come right away to your cubicle and explain [to] 
+you [...] because they feel [that] going and taking a book and read- 
+ing it would be, mmm, so much painful. So, they just come over to 
+you and draw on the board and explain what you did and what you 
+should not do.” In some cases, the reviewer is not necessarily more 
+experienced than the developer,  however,  the discussion that arises 
+during the review session can lead to better insights on code security.
+P1 also mentioned that junior developers can act as mock review- 
+ers to learn about the process and types of issues to avoid in their 
+code. One of the factors to rate the success of a code review session 
+discussed by participants is by determining whether the review re- 
+sulted in information sharing among reviewers and developers. P5 
+explained, “A good review is one where the development team gets 
+a better understanding of the security of the application, and the se- 
+curity team gets a better understanding of how applications are con- 
+structed and how to interact with the development teams.”
+
+Attending conferences ($-$$E ) 
+Some participants mentioned that they sometimes attend academic 
+conferences to keep up with new technologies and new security at- 
+tacks and defences. There is no mandate from their employers to at- 
+tend such events, although it is encouraged. Employers may reim- 
+burse their developers for conference registration fees and/or other 
+expenses. P11 explained, “they do offer umm, they will pay for us to 
+go. Like if you want go to a conference that’s, you know, in town,
+they’ll pay for the fee to go to the conference.”
+
+Thus, attending conferences is an activity initiated by developers 
+and encouraged by employers, where learning is an explicit goal ( E ).
+Conference presenters are often considered subject-matter experts 
+( ), and likely external to the company ( ). The cost of this activity 
+varies depending on the conference registration fees, and whether it 
+includes travel and accommodation expenses. 
+
+Searching online ($B ) 
+Several online resources are available to help developers in their job- 
+related tasks, however such resources vary in structure and credibil- 
+ity. These range from personal blogs and knowledge markets (e.g.
+
+
+
+Software security in practice 9 
+
+S  d  
+
+n  c  
+
+(  t  
+
+t  c  
+
+s  fi  
+
+a  t  
+
+a  i  
+
+I  t  
+
+t  j  
+
+i  [  
+
+r s  
+
+(  
+
+R a  
+
+T t  
+
+ 
+
+l p
+ 
+
+d  
+
+a  S
+a  P  
+
+a  t  
+
+p t  
+
+ c  
+
+u  t  
+
+s  d  
+
+t  e  
+
+o  u  
+
+t  y  
+
+i  a  
+
+t  t  
+
+a t  
+
+n  
+
+s  
+
+I
+I t  
+
+ 
+
+e o  
+
+ 
+
+o [  
+
+f  
+
+l  
+
+P
+[
+
+S  
+
+ 
+
+g  
+
+f  
+
+t  
+
+t  
+
+m  
+
+F  
+
+b  
+
+i  
+
+w  
+
+e  
+
+c  
+
+m  
+
+s  
+
+i  
+
+w  
+
+t  
+
+t  
+
+e  
+
+a
+u  
+
+c  
+
+C
+a
+
+W  
+
+t  
+
+s  
+
+t M
+ 
+
+i  I  
+
+a  o
+p   
+
+w  t  
+
+w  t  
+
+c  b  
+
+g  e  
+
+t  t  
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+tack Overflow [ 58 ]), to more official resources [e.g. National Vul-
+erability Database [ 81 ] and Common Vulnerabilities and Exposures
+CVEs) [ 82 ]). We found that when participants use online resources
+o fix a security issue, this helps them learn about that particular
+ecurity issue while working on their task. Thus, learning from this
+ctivity is considered part of the SDLC ( ) and is a by-product of the
+ctivity ( B ). P3 explained, “frankly, you know, Google search engine.
+ basically search things online. So, when there’s something particular
+hat I need to look into, I basically look it up online and see what the
+nternet says.” He also explained that he would prefer using “official
+esources or more reputable sources ,” rather than a blog. 
+
+eading information and discussion websites ($E ) 
+his activity involves the same resources as in the Searching On-
+ine activity described above. However, we categorize this into a
+istinct activity as participants’ motives for accessing these resources
+re different. Contrary to Searching Online , participants in this
+ctivity access the internet resources with the explicit goal of learning
+bout security. Thus, learning in this activity is explicit ( E ) and not
+art of the SDLC ( ). 
+
+Participants explained that they use internet resources to stay
+p-to-date on security vulnerabilities. For example, P9 explained his
+trategy, “[I follow a] couple of blogs, just general websites as well
+hat might point out some new vulnerability. If I want to go in depth
+n something, then, you know, we can read about its CVE for that
+hing.” Our participants’ recounts of their use of discussion websites
+ndicates that they did not actively participate in discussions, rather
+hey were passive learners reading about the security topic and the
+vailable discussion. 
+
+nformal learning 
+
+nformal learning activities identified herein fall under “learning by
+xperience” [ 76 ]. For all these activities, learning is a by-product ( B )
+f the development tasks performed as part of the SDLC ( ). 
+
+articipating in mediated social contact opportunities ($B ) 
+ome participants gained security knowledge while participating in
+roup activities enabled by their employers. For example, some par-
+icipants mentioned that they discuss work impediments during team
+eetings, including security issues they face and how these could
+e addressed. Others mentioned that they work in open-plan offices
+hich often stimulates discussions. P10 said, “We all sit relatively
+
+lose together, so if someone finds something, they might just sort of
+ay ‘OK, does anyone know about this?’ ‘Why are we doing it this
+ay?’ ” P10 explained that they value these general discussions as
+
+hey allow developers to stay informed about security vulnerabilities
+nd prevent vulnerabilities in their code. 
+
+ollaborating in the workplace ($B ) 
+e found that participants learned about security during collabora-
+
+ions with members of other teams through interactions and discus-
+ions between teams. In our interviews, participants described mul-
+iple instances of different teams working together, e.g. testers work-
+ng with developers to better understand the purpose of the code,
+nd thus being able to better analyze potential vulnerabilities. P2 ex-
+lained, “Usually, if [the testers] think there’s a problem, they really
+ouldn’t go ahead and publish the bug like this; they would work
+ith us. They’d be like, ‘do I understand this correctly? Is this the
+
+orrect behaviour?’ [...] So, it’s a process before the bug actually
+ets submitted.” Such collaboration with other teams provides mu-
+ual benefits; it allows for “information sharing ” (P11) between the
+ifferent teams, can help bridge the knowledge gap [ 68 ], and reduce
+onflicts. Conversely, poor communication and a disconnect between
+eams who are working together leads to tension; this can result in
+onflicts between the teams and poor security outcomes. P8 exempli-
+es this through his development team’s frustration with the testing
+eam, “[The relationship between the testing and development team
+s] bad. [chuckles] I mean, usually, you just pass them the code and
+hen, they run through test cases and, you know, if they fail, they’ll
+ust come back say ‘fail’. And then they don’t..., because people who
+are] doing the testing, they have zero knowledge about the code it-
+elf.” Such disconnect may be due to conflicting goals between teams
+e.g. functionality for developers, and security for security testers),
+nd may require building a shared sense of responsibility between
+he teams. The section “Multiple activity systems interacting within
+roject teams” discusses workplace collaborations in more detail. 
+
+eeking help ($B ) 
+articipants also described multiple instances where they turned to
+heir colleagues for help. This is different from Collaborating in
+he Workplace , as help seeking here is informal and random, oc-
+urring only when the developer needs help while working on their
+asks, rather than, e.g. a follow-up on testing results. In addition, the
+eveloper seeking help is usually the main beneficiary of the knowl-
+dge shared. P4 explained, “if I need advice from someone, I would
+sually ask, you know; ‘I’m looking at this thing here, how would
+ou go with doing it?’ We kind of just talk back and forth, it’s usu-
+lly pretty free form and open.”Our participants also mentioned that
+hey sometimes seek help to answer more specific questions relating
+o specific security issues. For example, P1 explained that if she can-
+ot fix a security issue in her code, she asks a teammate who faced a
+imilar issue how they fixed it. Although this activity is initiated by
+he developer, it is sometimes performed even by unmotivated devel-
+pers albeit after procrastinating. P2 explained, “In my experience
+some devs] would delay [asking for help]. They’d work on things
+or months and then over coffee they’d be telling me what they’re
+ooking at and I’d break it in 2 minutes [...]. And they would be like
+chuckle] ‘okay, let’s do this again’.”
+
+In summary, all the activities (Formal, Semi-Formal, and In-
+ormal) discussed herein improve developers’ security knowledge,
+hough participants’ favored in-context learning activities (Semi-
+ormal and Informal). In-context learning may be preferable since
+
+t fits within developers’ existing objectives, thus allowing develop-
+rs to learn about security while working on their routine develop-
+ent tasks. In other words, casual and social exchanges of security
+
+nformation during regular work activities are more meaningful, and
+he encouragement of a culture of security knowledge sharing is ben-
+ficial. Participants also found (Formal) security training activities
+seful, however it is important to adapt the frequency of training ac-
+ording to the needs of the trainees and to incorporate the training
+ctivities into their regular workload. 
+
+otivation for software security 
+
+n this section, we focus on RQ2 , specifically what motivates devel-
+pers to adopt or forgo security practices and tasks. 
+
+Through our analysis (see Fig. 3 ), we identified different motiva-
+ions to adopt software security practices, as well as several factors
+hat may induce developers’ amotivation despite their knowledge and
+elief of the importance of security. Classifying the motivations as
+ither intrinsic or extrinsic was too simplistic (e.g. the extrinsic mo-
+ivations we identified varied in their driving forces from an external
+
+
+
+10 Assal et al. 
+
+Figure 3. Analyzing motivations and amotivations for software security. Left: looking for patterns, right: identified patterns in amotivation. 
+
+ 
+
+ 
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+mandate to the developer’s sense of responsibility), thus we use SDT’s 
+autonomy-control continuum [ 37 ,39 ] to present our results. This 
+continuum, explained in the section “Theoretical background on 
+Self-Determination Theory,” describes human motivation in learn- 
+ing environments using motivators ranging from extrinsic forces (e.g.
+compliance to external requirements) to intrinsic forces (e.g. self- 
+interest). Table C1 in Appendix C, presents qualitative analysis codes 
+corresponding to the software security (a)motivations found in our 
+data, explains each code, and presents a corresponding sample quo- 
+tation. 
+
+Figure 4 presents (a)motivations identified in our study on the 
+self-determination continuum. At the leftmost end of the continuum 
+
+(colored orange), we present amotivations that led participants (or 
+their teams) to neglect software security. To the right, we present 
+software security motivations. As we move toward the right, activity 
+regulation increases in autonomy. Motivations under “external regu- 
+lation” and “introjected regulation” are colored separately (yellow), 
+because these motivations are not truly internalized (i.e. these mo- 
+tivations do not come from within the actor) and are contingent on 
+their perceived outcomes (e.g. they are performed to comply with reg- 
+ulations or to maintain self-esteem). Motivations under “identified 
+regulation” and “integrated regulation” (light blue) are more inter- 
+nally driven, and along with “intrinsic motivation” (dark blue), they 
+present the most favorable types of software security motivations. 
+
+Note that security practice herein refers to practices developers 
+can do to address security in their code, which may differ from secu- 
+rity best practices such as performing static analysis or threat model- 
+ing [ 28 ]. We focus on these practices since our goal is to understand 
+developers’ security motivations (i.e. willingness to address security 
+issues) rather than compare with best practices. 
+Amotivation 
+
+Through our data analysis, we identified three main reasons for par- 
+ticipants’ neglect of software security. 
+
+Amotivation—perceived lack of competence 
+Our analysis revealed that a lack of resources and a lack of 
+support are two factors that led to a perceived lack of competence 
+to address software security. Some participants indicated that their 
+teams do not have the necessary budget, time, people-power, or exper- 
+tise, to properly address security in their SDLC. We also found that 
+this lack of trust in their ability to address security occurs when teams 
+do not have a security plan in place, when security tools are nonexis- 
+tent or lacking, and when developers are unaware of the availability 
+of such tools. For example, P4 said, “I wish I knew of [security] tools,
+but unfortunately I don’t really know of any tool. So, I would prob- 
+ably be happy to say I would like to use some tools, but I don’t know 
+
+of any. I kinda wish I did, but I don’t .”
+
+Amotivation—lack of interest, relevance, or value 
+This type of amotivation comes from the lack of interest, relevance,
+or perceived value of performing security tasks. The lack of relevance 
+happens when security is not considered to be one of the developer’s 
+everyday duties ( not my responsibility ), or when security is 
+viewed as another entity’s responsibility ( security is handled 
+elsewhere ), such as by another team or team member. Our analysis 
+shows that when this is the general attitude within a team, it can have 
+detrimental effects such as induced passiveness . It could lead 
+developers (even those who believe in the importance of addressing 
+security) to become demotivated toward security and rather focus on 
+their ‘more valuable’ existing duties. For example, P9 said, “I don’t 
+
+
+
+Software security in practice 11 
+
+Figure 4. The self-determination continuum of software security. Amotivations (orange) are presented at the leftmost end of the continuum (problematic for 
+
+security). Towards the right, motivations are presented in increasing order of activity regulation (better for security). In the middle, extrinsic motivations are 
+
+shown in two different blocks to highlight the externally driven motivations (yellow) and the internally driven motivations (light blue). Intrinsic motivations, at 
+
+the rightmost end (blue), are always internally driven and are more favorable for security. 
+
+r  t  
+
+s i
+ 
+
+f  
+
+t  E
+t  E
+o  O  
+
+t  s  
+
+v  e  
+
+c  s  
+
+b  t  
+
+w  c
+s  
+
+ 
+
+c  b  
+
+e  o  
+
+f  t  
+
+w  s  
+
+s  s  
+
+c  a  
+
+o t  
+
+M  [  
+
+o  c  
+
+v d  
+
+[  
+
+A n  
+
+T t  
+
+ 
+
+t t
+ 
+
+c  
+
+p  I
+p  A  
+
+i v  
+
+w  
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+eally trust [my team members] to run any kind of like source code
+canners or anything like that. I know I’m certainly not going to.”
+
+Additionally, our analysis shows different reasons why security ef-
+orts lack value for some participants in our dataset. First, we found
+hat some participants are influenced by the optimistic bias [ 83 ],
+hinking that attackers would not be interested in their applications,
+r that they are not in an organization big enough to be a target for at-
+acks. Thus, as they see no perceived risk , security efforts lack
+alue. P7 said, “For a small company, nobody will usually attack or
+ompromise the vulnerabilities in your system. If something really
+ad happens, usually, you don’t really get enough [bad] reputation as
+ell.” We also found that when there are no perceived negative con-
+
+equences to the individuals or to the business from the lack of se-
+urity ( no perceived loss ), then security efforts lack value. For
+xample, when developers are not held responsible for security issues
+ound in their code, they would rather spend their time on aspects for
+hich they will be held responsible. P7 explained, “[If] I made a bad
+
+ecurity decision, nobody would blame me as much as if I made a de-
+ision that [led] to a [functionality] bug in the system. So the priority
+f security is definitely lower than introducing bugs in the system.”
+oreover, as different tasks compete for resources (e.g. the devel-
+
+per’s time in the previous quote), when security has no perceived
+alue, those tasks deemed more valuable are prioritized. 
+
+motivation—defiance/resistance to influence 
+he final amotivation we identified is inflexibility . We found
+
+hat some developers ignored security, not because it is difficult to
+omply, but rather because it conflicts with their perception of the
+roper way of coding, or their personal coding practices. P9 ex-
+lained how one of his team members resists using a framework
+
+n the proper way, despite having “gotten into so many arguments ”
+ith his manager, “I can tell he is very self-absorbed with his own
+ n  
+houghts, and he thinks that what he says is somehow the truth, even
+f it doesn’t necessarily pan out that way.”
+
+xtrinsic and intrinsic motivations 
+xternally driven motivations—external and introjected 
+ur analysis shows that addressing security can be driven by the de-
+
+ire to be recognized as the security expert or to receive acknowl-
+dgement ( prestige ), which helps in maintaining self-esteem and
+elf-worth. P1 explained, “When [somebody] clicks your name [on
+he employee website] and checks, it shows a badge that you’re ‘se-
+urity certified’, which gives you a good feeling.”
+
+In addition, we found three external motivations that are driven
+y the desire to avoid negative consequences associated with a lack
+f security: an overseeing entity finding non-compliance with regula-
+ions ( audit fear ), losing market share or market value due to a
+ecurity breach ( business loss ), and being monitored and pres-
+ured by managers ( pressure ). P2 explained, “We have a safety
+udit [conducted by an auditing organization]; all these guys they ac-
+ually send auditors to us every, I don’t know, however many months
+..], and they look at the process. They, you know, scan every single
+heck-in, every single review, [...] and they say ‘oh, no! You haven’t
+one that, you lose your certification.’ [If] we lose our certification,
+then] we have no company, we have no customers .” Another exter-
+al security motivation identified in our data is receiving rewards in
+he form of career advancement [e.g. “promotions or mov[ing]
+hroughout the scales and employment bands ”(P5)]. 
+
+nternally driven motivations—identified and integrated 
+s shown in Fig. 4 , there are three types of internally driven moti-
+ation, ordered from left to right in the figure by the degree of inter-
+alization. Those to the right are considered most favorable [ 38 ].
+
+
+
+12 Assal et al. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+We first discuss those falling in the extrinsic motivation category,
+specifically motivations with Identified and Integrated regulation (cf.
+section “Theoretical background on Self-Determination Theory”). 
+Discussion of intrinsic motivation follows later. 
+
+For extrinsic motivation, professional responsibility 
+and concern for users are two motivations where the action 
+is not performed for its inherent enjoyment, but rather to fulfill what 
+the developer views as their responsibility to their profession and to 
+safeguard users’ privacy and security. These motivations are a type 
+of integrated regulation, where the actor recognizes the importance 
+of the tasks involved and thus accepts the goals associated with the 
+tasks. For example, P3 said, “I would not feel comfortable with basi- 
+cally having something used by end users that I didn’t feel was secure,
+or I didn’t feel respective of privacy, umm so I would try very hard 
+to not compromise on that.”
+
+In addition, we identified motivations where participants view 
+
+the goal of addressing security as personally important (i.e. identified 
+regulation). For example, our analysis shows that understanding 
+the implications of ignoring or dismissing security increased 
+security awareness and motivated developers and their teams to in- 
+tegrate security in their SDLCs. P4 explained, “I know for me per- 
+sonally when I realized just how catastrophic something could be,
+just by making a simple mistake, or not even a simple mistake, just 
+overlooking something simple. uhh it changes your focus.” This was 
+especially true when the understanding came through practical ex- 
+amples of how the developer’s code could lead to a security issue or 
+through experiencing a real security issue at work. Caring about the 
+company reputation and recognizing how it could be negatively 
+affected in case of a security breach is another example of identified 
+regulation motivation. Participants were also motivated to partici- 
+pate in security activities when security was a shared responsi- 
+bility for the project team rather than the responsibility of one 
+individual alone. This could in turn have a snowball effect and moti- 
+vate additional team members to recognize the importance of security 
+since their colleagues do ( induced initiative ). For example, P7 
+said, “When you see your colleagues actually spending time on some- 
+thing, you might think that ‘well, it’s something that’s worth spending 
+time on’, but if you worked in a company that nobody just touches 
+security then you might not be motivated that much.”
+
+Internally driven motivations—inherent satisfaction 
+We classify self-improvement as (the only) intrinsic motivation 
+to security. It is driven by the developer’s own interest in security and 
+the self-satisfaction of producing issue-free code. For example, P1 
+said, “And sometimes I will challenge [myself], that ‘okay, this time 
+I’m going to submit [my code] for a review where nobody will give 
+me a comment’, though that never happened, but still...”
+
+Internalizing software security 
+
+During selective coding (the last coding stage in Grounded Theory),
+we recognized that our themes from the previous coding stage could 
+be connected by a central theme about internalizing security—the 
+driving force behind participants’ security practices being their own 
+will as opposed to external factors. In our data, we saw varied mo- 
+tivation toward security and varying degrees of internalization. For 
+example, some participants spoke of the importance of security tasks 
+and how they personally value these tasks, while others were indiffer- 
+ent to security and indicated that security tasks are only performed to 
+satisfy an external driving force. Through our analysis, we found that 
+participants who were internally motivated toward software security 
+were more accepting and willing to adopt security practices. 
+
+We developed a human-oriented model that describes the process 
+of internalizing software security based on our analysis (see Fig. 5 ).
+The end goal in this model is developers’ internalization of software 
+security, where they act toward security with autonomy and volition.
+This can apply to developers with varying level of motivations, in- 
+cluding developers who are initially amotivated. In other words, the 
+process of internalizing can begin at any point in the continuum of 
+amotivations and motivations (shown in Fig. 4 ). Internally motivated 
+actions are often associated with positive outcomes, such as increased 
+engagement in the activity, improved performance, more cognitive 
+flexibility, and better learning [ 38 ,40 ]. All of these outcomes would 
+be useful and important for software security given its complexity 
+and how it is commonly de-prioritized in software development in 
+practice. As shown in Fig. 5 , the two levers that influence this inter- 
+nalization are “(perceived) competence” and “relatedness”; the first 
+refers to the developer’s software security abilities and their percep- 
+tions thereof, while the latter is the developer’s sense of connection 
+to their project team. Naturally, all the software security learning op- 
+portunities discussed in Table 2 (indicated by the purple box in Fig. 5 ) 
+help improve developers’ (perceived) competence. Additionally, when 
+these activities involve collaboration with other team members (indi- 
+cated by the pink box in Fig. 5 ), this can improve relatedness through 
+increasing the developer’s bond with other members and their sense 
+of belonging to the project team. With improving (perceived) compe- 
+tence and improving relatedness, developers’ autonomy to act toward 
+software security improves, thus encouraging internalization of soft- 
+ware security. Internalization is a continuous process, with the learn- 
+ing opportunities identified in our data acting as the enduring impetus 
+for improving competence and relatedness, and in turn creating two 
+feedback loops fueling developers’ internalization. We describe this 
+process next. 
+
+Improving performance–valuing security loop 
+Acquiring software security knowledge and expertise (e.g. through 
+company-organized security training or through receiving in-context 
+support during development tasks) improves developers’ competence 
+and their confidence in their ability to address security in their code 
+[i.e. (perceived) competence ]. To encourage security learning among 
+amotivated developers, employers could rely on activities initiated 
+by the employer and activities initiated by the employer and devel- 
+oper (i.e. activities in the top two rows of the table in Fig. 5 ), with
+the aim of gradually moving these developers toward more internally 
+driven motivations. Acquiring security knowledge drives the improv- 
+ing performance—valuing security loop (center left section of Fig. 5 ),
+as described next. 
+
+When developers’ security knowledge improves, this improves (1) 
+their competence (i.e. their awareness of the negative consequences 
+of ignoring security, and their ability to address security) and (2) their 
+perceived competence (i.e. their confidence in applying their knowl- 
+edge). This leads to developers valuing security and thus encourages 
+them to adopt security practices with improved autonomy (i.e. their 
+actions are more internalized). In turn, with improved autonomy ,
+developers persevere in their security practices (e.g. through critical 
+thinking, asking for help from security experts) which results in im- 
+proving performance . As developers observe positive outcomes from 
+
+their security efforts, this further improves their perceived compe- 
+tence . And with each cycle through the loop, developers are likely to 
+engage in further knowledge acquisition activities. 
+
+For example, a developer takes a course on Cross-Site Scripting 
+(XSS) vulnerabilities [ 84 ], which improves their competence and per- 
+
+
+
+Software security in practice 13 
+
+Figure 5. Internalizing software security model. The model shows the process by which the security knowledge activities (from Table 2 ) contribute to the 
+
+continuous internationalization of security and to improving the developers’ autonomy toward software security. 
+
+c  n  
+
+u  p  
+
+n  s  
+
+u  t  
+
+k  t  
+
+t  t  
+
+(  d  
+
+t  l  
+
+t  c  
+
+c k
+ 
+
+I X  
+
+M  h  
+
+r  v  
+
+c  w  
+
+p  b  
+
+a  l  
+
+i  i  
+
+s o  
+
+ t  
+
+t  b  
+
+a  a  
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+eived competence. This helps the developer value security as they
+nderstand the implications (cf. Fig. 4 ) of having this vul-
+erability in their code, which could allow attackers to steal sensitive
+ser data ( concern for users ). Equipped with this new security
+nowledge and confidence in their abilities, the developer is more in-
+ernally driven toward addressing XSS vulnerabilities in their code
+ improved autonomy ). This autonomy leads the developer to spend
+he time and effort on protecting their applications against XSS at-
+acks, thus improving their performance and leading to improved
+ompetence . And the loop continues. 
+
+mproving commitment–valuing security loop 
+any security learning activities we have identified involve collabo-
+
+ation among team members and across different teams within the
+ompany (shown within the pink box in Fig. 5 ). In addition to im-
+roving security knowledge, these activities help individuals develop
+ sense of relatedness to their project team and its security goals, driv-
+ng the improving commitment—valuing security loop (center right
+ection of Fig. 5 ). We describe next. 
+
+Collaboration encourages individuals to recognize the project
+eam’s overall goals beyond their own individual goals (e.g. function-
+lity for developers or security for security engineers) and to feel con-
+ected to their team ( improved relatedness ). When the project team
+rioritizes security, this leads to individual developers also valuing
+ecurity . Working toward this shared priority, each individual seeks
+o contribute to the team with volition (i.e. improved autonomy ) and
+hus, becomes more internally driven toward adopting security prac-
+ices. Improved autonomy leads to improving commitment from the
+eveloper toward their team and its security goals, which in turn
+
+eads to improved relatedness to the project team. With each cy-
+le through the loop, the developer engages in further collaborative
+nowledge acquisition activities. 
+
+For example, a developer and a tester collaborate on fixing an
+SS vulnerability in the developer’s code, which includes discussing
+ow this issue affects the team’s software security goals. As the de-
+eloper works together with the tester and feels that “people are
+atching out for [her] ” [P10], the developer deepens her sense of
+elonging (cf. Fig. 4 ) to the team, which leads to improved re-
+
+atedness . The developer will thus come to value security and view
+t as a shared responsibility (cf. Fig. 4 ), aligning with the
+bjectives of the project team to which she belongs. Consequently,
+he developer is more internally driven to address the XSS vulnera-
+ility in her code ( improved autonomy ). Wi th improved autonomy
+nd willingness to contribute to her team, the developer becomes
+
+
+
+14 Assal et al. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+increasingly committed ( improving commitment ) to this shared se- 
+curity goal. This in turn reinforces the developer’s relatedness to 
+her team and promotes further collaborative knowledge acquisition 
+activities. 
+
+An ongoing process of internalization 
+As developers’ (perceived) competence and relatedness increase, they 
+gain and deepen their sense of belonging and their sense of responsi- 
+bility, to their team, company, and society. Thus, developers go into a 
+continuous process of internalizing the externally driven (or amo- 
+tivated) security activities (i.e. their motivations move toward the 
+right-side of Fig. 4 ), a process of active learning and self-growth [ 39 ].
+And consequently, as developers’ security practices are internalized,
+they can perform these practices with better performance, which im- 
+proves the security of their applications [ 38 ,40 ]. 
+
+Factors affecting internalization 
+
+Our previous analysis related to security practices [ 28 ] describes fac- 
+tors that affect security practices in development teams. Here, we 
+discuss a subset of these factors that could help expedite, or hinder,
+the process of internalizing software security practices. 
+
+Prior security knowledge 
+The duration it takes to fully internalize software security (cf. Fig. 5 ) 
+would likely be influenced by the developer’s existing security knowl- 
+edge and awareness. Under the same conditions, developers who al- 
+ready have prior background in security or have some awareness 
+of its implications would likely internalize and accept security more 
+readily than those who do not. In addition, developers who are re- 
+currently exposed to security learning opportunities (e.g. through in- 
+context learning activities) may be more likely to internalize security.
+
+Company culture 
+As our analysis revealed, the attitude toward software security by the 
+developer’s team, supervisors, and those up in the company hierar- 
+chy has a substantial effect on the developer’s motivation to learn 
+about and internalize security. Developers whose teams view secu- 
+rity as a shared goal and responsibility are more likely to adopt this 
+view. Such teams typically follow a security plan. This can be both a 
+cause and an effect of internalizing security; they develop a security 
+plan to motivate security, and their motivation to security improves 
+their security plan (recall that internalization is an ongoing process).
+Likewise, developers who recognize that security is valued by senior 
+management can be inspired to take an interest in security. For ex- 
+ample, P12 recounted, “As I was working with [my CTO], he was 
+telling me [about] all these different kinds of possible attack vectors 
+that may happen, such as, what happens if the attacker gets access 
+to the actual heap of the program, the memory [...] So stuff like that,
+I’ve never had to experience before [...] So, it was really, really inter- 
+esting.”
+
+Resource availability 
+Resource availability can substantially affect motivation, both for in- 
+dividual developers and for the entire development team [ 28 ]. For ex- 
+ample, when time is limited, developers preferred to prioritize their 
+primary tasks; only those who are highly motivated to focus on secu- 
+rity would ask for a deadline extension. In cases where the extension 
+request was denied, security would either be deferred or the team 
+
+would have to assign (or hire) extra personnel. However, with a lim- 
+ited budget, this may not always be possible. 
+Limitations and future work 
+
+Our sample size follows the norms this type of qualitative research 
+methodology; we stopped recruitment only after reaching data satu- 
+ration [ 73 ] (i.e. when new data did not add new insights relating to 
+our research questions). A future study could use quantitative meth- 
+ods to assess the prevalence of the different aspects of our internal- 
+ization model. 
+
+Like all interview-based research, our data is self-reported, which 
+may not necessarily fully represent developers’ reality. To address 
+this, we assured participants that their responses would be anony- 
+mous and that they may skip any questions they are not comfortable 
+answering, thus minimizing social desirability bias. To avoid prim- 
+ing participants on security, our study description did not mention 
+“security” and the interview focused on all aspects of software de- 
+velopment, which would naturally include security. 
+
+In this paper, we focus on software security in the professional 
+context, so all our participants are employed as software developers.
+Thus, our results may not be generalizable to other types of develop- 
+ers (e.g. open-source developers). Additionally, all our participants’ 
+organizations are based in North America, hence our results may 
+not be representative of organizations in other regions. Future work 
+could focus on security knowledge acquisition opportunities and se- 
+curity (de)motivators of software developers in different contexts and 
+locations. Another future research direction includes comparing the 
+different security learning activities and examining their effectiveness 
+so that organizations could prioritize those activities most likely to 
+be effective for their context. 
+
+Future work could also examine how to integrate collaborative 
+knowledge sharing opportunities into developers’ existing communi- 
+cation methods and platforms. For example, it may be useful to intro- 
+duce a security-focused branch within platforms like Stack Overflow 
+
+[ 58 ] to help developers find and share security knowledge. We also 
+suggest that future work should consider a deeper analysis of inter- 
+team collaboration and how security knowledge flows across teams 
+(i.e. how multiple activity systems interact during knowledge sharing,
+see the section “Multiple activity systems interacting within project 
+teams” for further discussion). 
+
+Discussion and conclusion 
+
+In this paper, we focus on human aspects of software security in prac- 
+tice, specifically how developers acquire security knowledge (RQ1) 
+and their motivations toward software security (RQ2). We  now re- 
+visit the research questions and discuss our findings to provide further 
+insights. 
+
+RQ1: Security knowledge acquisition 
+We created a Knowledge Acquisition Taxonomy (Table 2 ) categoriz- 
+ing the different security learning activities identified in our data. For- 
+mal learning was the least commonly reported learning type among 
+our participants (cf. Table B1 in Appendix B). This included activities 
+such as regularly scheduled training sessions, and learning resources 
+(e.g. video lectures) provided by employers and often prepared by in- 
+house security experts. In contrast, the most common security learn- 
+ing opportunities resulted as a by-product of the developer’s tasks 
+and responsibilities. Such tasks involved collaboration with the de- 
+veloper’s teammates (e.g. pair programming) or with members from 
+
+other teams within the organization. For example, during code re- 
+view tasks, participants mentioned discussing security issues relating 
+to their software with security testers, which increased participants’ 
+security awareness. In addition, this type of collaboration also al- 
+
+
+
+Software security in practice 15 
+
+l  o  
+
+s  n  
+
+a  w  
+
+c  b  
+
+h  a
+s   
+
+i  “  
+
+i a  
+
+g  
+
+R a  
+
+W a  
+
+ 
+
+s t  
+
+ 
+
+s i  
+
+ 
+
+t w  
+
+ 
+
+s t  
+
+ 
+
+w h  
+
+ 
+
+s ‘  
+
+ 
+
+t I  
+
+ 
+
+a a  
+
+ 
+
+d t  
+
+ 
+
+f l  
+
+ 
+
+a s  
+
+ 
+
+t b  
+
+ 
+
+d o  
+
+ 
+
+o f
+ 
+
+T  
+
+ 
+
+W t  
+
+ 
+
+v [  
+
+ 
+
+l j  
+
+ 
+
+f u  
+
+ 
+
+c a  
+
+ 
+
+o c  
+
+ 
+
+m t  
+
+ 
+
+t c  
+
+n  
+
+a
+M
+t
+O  P
+k  T  
+
+b  t  
+
+W  k  
+
+t  l  
+
+b  t  
+
+p  s  
+
+a  m  
+
+f  w  
+
+r  o
+i  
+
+ 
+
+t  t  
+
+o  n  
+
+[  p  
+
+t t  
+
+ a
+t  
+
+a  
+
+e  W
+r  W  
+
+t  t  
+
+b  B  
+
+t  a  
+
+r  k
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+ows other teams (such as security testing teams) to learn about is-
+ues relating to software development. Collaborative activities such
+s these can bring together multiple perspectives ( multi-voicedness ,
+f. the section “Theoretical background on activity theory”) and can
+elp bridge knowledge gaps between teams. This type of knowledge
+haring can also motivate developers to internalize security, which
+n turns improves their perceived competence in addressing security
+ssues, as discussed in the section “Internalizing software security.”
+
+Q2: Software security motivations 
+e identified varying motivations (including amotivations) toward
+
+oftware security; we presented these using the autonomy-control
+pectrum of the Self-Determination Theory [ 37 ] (Section “Motiva-
+ion for software security”). We found that developers tend to ignore
+ecurity when they do not perceive value in focusing their efforts to-
+ard it. In particular, when security is not among their primary re-
+
+ponsibilities, our participants tend to focus on the other considera-
+ions for which they will be held responsible. Such security devalu-
+tion can have dangerous consequences as it could demotivate even
+evelopers who consider security to be important. In contrast, we
+ound that a team culture promoting security as a shared objective
+nd responsibility motivates developers to value security and strive
+o produce secure code. By belonging to this culture, the developer is
+riven to internalize software security and thus acts toward it of their
+wn will, e.g. out of personal interest or out of their concern for users.
+his further strengthens their bond to their team and its objectives.
+hile developers may adopt security practices due to external moti-
+
+ators (e.g. to avoid negative consequences such as audit failures and
+oss of reputation), internally driven motivations are more favorable
+or security as per SDT, e.g. for improved performance, encouraging
+reativity, and fostering learning (Section “Theoretical background
+n Self-Determination Theory”). We developed a human-oriented
+odel to describe the process of internalizing software security in
+
+he section “Internalizing software security.”
+
+ultiple activity systems interacting within project 
+eams 
+ur internalization model (in Fig. 5 ) described how collaborative
+nowledge acquisition opportunities are beneficial for improving
+oth security knowledge and motivations toward software security.
+e reflect on these collaborative opportunities identified in our data
+
+hrough the lens of Activity Theory (recall the section “Theoretical
+ackground on activity theory”). We look at a software development
+roject team (consisting of a development team, a testing team, etc.)
+s a system of multiple interacting activity systems (see Fig. 1 ). We
+ocus specifically on the interaction between the development team,
+epresented by the development activity system , and the security test-
+ng team, represented by the security testing activity system . Each
+eam considers the software from a different perspective and has its
+wn background, points of views, and objectives ( multi-voicedness
+ 35 ]). For example, a development team would focus mainly on func-
+ionality, whereas a security testing team focuses on security. 
+
+Some project teams attempt to benefit from their multi-voicedness
+hrough communication, negotiations, and resolving conflicts. This
+llows the activity system to become more interconnected [ 35 ]. For
+xample, when the development and security testing teams collabo-
+ate and harmonize their perspectives and objectives, this could lead
+o increasing security knowledge within both teams and to satisfying
+oth teams’ objectives: a functioning software for the development
+eam and a secure software for the security testing team. Collabo-
+ative opportunities identified in our knowledge acquisition taxon-
+my (Table 2 ) can facilitate such inter-connectivity. These opportu-
+ities are also highlighted in the right section of Fig. 5 . For example,
+hen a developer and a security tester work together to fix a vulnera-
+ility ( Collaborating in the workplace ), we see knowledge
+cquisition happening across multiple activity systems. 
+
+P5 recounts that to support collaboration, the security testers
+have full access to the development team, so they can coordinate
+s much as they want.” This collaboration allows testers to have a
+ood understanding of the features they are testing, write better tests,
+nd minimizes conflicts between testers and developers. P2 provided
+n example of how successful collaboration between developers and
+esters helped avoid overlooking a serious security issue due to a gap
+n the tester’s understanding of the system. He said, “a [tester] [...]
+as testing some memory issue in the kernel. While he was doing the
+
+est, he wanted to access kernel memory from the user process. So,
+is test actually succeeds to get to the kernel memory. He’s [thinking]
+if I can get to the kernel memory, everything is fine, continue on.’ So
+ look at the test and I’m like ‘dude, [...] the test actually did discover
+ flaw, but you didn’t tell me about it. This is a false negative.’ [...] So,
+his [happened] because of the lack of understanding.” In contrast, a
+ack of collaboration or breakdowns in the developer-tester relation-
+hip can be detrimental. For example, P8 described the relationship
+etween the developers and the testing team as “bad ” due to a lack
+f collaboration and a lack of testers’ understanding of the software
+unctionality. 
+
+Developers also benefit from such collaboration as it helps
+hem stay updated on the constantly evolving security issues (e.g.
+ 12 ,85 ,86 ]). Given that security is not the developer’s primary ob-
+ective, as evidenced by our data and previous work [ 16–19 ,24 ], it is
+nrealistic to expect that developers will be able to remain informed
+bout these issues on top of their development tasks. In addition, se-
+urity information is often presented in a manner that is unusable
+o developers [ 87 ,88 ]. Thus, collaborating with those with higher se-
+urity expertise gives developers an opportunity to stay updated on
+ew security issues, and it could also lead to improving performance
+nd motivation toward adopting security practices. 
+
+ractical use for the knowledge acquisition taxonomy 
+
+he knowledge acquisition taxonomy presented in the sec-
+ion “Knowledge acquisition taxonomy” describes different security
+nowledge acquisition opportunities. Our data shows that implicit
+
+earning, especially when it is part of the SDLC, can be more effec-
+ive than other types of learning, and can have a positive impact on
+oftware security. For example, our findings show that developers are
+ore willing to engage in learning about security when it is combined
+ith their existing tasks. This finding supports previous research rec-
+mmending teaching developers about security in context [ 57 ,68 ]. 
+
+Practitioners (e.g. employers, team leads) can use this taxonomy
+o induce software security learning opportunities within their orga-
+izations. With improved security knowledge, developers are more
+repared to address software security, and, as detailed in the sec-
+ion “Internalizing software security,” they may be more motivated
+nd willing to do so. 
+
+hich activities should my organization adopt? 
+hen choosing activities, practitioners should take into considera-
+
+ion the different features of each activity and developers’ initiative.
+ased on our analysis, we have identified the following three main
+spects to consider when deciding on activities to promote security
+nowledge. 
+
+
+
+16 Assal et al. 
+
+  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+Initiative. If the developer (being the learner) is motivated to learn 
+about security, then all the activities listed in the taxonomy are suit- 
+able. However, in case of an amotivated developer, it is unlikely that 
+they would initiate an explicit learning activity. Thus, the employer 
+could instead look into initiating (or at least partly initiating) learn- 
+ing opportunities. Ergo, activities listed in the first, and perhaps the 
+second row, of the taxonomy (Table 2 ) may be suitable. In addition,
+learning opportunities that are a by-product of the developer’s main 
+tasks ( B ) avoid competing for the developer’s time and may be bet- 
+ter received by such developers, especially those opposed to manda- 
+tory explicit learning (e.g. mandatory training). 
+
+Experience. Organizations that lack in-house security expertise 
+should avoid activities that require high internal security expertise.
+They could consider activities without that requirement (i.e. those 
+marked with ), or activities with security expertise external to the 
+company (i.e. those marked with and ). When relying on exter- 
+nal expertise, it is important to check the source’s credibility and to 
+encourage developers to use credible sources; developers often rely on 
+external resources that are not necessarily ideal for security [ 60 ,89 ]. 
+
+Budget. The available budget that the employer is willing to allocate 
+for promoting security is another deciding aspect. Fortunately, most 
+learning opportunities derived from our interviews are relatively low 
+
+cost. However, as the affordability of an activity varies between com- 
+panies, employers would need to decide on the most useful activity 
+that fits their budget. In addition, some employers may wish to invest 
+in more expensive learning opportunities, such as offering security 
+courses to their developers, or by hiring external security experts to 
+provide in-context support to developers. Although the latter did not 
+come up in our interviews, it has been reported elsewhere [ 90 ]. 
+
+Expanding the taxonomy 
+This taxonomy is not exhaustive, thus employers could map their 
+own activities onto the taxonomy to compare and determine whether 
+they are a good fit for them and their developers. For example, or- 
+ganizations sometimes use Capture The Flag (CTF) events to sup- 
+port security learning [ 91 ,92 ]. CTFs [ 93 ] are competitions where 
+teams work together to solve coding challenges; developers thus learn 
+through hands-on experience while socializing and competing on the 
+challenges [ 91 ,92 ]. Within the taxonomy, CTFs would be considered 
+as semi-formal learning opportunities, and placed in the Employer & 
+
+Developer initiator row on Table 2 , alongside conferences. Since the 
+primary reasons for participating in CTFs are socialization, prizes,
+and bragging rights [ 91 ,92 ], learning is a by-product ( B ). CTFs are 
+also not part of the SDLC ( ), and the security expertise of team 
+
+members can vary based on their individual experiences and knowl- 
+edge ( ). Knowledge could be from external ( ) or internal sources 
+( ), depending on the setup and location of the CTF. 
+
+Moti vating developer s toward adopting security 
+
+practices 
+Finding the best way to motivate developers is not a trivial task. Even 
+though external rewards and punishment may help induce external 
+motivation, previous research in other domains [ 38 ,94–96 ] suggests 
+that these approaches can have detrimental consequences, such as 
+negatively influencing conceptual learning and problem solving. For 
+example, externally motivated developers might gain limited knowl- 
+edge about individual security issues rather than gaining an under- 
+standing of the underlying security concepts that may be necessary 
+for solving new security issues. Thus, relying solely on external moti- 
+vations may contribute to the poor performance and inadequate se- 
+curity practices identified in previous work (e.g. [ 28 ]). Of the partic- 
+ipants who had external motivations for security (e.g. audits), those 
+who also had internal motivations had better security practices than 
+those who did not. 
+
+Based on our findings, internal motivations are more favorable 
+for practicing software security compared to other motivation types.
+Thus, guided by our analysis, we built a security internalization 
+model (Section “Internalizing software security”) to explain how 
+
+software security practices can be transformed to be internally moti- 
+vated, rather than an external chores. Such transformation occurs by 
+recognizing the value of incorporating software security and believ- 
+ing in one’s ability to have an impact on the security of the software 
+being built. To improve chances of success, security tasks should be 
+accompanied by improving the team’s morale when it comes to se- 
+curity. Based on our data, this can be through adopting a security 
+culture, supporting developers in these tasks, providing positive en- 
+couragement, and allowing teams to see value and identify with such 
+tasks. In addition, the internalization of security can be reinforced by 
+promoting developers’ security awareness which helps to improve 
+their confidence in addressing security issues. Thus, we recommend 
+that development teams focus on both increasing security awareness 
+and improving developers’ motivation to achieve positive security 
+outcomes. 
+
+The role of Artificial Intelligence 
+
+Use of Artificial Intelligence in software development 
+Since our participant interviews, there have been significant advance- 
+ments in Artificial Intelligence (AI) tools such as ChatGPT ( https: 
+// chatgpt.com/ ). These tools are now used by developers [ 97 ,98 ] as a
+resource for explaining concepts and providing instant feedback [ 99 ],
+and to generate code or automate routine tasks [ 100 ]. However, de- 
+velopers relying on AI-generated code could introduce more security 
+vulnerabilities compared to those not using AI, and yet have false 
+confidence in the code’s security [ 101 ]. In fact, Khoury et al. [ 102 ] 
+identified various security vulnerabilities in AI-generated code, in- 
+cluding code injection, buffer overflow, and XSS vulnerabilities. This 
+could be the result of the AI models being trained on data obtained 
+from the internet, which may include unverified or insecure code sam- 
+ples [ 101 ,103 ,104 ]. The security implications of adopting AI tools in
+software development remains unclear and warrants further investi- 
+gation. 
+
+Impact of AI on security knowledge 
+Developers may learn about security from interactions with AI tools,
+e.g. when debugging code or searching for information. However,
+their learning may be limited to the particular solution they seek 
+(e.g. how to request user input) without gaining an understanding of 
+relevant security concepts (e.g. code injection attacks). Additionally,
+information generated by AI tools may be inaccurate, outdated, or 
+incomplete [ 105 ]; and without contextual details relating to the de- 
+veloper’s work (e.g. their application’s threat model), AI tools’ output 
+may be of limited applicability [ 106 ]. The quality of AI-generated in- 
+formation is also greatly dependent on the specifics of the developer’s 
+prompt; minor prompt variations could substantially change the out- 
+put [ 107 ]. Developers with limited security expertise may thus face 
+challenges when using AI tools to obtain security information. On 
+the other hand, developers who rely heavily on AI tools may per- 
+ceive these tools as sufficient for their needs and become reluctant to 
+engage in security knowledge acquisition activities (Section “Knowl- 
+edge acquisition taxonomy”). 
+
+
+
+Software security in practice 17 
+
+ o  
+
+s  s  
+
+d  f  
+
+f  m  
+
+c  w  
+
+e  t  
+
+O  
+
+p  
+
+b A
+H  
+
+I o  
+
+I e  
+
+ 
+
+r W  
+
+ 
+
+q W  
+
+ 
+
+y  
+
+A  
+
+W
+r  
+
+w  C
+o  
+
+h  
+
+d  F
+t  H  
+
+s  a  
+
+w  (
+r  
+
+v
+A
+
+I T  
+
+D  t  
+
+u  r
+u  
+
+o  
+
+ 
+
+i  
+
+n  
+
+t  
+
+t  
+
+ 
+
+q  
+
+t  
+
+o  
+
+ 
+
+i  
+
+i  
+
+i  
+
+ 
+
+w  
+
+o  
+
+t
+
+ 
+
+C
+W  
+
+ 
+
+t  
+
+s  
+
+p  
+
+A
+d  
+
+t l
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+Moreover, developers’ increasing reliance on AI as a primary
+ource of development-related information [ 108 ] may lead to re-
+uced communication between team members. This raises concerns
+or software security as informal discussions within the workplace
+reate opportunities for developers to gain relevant security knowl-
+dge (as discussed in the section “Internalizing software security”).
+rganizations may thus need to focus on adopting and creating op-
+ortunities that foster communication between project team mem-
+ers, such as mediated social contact activities or hosting CTFs. 
+
+mpact of AI on security motivation 
+nternalizing security (i.e. being internally motivated to adopt secu-
+ity practices, cf. the section “Internalizing software security”) re-
+uires sustained relatedness to the project team and its security goals.
+s discussed above, developers’ increasing reliance on AI tools could
+
+educe opportunities for interaction between team members, which
+ould lower their sense of relatedness to their team. As the devel-
+per becomes disconnected from their team, it becomes harder for
+er to value security or to view it as a shared responsibility, thus hin-
+ering the internalization of software security. Overreliance on AI
+ools could also lead to amotivation should the developer defer re-
+ponsibility for software security to the AI tool. While AI tools come
+ith promises for improved software development processes, further
+
+esearch is needed to fully understand their impact on security moti-
+ations. 
+
+ntegration within the taxonomy 
+espite the potential shortcomings discussed above, developers may
+se AI tools as a source for acquiring security knowledge. However,
+ntil security considerations become a priority for such tools, devel-
+pers need to thoroughly review the generated output to ensure the
+nformation is reliable and secure [ 106 ,109 ]. For completeness, we
+ow discuss how using AI tools like ChatGPT could fit within our
+axonomy to allow for comparison with other knowledge acquisi-
+ion activities (cf. the section “Practical use for the knowledge ac-
+uisition taxonomy”). The cost for this activity varies based on the
+ype of the AI tool used ($-$$) . Learning is typically a byproduct
+f the activity ( B ), and is integrated into the SDLC ( ). Expertise
+s questionable due to potential inaccuracies ( ) and the source of
+nformation is external to the organization ( ). In Table 2 , this activ-
+ty would be considered as a semi-formal learning opportunity, and
+ould be placed in either the Employer & Developer row if the usage
+f AI tools is encouraged by the employer, or the Developer row if
+he usage is purely the developer’s decision. 
+
+onclusion 
+
+ith an increasing number of security-sensitive software applica-
+ions, it is essential for software developers to be aware of software
+ecurity and stay motivated in order to address security in their ap-
+lications. In this paper, we explicate security knowledge acquisition,
+eveloper motivation toward security and offer a framework for in-
+ernalizing security. Our novel taxonomy can help practitioners rec-
+gnize existing developer activities that may lead to advancing their
+ecurity knowledge. In addition, it could help employers explore dif-
+erent learning opportunities and decide on the best methods to pro-
+ote security knowledge within their organization. We envision this
+ork to lead to increase in security awareness and in developers mo-
+
+ivated toward improving the security of their software applications.
+
+uthor contributions 
+
+ala Assal (Conceptualization, Formal analysis, Funding acquisition, Method-
+logy, Supervision, Visualization, Writing–original draft, Writing–review &
+diting), Srivathsan G. Morkonda (Visualization, Writing–original draft,
+riting–review & editing), Muhammad Zaid Arif (Writing–original draft,
+riting–review & editing), Sonia Chiasson (Conceptualization, Formal anal-
+
+sis, Funding acquisition, Methodology, Supervision, Writing–original draft,
+riting–review & editing) 
+
+onflict of interest : There are no conflicts of interest. 
+
+unding 
+
+.A. acknowledges her NSERC Discovery Grant (RGPIN-2021-03808). S.C.
+cknowledges NSERC for funding of an Arthur B. McDonald Fellowship
+SMFSA-566403-2022) and a Discovery Grant (RGPIN-2023-04653). 
+
+ppendix A: Interview script 
+he following questions represent the main themes discussed during the in-
+
+erviews. We may have probed for more details depending on participants’
+esponses. 
+ What type of development do you do? 
+ What are your main priorities when doing development? (In order of pri-
+
+ority) 
+ Do your priorities change when a deadline approaches? 
+ What about security? Is it something you worry about? 
+ Which are the best methods in your opinion for ensuring the security of
+
+software applications? 
+ How does security fit in your priorities? 
+ Which resources do you use to gain security knowledge? 
+ Do you get training (formal, or self-learning) to gain better knowledge of
+
+software security? How often? 
+ Which software security best practices are you familiar with? 
+ Are there any obligations by your supervisor/employer for performing se-
+
+curity testing? 
+ What methods do you use to try to ensure the security of applications? 
+ Do you perform testing on your (or someone else’s) applications/code? 
+ Do you perform code reviews? 
+ How would you describe the relation between the development and the
+
+testing team? 
+ Can you think of a story of security issue that was frustrating and how
+
+you dealt with it? 
+
+ppendix B: Distribution of participants’ security 
+
+earning opportunities 
+
+
+
+18 Assal et al. 
+
+Table B1. Distribution of participants mentioning learning opportunities fitting in each cell of the knowledge acquisition taxonomy. 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1
+Appendix C: Motivations and amotivations for 
+software security 
+Table C1. Motivations and amotivations of software security. 
+
+Code Description Exam
+
+Amotivation - Felt lac
+Lack of resources The shortage in resources, e.g. budget “We 
+
+and human power, needed to perform vulne
+security tasks have 
+
+um, t
+Lack of support The inadequate security tools and “We 
+
+processes, or the lack thereof talkin
+Amotivation - Lack of inte
+
+Not my responsibility Security is not part of my duties “Dev
+it’s no
+to the
+
+Security is handled elsewhere Security is another entity’s responsibility “I us
+my fe
+
+Induced passiveness The surrounding environment causes “I do
+passiveness toward security code 
+
+No perceived loss The lack of competition, expected “I ca
+repercussions, and loss much
+
+No perceived risk The company or application type is “For 
+perceived as not a valuable target for vulne
+attacks don’t
+
+Competing priorities Other tasks compete for resources and “I ha
+are prioritized over security with 
+
+just c
+Amotivation - Defiance/Re
+
+Inflexibility The resistance to new technology and “[My
+being set in one’s way incor
+
+and h
+it [...]
+ple Quote 
+
+k of competence 
+don’t have that much manpower to explicitly test security 
+rabilities, [..] we  don’t have  those kind of resources. But ideally if we  did 
+[a big] company size, I would have a team dedicated to find exploits, 
+hat sorta thing. But unfortunately we don’t .”
+don’t have any formal process of like a code review, sitting down and 
+g about security risks ”
+rest, relevance, value 
+e lopers  are similar to me, they don’t care that much about security or 
+t part of their day to day job, therefore they don’t pay much attention 
+ security aspect of the code.”
+
+ually don’t as a developer go to the extreme of testing vulnerability in 
+ature, that’s someone else’s to do.”
+n’t really trust them [my team members] to run any kind of like source 
+scanners or anything like that. I know I’m certainly not going to.”
+n introduce a big security issue and I definitely won’t be blamed that 
+ for it ”
+a small company, nobody will usually attack or compromise the 
+rabilities in your system. If something really bad happens, usually, you 
+ really get enough [bad] reputation as well.”
+ve security issues that are frustrating, but I haven’t been able to deal 
+them yet. [...] It’s not something that we’ve been able to deal with yet, 
+ause of priorities with everything else.”
+sistance to influence 
+ team is] using a framework and these guys, they used the framework 
+rectly, they didn’t like how certain part of this coding framework works 
+as been designed, so they decided to do things completely different than 
+ And I am sure it’s gonna result in a security risk down the line.”
+
+/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+
+
+
+Software security in practice 19 
+
+Table C1. Continued 
+
+Code Description Example Quote 
+
+Extrinsic Motivation - External 
+Audit fear The presence of an overseeing and “One of the main reasons that they did [address security] was audits. I think 
+
+supervising entity they had to comply with certain security regulation standard, basically every 
+quarter or so they’re being checke d for compliance, therefore they had the 
+make sure the auditors can’t find any issue during the penetration test.”
+
+Business loss Losses that a business can incur, e.g. “We ended up ignoring security until we got a decent customer base where 
+losing customers, due to security issues we  we re actually concerned that if our product was compromised, we  will 
+
+lose these customers.”
+Pressure Continuous pressure by superiors “If they find a security issue, then you will be in trouble. Everybody will be at 
+
+your back, and you have  to fix it as soon as possible.”
+Career advancement Software security efforts and knowledge “When it comes time to do promotions or move throughout the scales and 
+
+move employees up in the hierarchy employment bands, the people with the higher knowledge on everything 
+move up and the people who don’t necessarily, like, didn’t take those security 
+training seriously, [...] they sort of stay in the same range.”
+
+Extrinsic Motivation - Introjected 
+Prestige Acknowledgement and preserving “Whenever somebody wants to find about you, then they go and check you in 
+
+self-image the employe e we bsite. Then, when they click your name and check, it shows a 
+badge that you’re security certified, which gives you a good feeling.”
+
+Extrinsic Motivation - Identified 
+Understanding the Recognizing and understanding the “Just understanding the implications, I guess, of what could happen [would 
+implications potential implications of ignoring motivate deve lopers  be more security-oriented]. I know for me pers onally 
+
+security when I realized just how catastrophic something could be, just by making a 
+simple mistake, or not even a simple mistake, just overlooking something 
+simple. uhh it changes your focus.”
+
+Company reputation The company and its employees care “We need to know safe secure coding techniques, we  need to know what 
+about their reputation and how paths the attacke rs  might take, and have you fixed everything on your code 
+customers perceive the company and your code doesn’t have any vulnerabilities. [...] because finally, it is going 
+
+to go under your logo.”
+Shared responsibility The responsibility of software security “[If we find a vulnerability,] we try not to say, ’you personally are responsible 
+
+is shared among different teams within for causing this vulnerability’. I mean, it’s a team effort, people looked at that 
+the project team code and they passed on it too, then it’s shared, really.”
+
+Induced initiative Opportunities may exist that lead “When you see your colleagues actually spending time on something, you 
+developers to take the software security might think that ‘well, it’s something that’s worth spending time on’, but if 
+initiative you worke d in a company that nobody just touches security then you might 
+
+not be motivated that much.”
+Extrinsic Motivation - Integrated 
+
+Professional responsibility Feeling responsible as a professional “I would hesitate to release anything that’s not functional and I also hesitate 
+to release anything that had security concerns.”
+
+Concern for users Caring about users’ privacy and security “I would not feel comfortable with basically having something used by end 
+users that I didn’t feel was secure, or I didn’t feel respective of privacy, umm 
+
+so I would try very hard to not compromise on that.”
+Intrinsic Motivation 
+
+Self-improvement The interest in, and self-satisfaction “And sometimes I will challenge [myself], that ‘okay, this time I’m going to 
+from, improving one’s implementation submit [my code] for a review where nobody will give me a comment’, 
+
+though that never happened, but still...”
+
+R  
+
+ 
+
+1  
+
+ 
+
+6  
+
+ 
+
+2  
+
+ 
+
+ 
+
+7  
+
+3  
+
+ 
+
+4  
+
+8  
+
+ 
+
+ 
+
+ 
+
+ 
+
+9  
+
+5  
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+EFERENCES 
+
+. Assal H, Chiasson S, Biddle R. Cesar: visual representation of source
+code vulnerabilities. In: 2016 Symposium on Visualization for Cyber Se-
+curity (VizSec) , Baltimore, MD, USA: IEEE, 2016, 1–8.
+
+. Backes M, Rieck K, Skoruppa M,. et al. Efficient and flexible discovery
+of PHP application vulnerabilities. In: 2017 European Symposium on
+Security and Privacy (EuroS&P) , Paris, France: IEEE, 2017, 334–49.
+
+. Chess B, McGraw G. Static analysis for security. IEEE Secur Priv
+2004; 2 :76–9. https:// doi.org/ 10.1109/ MSP.2004.111 
+
+. Smith J, Johnson B, Murphy-Hill E,. et al. Questions developers ask
+while diagnosing potential security vulnerabilities with static analysis.
+In: Proceedings of the 2015 10th Joint Meeting on Foundations of Soft-
+ware Engineering. ESEC/FSE 2015 . New York, NY: ACM, 2015, 248–
+59.
+
+. Espinha Gasiba T, Lechner U, Pinto-Albuquerque M,. et al. Is secure
+coding education in the industry needed? An investigation through a
+large scale survey. In: 2021 IEEE/ACM 43rd International Conference
+on Softwa re Engineering: Softwa re Engineering Education and Training
+(ICSE-SEET) , Madrid: ES, 2021, 241–52.
+
+. Weir C, Becker I, Noble J,. et al. Interventions for long-term software
+security: creating a lightweight program of assurance techniques for de-
+velopers. Software Pract Exp 2020; 50 : 275–98. https:// doi.org/ 10.1002/
+spe.2774 
+
+. Microsoft Corp. Microsoft Security Development Lifecycle. https://ww
+w.microsoft.com/ en-us/ securityengineering/ sdl/ practices . (April 2024,
+date last accessed).
+
+. Mandiant. Mandiant Unveils M-Trends 2023 Report, Delivering Critical
+Threat Intelligence Directly from the Frontlines. 2023. https://www.ma
+ndiant.com/company/press- releases/m- trends- 2023 . (June 2024, date
+last accessed).
+
+. NIST. CVSS Severity Distribution Over Time. https://nvd.nist.gov/gener
+al/visualizations/vulnerability- visualizations/cvss- severity- distribution- 
+over-time . (September 2024, date last accessed).
+
+
+
+20 Assal et al. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+10. Greenberg A. Hackers Remotely Kill a Jeep on the Highway—With Me 
+in It. 2015. https:// www.wired.com/ 2015/07/ hackers- remotely- kill- jeep 
+-highway/. (May 2017, date last accessed).
+
+11. Gitlin JM. Hackers discover that vulnerabilities are rife in the auto in- 
+dustry. 2023. https:// arstechnica.com/ cars/2023/ 01/hackers- discover- th 
+at- vulnerabilities- are- rife- in- the- auto- industry/. (June 2024, date last 
+accessed).
+
+12. Radcliffe J. Hacking Medical Devices for Fun and Insulin: Breaking 
+the Human SCADA System. 2011. https://media.blackhat.com/bh- us- 1 
+1/ Radcliffe/ BH _ US _ 11 _ Radcliffe _ Hacking _ Medical _ Devices _ WP.pdf. 
+(February 2017, date last accessed].
+
+13. Pance L. Hackers Turn Smart Fridges into Cryptocurrency Miners, Caus- 
+ing Global Kitchen Meltdown. 2024. https:// techreport.com/news/ hack 
+ers- turn- smart- fridges- mining- rigs/ (June 2024, date last accessed).
+
+14. Blank R, Gallagher P. NIST Special Publication 800-30 Revision 1: 
+Guide for Conducting Risk Assessments. 2012. NIST Technical Series 
+Publication, https:// csrc.nist.gov/ pubs/sp/ 800/ 30/r1/ final . (June 2024,
+date last accessed].
+
+15. Whitten A, Tygar JD. Why Johnny Can’t Encrypt: A Usability 
+Evaluation of PGP 5.0.In: USENIX Security Symposium . Vol. 348 .
+1999.
+
+16. Acar Y, Fahl S, Mazurek ML. You are Not Your Developer, Either: A 
+
+Research Agenda for Usable Security and Privacy Research Beyond End 
+Users. In: 2016 Cybers ecurity Deve lopment (SecDev) , Boston, MA, USA: 
+IEEE, 2016, 3–8.
+
+17. Green M, Smith M. Developers are Not the Enemy!: The Need for Us- 
+able Security APIs. IEEE Secur Priv 2016; 14 :40–6. https:// doi.org/ 10.1 
+109/MSP.2016.111 
+
+18. Ta haei M, Va niea K. A Survey on Developer-Centred Security. In: 
+2019 European Symposium on Security and Privacy Workshops (Eu- 
+roS&PW) , Stockholm, Sweden: IEEE, 2019, 129-38.
+
+19. Mokhberi A, Beznosov K. SoK: Human, Organizational, and Technolog- 
+ical Dimensions of Developers’ Challenges in Engineering Secure Soft- 
+ware. In: Proceedings of the 2021 European Symposium on Usable Se- 
+curity . New York, NY, USA: ACM, 59–75.
+
+20. Witschey J, Xiao S, Murphy-Hill E. Technical and Personal Factors 
+Influencing Developers’ Adoption of Security Tools. In: Proceedings of 
+the 2014 ACM Workshop on Security Information Worke rs , SIW ’14 .
+New York, NY, USA: ACM, 2014, 23–26.
+
+21. Xiao S, Witschey J, Murphy-Hill E. Social Influences on Secure Devel- 
+opment Tool Adoption: Why Security Tools Spread. In: Proceedings of 
+the 17th ACM Conference on Computer Supported Cooperative Work 
+and Social Computing, CSCW ’14 . New York, NY, USA. ACM, 2014,
+1095–106.
+
+22. Xie J, Lipford HR, Chu B. Why do programmers make security er- 
+rors? In: 2011 Symposium on Visual Languages and Human-Centric 
+Computing (VL/HCC) , Pittsburgh, PA: IEEE, 2011, 161–64.
+
+23. Marshall BK. Passwords Found in the Wild for January 2013. http://bl 
+og.passwordresearch.com/ 2013/02/ . (April 2017, date last accessed).
+
+24. Wurster G, van Oorschot PC. The Developer is the Enemy. In: Proceed- 
+ings of the 2008 New Security Paradigms Workshop, NSPW ’08 . New 
+
+York, NY: ACM, 2008, 89–97.
+25. Votipka D, Fulton KR, Parker J,. et al. Understanding Security Mistakes 
+
+Developers Make: Qualitative Analysis from Build It, Break It, Fix It. In: 
+Proceedings of the 29th USENIX Conference on Security Symposium ,
+USENIX Association, 2020, 109–26.
+
+26. Oliveira D, Rosenthal M, Morin N,. et al. It’s the Psychology Stupid: 
+How Heuristics Explain Software Vulnerabilities and How Priming Can 
+Illuminate Developer’s Blind Spots. In: Proceedings of the 30th Annual 
+Computer Security Applications Conference, ACSAC ’14 . New York,
+NY: ACM, 2014, 296–305.
+
+27. Baca D, Petersen K, Carlsson B,. et al. Static Code Analysis to De- 
+tect Software Security Vulnerabilities - Does Experience Matter?In: 
+2009 International Conference on Availability, Reliability and Security ,
+Fukuoka, Japan: IEEE, 2009, 804–10.
+
+28. Assal H, Chiasson S. Security in the Software Development Lifecycle. In: 
+Fourteenth Symposium on Usable Privacy and Security (SOUPS 2018) .
+Baltimore, MD: USENIX Association, 2018.
+29. Assal H, Chiasson S. Motivations and Amotivations for Software Se- 
+curity. In: SOUPS Workshop on Security Information Worke rs  (WSIW) .
+Baltimore, MD: USENIX Association, 2018.
+
+30. Lopez T, Tun TT, Bandara AK,. et al. Taking the Middle Path: Learn- 
+ing About Security Through Online Social Interaction. IEEE Software 
+2020; 37 :25–30. https:// doi.org/ 10.1109/ MS.2019.2945300 
+
+31. Braz L, Bacchelli A. Software Security during Modern Code Review: 
+The Developer’s Perspective. In: Proceedings of the 30th ACM Joint Eu- 
+ropean Software Engineering Conference and Symposium on the Foun- 
+dations of Software Engineering, ESEC/FSE 2022 . New York, NY: ACM 
+
+2022, 810–21.
+32. Engeström Y. Learning by expanding. Center for Activity Theory and 
+
+Deve lopmental Work Research .Orienta-konsultit 1987. 
+33. Engeström Y, Miettinen R, Punamäki RL. Pers pective s on Activity The- 
+
+ory . Cambridge: Cambridge University Press, 1999.
+34. Kuutti K. Activity theory as a potential framework for human-computer 
+
+interaction research. Context and Consciousness: Activity Theory and 
+Human-Computer Interaction 1996;17–44 
+
+35. Engeström Y. Expansive Learning at Work: Toward an activity theo- 
+retical reconceptualization. Journal Educ Work 2001; 14 :133–56. https: 
+// doi.org/ 10.1080/ 13639080020028747 
+
+36. O’Connor K. In: Activity Theory . John Wiley and Sons, 2015. https: 
+//onlinelibrary. wiley. com/doi/abs/10.1002/9781118611463.wbielsi188 .
+
+37. Deci E, Ryan RM. Intrinsic Motivation and Self-Determination in Hu- 
+man Behavior . US: Springer, 1985.
+
+38. Ryan RM, Deci EL. Self-determination theory and the facilitation of 
+intrinsic motivation, social development, and well-being. Am Psychol 
+2000; 55 :68. https:// doi.org/ 10.1037/ 0003-066X.55.1.68 
+
+39. Ryan RM, Deci EL. Self-determination theory: Basic psychological 
+needs in motivation, development, and wellness . New York, NY: Guil- 
+ford Publications, 2017.
+
+40. Vallerand RJ, Blssonnette R. Intrinsic, Extrinsic, and Amotiva- 
+tional Styles as Predictors of Behavior: A Prospective Study. J Pers 
+1992; 60 :599–620. https:// doi.org/ 10.1111/ j.1467-6494.1992.tb00922 
+.x 
+
+41. Fulton KR, Votipka D, Abrokwa D,. et al. Understanding the How 
+
+and the Why: Exploring Secure Development Practices through a Course 
+Competition. In: Proceedings of the 2022 ACM SIGSAC Conference on 
+Computer and Communications Security . New York, NY: ACM, 2022. 
+
+42. Lipner S. The Trustworthy Computing Security Development Lifecy- 
+cle. In: 20th Annual Computer Security Applications Conference. IEEE,
+2004, 2–13.
+
+43. Fulton KR, Chan A, Votipka D,. et al. Benefits and Drawbacks of 
+Adopting a Secure Programming Language: Rust as a Case Study. In: 
+Proceedings of the Seventeenth USENIX Conference on Usable Privacy 
+and Security, SOUPS’21 . USENIX Association, 2021.
+
+44. Braz L, Aeberhard C, Çalikli G,. et al. Less is More: Supporting Devel- 
+opers in Vulnerability Detection during Code Review. In: Proceedings of 
+the 44th International Conference on Software Engineering, ICSE ’22 .
+New York, NY: ACM, 2022, 1317–29. 
+
+45. Danilova A, Naiakshina A, Rasgauski A,. et al. Code Reviewing as 
+Methodology for Online Security Studies with Developers: A Case Study 
+with Freelancers on Password Storage. In: Proceedings of the Seven- 
+teenth USENIX Conference on Usable Privacy and Security, SOUPS’21 .
+USENIX Association, 2021.
+
+46. Naiakshina A, Danilova A, Gerlitz E,. et al. “If you want, I can store the 
+encrypted password”: A Password-Storage Field Study with Freelance 
+Developers. In: Proceedings of the 2019 CHI Conference on Human 
+Factors in Computing Systems, CHI ’19 . New York, NY: ACM, 2019,
+1–12.
+
+47. van der Linden D, Anthonysamy P, Nuseibeh B,. et al. Schrödinger’s 
+Security: Opening the Box on App Developers’ Security Rationale. In: 
+2020 IEEE/ACM 42nd International Conference on Software Engineer- 
+ing (ICSE) . New York, NY: ACM, 2020. 
+
+48. Haney JM, Lutters WG. Skills and Characteristics of Successful Cy- 
+bersecurity Advocates. In: Workshop on Security Information Worke rs ,
+Symposium on Usable Privacy and Security (SOUPS) . Santa Clara, CA: 
+USENIX Association, 2017.
+
+
+
+Software security in practice 21 
+
+4  6  
+
+  
+
+  
+
+5  6  
+
+  
+
+ 
+
+5  
+
+ 6  
+
+  
+
+ 
+
+5   
+
+ 
+
+ 7  
+
+ 
+
+5  
+
+ 7  
+
+  
+
+  
+
+5  7  
+
+  
+
+  
+
+5  
+
+ 7  
+
+5  7  
+
+  
+
+  
+
+ 
+
+5  
+
+ 7  
+
+  
+
+5  7  
+
+ 
+
+5  
+
+ 
+
+ 7  
+
+ 
+
+6  
+
+ 7  
+
+ 
+
+6  7  
+
+  
+
+6  8  
+
+  
+
+ 
+
+8  
+
+6  
+
+ 8  
+
+ 
+
+8  
+
+6   
+
+ 
+
+ 8  
+
+6  8  
+
+  
+
+ 
+
+ 8  
+
+6  
+
+ 8  
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+9. Nurgalieva L, Frik A, Doherty G. A Narrative Review of Factors Af-
+fecting the Implementation of Privacy and Security Practices in Software
+Development. ACM Comput Surv 2023; 55 :1–27. https:// doi.org/ 10.114
+5/3589951 
+
+0. Kathrin Bednar SS, Langheinrich M. Engineering Privacy by Design: Are
+engineers ready to live up to the challenge? Inform Soc 2019; 35 :122–42.
+https:// doi.org/ 10.1080/ 01972243.2019.1583296 
+
+1. Ryan I, Roedig U, Stol KJ. Understanding Developer Secu-
+rity Archetypes. In: 2021 IEEE/ACM 2nd International Workshop
+on Engineering and Cybersecurity of Critical Systems (EnCyCriS) ,
+Madrid, Spain, 2021, 37–40.
+
+2. Spiekermann S, Korunovska J, Langheinrich M. Inside the Organiza-
+tion: Why Privacy and Security Engineering Is a Challenge for Engineers.
+Proc IEEE , 2019; 107 :600–15. https:// doi.org/ 10.1109/ JPROC.2018.2
+866769 
+
+3. Danilova A, Naiakshina A, Smith M. One Size Does Not Fit All: A
+Grounded Theory and Online Survey Study of Developer Preferences
+for Security Warning Types. In: Proceedings of the ACM/IEEE 42nd
+International Conference on Software Engineering, ICSE ’20 . 2020,
+136–48.
+
+4. Ta haei M, Va niea K, Beznosov K,. et al. Security Notifications in Static
+Analysis Tools: Developers’ Attitudes, Comprehension, and Ability to
+Act on Them. In: Proceedings of the 2021 CHI Conference on Human
+Factors in Computing Systems, CHI ’21 , New York, NY: ACM, 2021. 
+
+5. Acar Y, Backes M, Fahl S,. et al. Comparing the Usability of Crypto-
+graphic APIs. In: 2017 IEEE Symposium on Security and Privacy (SP) ,
+San Jose, CA, USA, 2017, 154–71.
+
+6. Oyetoyan TD, Cruzes DS, Jaatun MG. An Empirical Study on the Rela-
+tionship between Software Security Skills, Usage and Training Needs in
+Agile Settings. In: 2016 11th International Conference on Availability,
+Reliability and Security (ARES) , Salzburg, Austria: IEEE, 2016.
+
+7. Tuladhar A, Lende D, Ligatti J,. et al. An Analysis of the Role of Situ-
+ated Learning in Starting a Security Culture in a Software Company. In:
+Proceedings of the Seventeenth USENIX Conference on Usable Privacy
+and Security, SOUPS’21 . USENIX Association, 2021.
+
+8. Stack Overflow - Where Developers Learn, Share, and Build Careers.
+https://stackoverflow.com . (January 2018, date last accessed].
+
+9. Fischer F, Böttinger K, Xiao H,. et al. Stack Overflow Considered Harm-
+ful? The Impact of Copy&Paste on Android Application Security. In:
+2017 IEEE Symposium on Security and Privacy (SP) , San Jose, CA, USA,
+2017, 121–36.
+
+0. Acar Y, Backes M, Fahl S,. et al. You Get Where You’re Looking for:
+The Impact of Information Sources on Code Security. In: 2016 IEEE
+Symposium on Security and Privacy (SP) , San Jose, CA, USA, 2016, 289–
+305.
+
+1. Díaz Ferreyra NE, Vidoni M, Heisel M,. et al. Cybersecurity Discussions
+in Stack Overflow: A Developer-Centred Analysis of Engagement and
+Self-Disclosure Behaviour. Soc Netw Anal Mining 2024; 14 :16.
+
+2. Horvath A, Liu MX, Hendriksen R,. et al. Understanding How Pro-
+grammers Can Use Annotations on Documentation. In: Proceedings of
+the 2022 CHI Conference on Human Factors in Computing Systems,
+CHI ’22 . New York, NY: ACM, 2022. 
+
+3. Arab M, LaToza TD, Liang J,. et al. An Exploratory Study of Shar-
+ing Strategic Programming Knowledge. In: Proceedings of the 2022
+CHI Conference on Human Factors in Computing Systems, CHI ’22 .
+New York, NY: ACM, 2022. 
+
+4. Pieczul O, Foley S, Zurko ME. Developer-centered Security and
+the Symmetry of Ignorance. In: Proceedings of the 2017 New Secu-
+rity Paradigms Workshop, NSPW 2017 . New York, NY: ACM, 2017,
+46–56.
+
+5. Poller A, Kocksch L, Türpe S,. et al. Can Security Become a Routine?:
+A Study of Organizational Change in an Agile Software Development
+Group. In: Proceedings of the 2017 ACM Conference on Computer Sup-
+ported Cooperative Work and Social Computing, CSCW ’17 . New York,
+NY: ACM, 2017, 2489–503.
+
+6. Woon IMY, Kankanhalli A. Investigation of IS professionals’ intention
+to practise secure development of applications. Int J Hum-Comput Stud
+2007; 65 :29–41. https:// doi.org/ 10.1016/ j.ijhcs.2006.08.003 
+7. Weir C, Hermann B, Fahl S. From Needs to Actions to Secure Apps?
+The Effect of Requirements and Developer Practices on App Security. In:
+Proceedings of the 29th USENIX Conference on Security Symposium .
+USENIX Association, 2020.
+
+8. Thomas TW, Tabassum M, Chu B,. et al. Security During Application
+Development: An Application Security Expert Perspective. In: Proceed-
+ings of the 2018 CHI Conference on Human Factors in Computing Sys-
+tems, CHI ’18 . New York, NY: ACM, 2018, 262:1–262:12.
+
+9. Lopez T, Sharp H, Tun T,. et al. Talking About Security with Profes-
+sional Developers. In: 2019 IEEE/ACM Joint 7th International Work-
+shop on Conducting Empirical Studies in Industry (CESI) and 6th In-
+ternational Workshop on Software Engineering Research and Industrial
+Practice (SER&IP) . 2019, 34–40.
+
+0. Gasiba T, Lechner U, Pinto-Albuquerque M. ”CyberSecurity Chal-
+lenges for Software Developer Awareness Training in Industrial Environ-
+ments”. In: Innovation Through Information Systems . 2021, 370–87.
+
+1. Gorski PL, Acar Y, Lo Iacono L,. et al. Listen to Developers! A Partic-
+ipatory Design Study on Security Warnings for Cryptographic APIs. In:
+Proceedings of the 2020 CHI Conference on Human Factors in Com-
+puting Systems, CHI ’20 . New York, NY: ACM, 2020, 1–13. 
+
+2. Ford D, Zimmermann T, Bird C,. et al. Characterizing Software Engi-
+neering Work with Personas Based on Knowledge Worker Actions. In:
+2017 ACM/IEEE International Symposium on Empirical Software En-
+gineering and Measurement (ESEM) , Toronto, ON, Canada, 2017, 394–
+403.
+
+3. Glaser BG, Strauss AL. The discovery of grounded theory: strategies for
+qualitative  research . Aldine, 1967.
+
+4. Forward A, Lethbridge TC. A Taxonomy of Software Types to Facili-
+tate Search and Evidence-based Software Engineering. In: Proceedings of
+the 2008 Conference of the Center for Advanced Studies on Collabora-
+tive  Research: Meeting of Minds, CASCON ’08 . New York, NY: ACM,
+2008, 179–91.
+
+5. Strauss AL, Corbin JM. Basics of Qualitative Research: Techniques and
+Procedures for Developing Grounded Theory. Sage Publications, Inc.,
+1998.
+
+6. Organisation for Economic Co-operation and Development (OECD).
+Recognition of Non-formal and Informal Learning - Home.
+http://www.oecd.org/edu/skills- beyond- school/recognitionofnon- forma 
+landinformallearning-home.htm . (January 2018, date last accessed).
+
+7. Dib CZ. Formal, non-formal and informal education: con-
+cepts/applicability. AIP Conf Proc 1988; 173 :300–15. https:
+// doi.org/ 10.1063/ 1.37526 
+
+8. Eraut M. Non-formal learning and tacit knowledge in professional work.
+Brit J Educ Psychol 2000; 70 :113–36. https:// doi.org/ 10.1348/ 00070990
+0158001 
+
+9. Eshach H. Bridging In-school and Out-of-school Learning: Formal, Non-
+Formal, and Informal Education. J Sci Educ Technol 2007; 16 :171–90.
+https:// doi.org/ 10.1007/ s10956- 006- 9027- 1 
+
+0. Stahl G. Conceptualizing the Intersubjective Group. Int J Comput Supp
+Collab Learn . 2015; 10 :209–17. https:// doi.org/ 10.1007/ s11412- 015- 9
+220-4 
+
+1. NIST. National Vulnerability Database. https://nvd.nist.gov . (March
+2017, date last accessed).
+
+2. CVE - Common Vulnerability Exposures. https://cve.mitre.org . (January
+2018, date last accessed).
+
+3. Rhee HS, Ryu YU, Kim CT. Unrealistic optimism on information se-
+curity management. Comput Secur 2012; 31 :221–32. https:// doi.org/ 10
+.1016/j.cose.2011.12.001 
+
+4. OWASP. Cross Site Scripting (XSS). https:// owasp.org/ www-communit
+y/ attacks/ xss/ . (July 2024, date last accessed).
+
+5. Howard M, Lipner S. The security development lifecycle: SDL, a process
+for developing demonstrably more secure software , Redmond, Wash:
+Microsoft Press, 2006.
+
+6. Sophy J. 43 Percent of Cyber Attacks Target Small Business. 2016.
+https:// smallbiztrends.com/2016/ 04/cyber- attacks- target- small- busine 
+ss.html . (February 2017, date last accessed).
+
+7. Nafees T, Coull N, Ferguson I,. et al. Vulnerability Anti-Patterns: A
+Timeless Way to Capture Poor Software Practices (Vulnerabilities). In:
+
+
+
+22 Assal et al. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Downloaded from https://academic.oup.com/cybersecurity/article/11/1/tyaf005/8071721 by Universidad Nacional de Loja user on 06 May 2025
+Pattern Languages of Programs Conference . USA: The Hillside Group,
+2017.
+
+88. Nafees T, Coull N, Ferguson RI,. et al. Idea-Caution Before Exploita- 
+tion: The Use of Cybersecurity Domain Knowledge to Educate Soft- 
+ware Engineers Against Software Vulnerabilities. In: Bodden E, Payer 
+M, Athanasopoulos E, (eds.). Engineering Secure Software and Systems .
+Cham: Springer International Publishing, 2017, 133–42.
+
+89. Fischer F, Böttinger K, Xiao H,. et al. Stack Overflow Considered Harm- 
+ful? The Impact of Copy Paste on Android Application Security. In: 2017 
+IEEE Symposium on Security and Privacy (SP) , San Jose, CA, USA, 2017,
+121–36.
+
+90. van Zadelhoff M. Cybersecurity Has a Serious Talent Shortage. Here’s 
+How to Fix It. https:// hbr.org/ 2017/05/ cybersecurity- has- a- serious- tale 
+nt- shortage- heres- how- to- fix- it . (January 2018, date last accessed).
+
+91. OWASP. OWASP CTF Project. https:// www.owasp.org/ index.php/ Cate 
+gory:OWASP _ CTF _ Project . (January 2018, date last accessed].
+
+92. Harmon TD. Cyber Security Capture The Flag (CTF): What 
+Is It?. https:// blogs.cisco.com/ perspectives/cyber- security- capture- the- 
+flag- ctf- what- is- it . (January 2018, date last accessed).
+
+93. CTFtime. CTF? WTF? https:// ctftime.org/ ctf-wtf/ . (January 2018, date 
+last accessed).
+
+94. Gagné M, Deci EL. Self-determination theory and work motivation. J 
+Organ Behav 2005; 26 :331–62. https:// doi.org/ 10.1002/ job.322 
+
+95. Bear GG, Slaughter JC, Mantz LS,. et al. Rewards, praise, and puni- 
+tive consequences: Relations with intrinsic and extrinsic motivation. 
+Te ach Te ach Educ 2017; 65 :10–20. https:// doi.org/ 10.1016/ j.tate.2017. 
+03.001 
+
+96. Selart M, Nordström T, Kuvaas B,. et al. Effects of Reward on 
+Self-regulation, Intrinsic Motivation and Creativity. Scand J Educ Res 
+2008; 52 :439–58. https:// doi.org/ 10.1080/ 00313830802346314 
+
+97. Shani I, Staff GitHub. Survey reveals AI’s impact on the devel- 
+oper experience. 2023. https:// github.blog/ 2023- 06- 13- survey- reveal 
+s- ais- impact- on- the- developer- experience/. (August 2024, date last 
+accessed).
+
+98. Overflow S. 2024 Developer Survey. https://survey.stackoverflow.co/202 
+4 . (August 2024, date last accessed). 
+© The Author(s) 2025. Published by Oxford University Press. This is an Open Access article
+License ( https://creativecommons.org/licenses/by-nc/4.0/ ), which permits non-commercia
+properly cited. For commercial re-use, please contact journals.permissions@oup.com 
+99. Tubino L, Adachi C. Developing feedback literacy capabilities through 
+an ai automated feedback tool. Ascilite Publ 2022; e22039. https://doi. 
+org/10.14742/apubs.2022.39 
+
+100. Schulte-Althoff M. What’s to Automate? A Task Analysis of AI-enabled 
+Start-ups. Proc 56th Hawaii Int Conf System Sci 2023.
+
+101. Perry N, Srivastava M, Kumar D,. et al. Do Users Write More Inse- 
+cure Code with AI Assistants?In: Proceedings of the 2023 ACM SIGSAC 
+
+Conference on Computer and Communications Security, CCS ’23 . New 
+
+York, NY: ACM, 2023, 2785–99.
+102. Raphael Khoury and Anderson R. Avila and Jacob Brunelle and Baba 
+
+Mamadou Camara. How Secure is Code Generated by ChatGPT? 2023.
+https:// arxiv.org/ pdf/ 2304.09655 .
+
+103. Pearce H, Ahmad B, Tan B,. et al. Asleep at the Keyboard? Assessing 
+the Security of GitHub Copilot’s Code Contributions. In: 2022 IEEE 
+Symposium on Security and Privacy (SP) , 2022, San Francisco, CA, USA,
+754–68.
+
+104. Negri-Ribalta C, Geraud-Stewart R, Sergeeva A,. et al. A systematic 
+literature review on the impact of AI models on the security of code 
+generation. Front Big Data 2024; 7 .
+
+105. OWASP. LLM To p 10 for LLMs v1.1. 2024. https:// genai.owasp.org/ re 
+source/llm- top- 10- for- llms- v1- 1/.
+
+106. Klemmer JH, Horstmann SA, Patnaik N,. et al. Using AI Assistants in 
+Software Development: A Qualitative Study on Security Practices and 
+ConcernsIn: Proceedings of the 2024 on ACM SIGSAC Conference on 
+Computer and Communications Security , Salt Lake City, UT, USA, 2024.
+
+107. Mastropaolo A, Pascarella L, Guglielmi E,. et al. On the Robustness of 
+Code Generation Techniques: An Empirical Study on GitHub Copilot.
+In: Proceedings of the 45th International Conference on Software Engi- 
+neering, ICSE ’23 , Melbourne, Victoria, Australia: IEEE, 2023, 2149–60.
+
+108. Vizard M. Survey Surfaces Widespread Reliance on Generative 
+AI Among Developers. 2024. https://devops.com/survey-surfaces 
+- widespread- reliance- on- generative- ai- among- developers/. (Au- 
+gust 2024, date last accessed).
+
+109. Silva CAGd, Felipe NR, Rafael VdM,. et al. ChatGPT: Challenges and 
+Benefits in Software Programming for Higher Education. Sustainability 
+2024; 16 :1–23.
+ distributed under the terms of the Creative Commons Attribution-NonCommercial 
+l re-use, distribution, and reproduction in any medium, provided the original work is

@@ -1,0 +1,1370 @@
+﻿International Journal of Medical Informatics 194 (2025) 105699 
+
+Contents lists available at ScienceDirect
+
+International Journal of Medical Informatics
+journal homepage: www.elsevier.com/locate/ijmedinf
+
+A method and validation for auditing e-Health applications based on
+reusable software security requirements specifications
+Carlos M. Mejía-Granda , José L. Fernández-Alemán , Juan M. Carrillo de Gea ,
+José A. García-Berná *
+Department of Informatics and Systems, Faculty of Computer Science, University of Murcia, Murcia 30100, Spain
+
+A R T I C L E I N F O A B S T R A C T
+
+Keywords: Objective: This article deals with the complex process of obtaining security requirements for e-Health applica-
+e-Health tions. It introduces a tailored audit and validation methodology particularly designed for e-Health applications.
+Requirements engineering Additionally, it presents a comprehensive security catalog derived from primary sources such as law, guides,
+Medical software standards, best practices, and a systematic literature review. This catalog is characterized by its continuous
+Audit methodology
+Software security improvement, clarity, completeness, consistency, verifiability, modifiability, and traceability.
+Software requirements specification Methods: The authors reviewed electronic health security literature and gathered primary sources of law, guides,
+
+standards, and best practices. They organized the catalog according to the ISO/IEC/IEEE 29148:2018 standard
+and proposed a methodology to ensure its reusability. Moreover, the authors proposed SEC-AM as an audit
+method. The applicability of the catalog was validated through the audit method, which was conducted on a
+prominent medical application, OpenEMR.
+Results: The proposed method and validation for auditing e-Health Applications through the catalog provided a
+comprehensive framework for developing or evaluating new applications. Through the audit of OpenEMR,
+several security vulnerabilities were identified, such as DDOs, XSS, JSONi, and CMDi, resulting in a “Secure”
+classification of OpenEMR with a compliance rate of 66.97%.
+Conclusion: The study demonstrates the proposed catalog’s feasibility and effectiveness in enhancing health
+software security. The authors suggest continuous improvement by incorporating new regulations, knowledge
+from additional sources, and addressing emerging zero-day vulnerabilities. This approach is crucial for providing
+practical, safe, and quality medical care amidst increasing cyber threats in the healthcare industry.
+
+Abbreviations: AICPA, American Institute of Certified Public Accountants; Apps, Applications; ASD STIG, Application Security and Development Security Tech-
+nical Implementation Guide; AWS, Amazon Web Services; CDSS, Clinical Decision Support Systems; CHS, Consumer health solutions; CIA, Confidentiality, Integrity,
+and Availability; CMS, Centers for Medicare and Medicaid Services; CMDi, CoMmanD injection; DAST, Dynamic Application Security Testing; DDOs, Distributed
+Denial-of-service; DevSecOps, Development, Security, and Operations; DoS, Denial of Service; e-Health, electronic health; EHR, Electronic Health Record; EMR,
+Electronic Medical Records; EMR-S, Electronic Medical Record Storage; HIE, Health Information Exchange; HIPAA, Health Insurance Portability and Accountability
+Act; HIS, Hospital Information Systems; IAST, Interactive Application Security Testing; ICFR, Internal Controls over Financial Reporting; ISO, International Orga-
+nization for Standardization; ISSO, Information System Security Officer; IT, Information technology; JSONi, JavaScript Object Notation injection; NFR, Non-Func-
+tional Requirement; NIST, National Institute of Standards and Technology; NVD, National Vulnerability Database; OECD, Organization for Economic Co-operation
+and Development; ONC, Office of the National Coordinator for Health Information Technology; OpenEMR, Open-source Electronic Medical Record; OWASP, Open
+Web Application Security Project; PKI, public key infrastructure; PRISMA, Preferred Reporting Items for Systematic Reviews and Meta-Analysis; RBAC, Role-based
+access control; RPM, Remote patient monitoring; SA, System Administration; SAML, Security Assertion Markup Language; SAST, Static Application Security Testing;
+SEC-AM, SECurity Audit Method; SEC-CAT, SECurity CATalog; SIREN, SImple Reuse of software requiremeNts; SLR, Systematic Literature Review; SOC, Systems and
+Organization Controls; SOAP, Simple Object Access Protocol; SRE, security requirements engineering; SRS, Software Requirements Specification; XSLT, Extensible
+Stylesheet Language Transformations; XSS, Cross-Site Scripting.
+* Corresponding author.
+E-mail addresses: carlosmichael.mejiag@um.es (C.M. Mejía-Granda), aleman@um.es (J.L. Fernández-Alemán), jmcdg1@um.es (J.M. Carrillo de Gea), josealberto.
+
+garcia1@um.es (J.A. García-Berná).
+
+https://doi.org/10.1016/j.ijmedinf.2024.105699
+Received 29 March 2024; Received in revised form 29 October 2024; Accepted 8 November 2024
+Available online 10 November 2024 
+1386-5056/© 2024 The Authors. Published by Elsevier B.V. This is an open access article under the CC BY license ( http://creativecommons.org/licenses/by/4.0/). 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+1. Introduction the flexibility of EHR systems, gaps are revealed by focusing mainly on
+the perspective of technical mechanisms. Hence, the need to delve into
+
+The increasing adoption of software applications in the healthcare an approved and trustworthy set of security characteristics for e-Health
+sector has significantly transformed the way healthcare services are applications remains.
+delivered [1], facilitating online consultations, medical record man- One of the biggest challenges for implementing controls in SRE is
+agement, and real-time monitoring of vital signs [2,3]. These digital extracting requirements from any source text of security requirements
+platforms, known as e-Health applications, offer a wide range of func- [61]. These texts are often ambiguous, frequently updated, and contain
+tionalities that improve the delivery of medical services and provide numerous cross-references and complicated exceptions, making them
+advanced tools for disease diagnosis, health promotion, and EMR difficult to translate into concrete, verifiable software requirements
+constitution [4,5]. [60,62,63,64]. Despite the methodologies and tools developed to
+
+Privacy and software security are closely interconnected. However, improve the extraction of textual requirements, such as the proposals of
+privacy refers to safeguarding personal data processed by the system, A. K. Massey et al. [22] that highlight the validation of software re-
+while security refers to policies and procedures to protect assets critical quirements and designs against relevant regulations, a significant gap
+to the system [6,7]. Several works address security in a focused and remains between regulations and a clear proposal or definition of a
+separate manner [8,9,10]. A security requirement can be characterized single catalog of requirements and their practical implementation and
+as a non-functional requirement (NFR) [11] that translates a higher- evaluation in the software has not been achieved [58,65,66].
+level rule, regulation, or organizational directive into the specific sys- Harmonizing models through their combination and integration has
+tem needs [12,13,14]. become a powerful tool for organizations, offering benefits such as
+
+Sensitive information handled in e-Health applications requires high minimizing time and effort costs [67,68]. This document addresses the
+levels of privacy and information security. As an illustrative example, critical need to improve enterprise information security by focusing on
+ransomware attacks on healthcare delivery organizations have been on application-level security vulnerabilities and software analysis, design,
+the rise, with incidents more than doubling between 2016 and 2021, and development deficiencies. It highlights the necessity of an audit or
+exposing the personal health information of millions of patients [15]. validation method to technically test security approaches. The docu-
+The cumulative cost of cybercrime in the world between 2020 and 2025 ment proposes a harmonized criterion for security features in e-Health
+is expected to be $125 billion and, highlighting the severe privacy and applications, including a single catalog of security requirements. This
+security risks associated with e-Health apps [16], which, despite their catalog focuses on security through a centralized repository, satisfying
+advantages, can lead to significant social, legal, and financial re- the CIA security triad, and is traceable, applicable, reusable, and subject
+percussions [17], including data breaches that result in civil penalties of to continuous improvement. It also includes a practical implementation
+up to $25,000 per individual per violation, criminal penalties of up to and evaluation proposal for e-Health software against this catalog.
+$250,000, and ten years in jail under HIPAA regulations [18,19], as well The article introduces a general software requirements specification
+as losses of reputation and brand harm. These breaches have substantial (SRS) catalog for e-Health applications. The catalog sets technical and
+financial and care costs, putting patients’ lives at risk due to decisions objective criteria for compliance and harmonization with laws, guide-
+made with inaccurate information [20,21,22]. lines, standards, academic articles, and best practices, organized ac-
+
+Security in healthcare software faces significant challenges due to cording to the ISO/IEC/IEEE 29148:2018 standard [69]. It uses the
+errors in design and implementation. Research by McGraw [23] and SIREN methodology to ensure reuse and auditability [70]. The target
+Smith [24] indicates that the majority of cyberattacks are due to a lack audience for this SRS includes those involved in designing, developing,
+of attention to information security in companies and vulnerabilities in and auditing secure e-Health applications and requirements engineers.
+the implementation of security requirements at the application level Additionally, it will assist senior management in defining the terms of
+[25,26]. Other factors include the introduction of malicious code [27] reference and the minimum characteristics required for e-Health
+and deficiencies in software analysis, design, and development products.
+[28,29,30]. Unpredictable behaviors in e-Health systems can cause In summary, the main contributions of this article are:
+critical availability problems [31,32] that put patients’ lives at risk
+[33,34]. 1) A SLR on e-Health software and device security requirements.
+
+There are various approaches, mechanisms, and technical initiatives 2) A reusable, traceable, applicable and updateable catalog of security
+that are not necessarily linked to security requirements for validating control requirements for e-Health software according to the ISO/
+and improving the security of medical software [35], including IEC/IEEE 29148:2018 standard [69].
+encryption [36,37,38,39], secure data transfer protocols [40,41,42,43], 3) An audit method for evaluating security requirements for health e-
+and defense mechanisms against physical and software vulnerabilities Health software.
+[44,45,46,47,48]. Additionally, Blockchain-based frameworks 4) The validation of the proposed approach by generating a security
+[49,50,51] and smart contracts [52,53,54] have been developed to requirements audit report for e-Health software.
+ensure the integrity and availability of medical records in e-Health
+systems [55,56,57]. The above proposals focus on the “how”. However, 2. Methods
+inquiring into the “what” at a higher level of abstraction is often decisive
+for increasing the security of medical software. The method used in this scientific work is composed of three stages:
+
+H. S. Gardiyawasam Pussewalage et al. [7] presented seven general (i) An SLR, (ii) the construction of a catalog of security requirements,
+privacy approaches based on HIPAA, suggestions for implementation and (iii) the development of an audit method aimed at verifying the
+mechanisms such as cryptography and RBAC, and the need to consider a effectiveness of our catalog of requirements. The subsequent sections of
+holistic approach to e-Health security. However, this proposal could be the document show the described process in detail.
+complemented by an audit or validation method to technically test these
+seven proposed mechanisms. 2.1. Research review
+
+Rezaeibagha F et al. [58] systematically reviewed the literature on
+EHR systems’ technical security perspectives, identifying 13 essential A SLR was performed to get security recommendations for e-Health
+characteristics that were taken from the standards of ISO/IEC 27,002 software that follows the phases described below:
+and ISO/IEC 27,001 [59,60]. The need to implement appropriate se-
+curity and privacy policies and architectures to improve health software 2.1.1. Selecting data sources and the search string
+is concluded since, after evaluating selected ISO standards concerning SCOPUS was selected to identify studies on security requirements
+
+2 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+published between 1991 and 2023. It represents the most comprehen- separate areas to generate the PICO string.
+sive source of high-quality, peer-reviewed publications for emerging As detailed in Table 1, the researchers established the following fil-
+research fields [71]. It is the largest and most widely used bibliometric ters in the query entered into the SCOPUS database:
+database for citation data, offering broad interdisciplinary coverage,
+including biomedical sciences [72]. Several bibliographic studies have 1. Only articles published in the English language will be considered.
+used SCOPUS as a primary source in their works [73,74]. Regarding our 2. As the subject area is limited to:
+work, the literature search was conducted on July 9, 2023, and was • Computer Science
+limited to “Title of the article, Abstract, Keywords”. Therefore, any work • Medicine
+published after this date will not be considered for inclusion in the • Engineering
+analysis. The PICO search string [75] is made up of the following • Health Professions
+components and is described in Table 1 as follows: 3. Those established in the “Additional filters” section and the sub-
+
+criterion “EXACTKEYWORD” were considered keywords.
+1. The population or field of study: Patient or medic or clinic or care or
+health. As a result of the initial search, 886 scientific papers1 were obtained
+
+2. Software as the intervention. and subject to inclusion and exclusion criteria to maintain rigor and
+3. Security as a factor of comparison. consistency in study selection.
+4. As the outcomes: requirement or catalog or criteria or guide or
+specification. 2.1.2. Inclusion and exclusion criteria
+
+Research work must meet specific criteria to be included:
+To reduce the possibility that the keywords used do not focus on the
+
+literature related to security requirements in e-Health, an exhaustive • IC: The work furnishes insights into security guidelines, standards, or
+investigation of the most recurrent keywords was carried out, which led requirements for e-Health software and devices.
+to the creation of a co-occurrence map that illustrates the interrelation of
+the keywords associated with the application of security in the field of e- Furthermore, for a research work to be excluded, it must satisfy any
+Health. This map was generated using VOSviewer software (version of the conditions mentioned below:
+1.6.20) [76]. Keywords were extracted from the last 20,000 of 63,436
+articles related to “security and health”. The analysis resulted in a • EC1: The work does not provide a suggestion, list, or catalog of se-
+collection of 1,000 words or phrases that appeared at least fifty-five curity requirements for software development.
+times that included synonyms, abbreviations, repeated terms (such as • EC2: The work cannot be accessed.
+“insurance”, “security”, “hospital”, “health”, “electronic medical record • EC3: The work does not provide requirements that differ from
+”, “EMR”) and terms not related to the central topic (such as “article”, existing standards, norms, or best practices.
+“review”, “model”, “survey”, “literature review”). The authors stan-
+dardized the nomenclature, removed abbreviations with similar mean- Six scientific articles were not considered because they repeated
+ings, and eliminated irrelevant terms. The new refined collection their title (duplicates), and after applying the EC1 and EC2 criteria,
+consisted of 65 keywords related to safety and health. The most frequent another 877 were excluded.
+terms and their interconnections are shown in Fig. 1. These keywords To apply EC1 during the full text review stage R4, a thorough anal-
+guided researchers to construct wildcard nouns included into four ysis of each paper was carried out, carefully assessing its content in
+
+relation to security guidelines, standards and regulations. In the
+comprehensive review of the 69 articles, many highlighted the impor-
+
+Table 1 tance of security in software development and explored security con-
+PICO-compliant SLR search string for e-Health software security cepts in a general way. However, they did not provide practical
+recommendations. guidance, structured catalogue, lists or recommendations of security
+Scope String requirements. Rather than providing specific recommendations, these
+Population ((“patient” OR “medic*” OR “clinic*” OR “care” OR “ health*”) papers presented a predominantly theoretical approach, without trans-
+
+AND lating into guidelines applicable to healthcare software development.
+Intervention (“software”) AND This analysis was based on the baseline SRS created by using ca-
+Control (“secur*”) AND nonical sources from ISO, HIPAA, NIST, DISA STIG, OWASP, Canada
+Outcomes (“requirement*” OR “catalog*” OR “criteria*” OR “guide*” OR Health Infoway CWE/SANS. By comparing each paper with the baseline
+
+“specification*”)) AND
+Additional (LIMIT-TO (SUBJAREA,“COMP”) OR LIMIT-TO SRS, it was possible to determine whether it provided additional and
+filters (SUBJAREA,“MEDI”) OR LIMIT-TO (SUBJAREA,“ENGI”) OR useful information, with the aim of complementing, enriching and
+
+LIMIT-TO (SUBJAREA,“HEAL”)) AND reinforcing previously established guidelines, standards, and regula-
+(LIMIT-TO (LANGUAGE, “English”)) AND tions. The use of the baseline SRS as a reference was key to ensuring
+(LIMIT-TO (EXACTKEYWORD, “Computer Security”) OR LIMIT-
+TO (EXACTKEYWORD, “Security Of Data”) OR LIMIT-TO consistency and depth in the evaluation of each paper, thus strength-
+(EXACTKEYWORD, “Security”) OR LIMIT-TO ening the e-health security framework.
+(EXACTKEYWORD, “Network Security”) OR LIMIT-TO To apply EC3 in the exhaustive review of the remaining 44 articles
+(EXACTKEYWORD, “Confidentiality”) OR LIMIT-TO during the full text review stage R4, requirements based on guidelines,
+(EXACTKEYWORD, “Privacy”) OR LIMIT-TO (EXACTKEYWORD, recommendations, best practices, standards and regulations addressed
+“Security Systems”) OR LIMIT-TO (EXACTKEYWORD, “Data
+Privacy”) OR LIMIT-TO (EXACTKEYWORD, “Security in the baseline SRS were identified. As these items did not add value to
+Requirements”) OR LIMIT-TO (EXACTKEYWORD, this already holistic and robust catalogue in the baseline SRS, they were
+“Cryptography”) OR LIMIT-TO (EXACTKEYWORD, “Access discarded.
+Control”) OR LIMIT-TO (EXACTKEYWORD, “Authentication”) Finally, three scientific works were selected after using the PRISMA
+OR LIMIT-TO (EXACTKEYWORD, “Safety Engineering”) OR
+LIMIT-TO (EXACTKEYWORD, “Specifications”) OR LIMIT-TO directive [77,78]. Fig. 2 shows the diagrammatic representation of
+(EXACTKEYWORD, “Security And Privacy”) OR LIMIT-TO PRISMA’s proposed flowchart for determining scientific articles on
+(EXACTKEYWORD, “Safety”) OR LIMIT-TO (EXACTKEYWORD,
+“Information Security”) OR LIMIT-TO (EXACTKEYWORD,
+“Cybersecurity”)) 1 https://bit.ly/4ds2xw3.
+
+3 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+Fig. 1. Keyword co-occurrence map for security in health. Source: elaborated by the authors using VOSviewer software.
+
+studies were included in our final analysis. Nevertheless, to guarantee
+inclusion of numerous pertinent primary studies, considering the key-
+words in the search string detailed in Table 1, we have added the terms
+“issue” and “challenge” in the search string, recovering 3,272 publica-
+tions between 1991 and 2023. These were exported in.csv format from
+SCOPUS, of which 23 duplicates and 926 articles in the original search
+chain were excluded, resulting in 2,323 new articles.
+
+A sensitivity analysis of the publications obtained from the Scopus
+database was performed to evaluate the accuracy of the results con-
+cerning security in e-Health applications. This evaluation was done by
+randomly selecting a subset of publications from the complete list and
+reviewing their relationship to the field of study. The number of docu-
+ments selected for validation was determined using Cochran’s sample
+size formula (1) [79]:
+
+(1) n NZ2p(1− p)
+=
+
+(N− 1)e2+Z2p(1− p)
+
+Where:
+
+• n is the number of documents randomly selected for validation,
+• N is the total number of publications obtained from the Scopus
+database (2,323),
+
+• Z is the deviation from the accepted mean value for the confidence
+level (1.96 for a 95 % confidence level).
+
+• e is the margin of error (0.05),
+Fig. 2. PRISMA diagram of the SLR of security recommendations. • p is the proportion of invalid expected results (0.08, randomly
+
+selected and expected to be low).
+security recommendations for e-Health applications and devices.
+
+Many papers were excluded because they did not meet these specific A sample of 108 publications was required for validation, and of
+criteria or were duplicates. Our goal was to maintain rigor and consis- these, none presented security requirements with a formal structure or
+tency in our study selection, ensuring that only the most pertinent format, resulting in a proportion of 0 % of invalid results (8 % expected).
+
+4 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+2.2. Security requirements catalog Table 2
+Requirements extracted from document sources.
+
+The SIREN methodology guides this catalog to ensure that re- Document source Requirements
+quirements are reusable, traceable, applicable, and auditable. It in- Associated
+corporates templates and a repository of reusable requirements D. L. Hamilton [87] 7
+organized according to international recommendations [70]. SIREN uses H. J. Baur, U. Engelmann, F. Saurbier, A. Schröter, U. Baur, 7
+a spiral process model inspired by Kotonya and Sommerville [80] that and H. P. Meinzer [88]
+covers the extraction, analysis, negotiation, documentation, and vali- A. Strielkina, O. Illiashenko, M. Zhydenko, and D. Uzun [89] 1
+
+dation phases, adhering to standards like IEEE 830–1998 [81] and ISO/ ISO 27002:2022 [60] 9
+ISO 27799:2016 [90] 18
+
+IEC/IEEE 29148:2018 [69]. HIPAA [91] 1
+Previous works have employed SIREN to create reusable horizontal HIPAA Security rules [92] 16
+
+catalogs of sustainability, usability, and internationalization re- National Institutes of Standards and Technology (NIST) SP 29
+quirements [5,82,83] and vertical catalogs about CARE tools and tele- 800–53 rev. 5 [93]
+
+Canada Health Infoway: Privacy & Security Requirements 23
+operated systems [84,85]. The framework complies with the eight key and Considerations for Digital Health Solutions [94].
+precepts for an effective requirements process [86]: DISA STIG Application Security and Development Security 108
+
+Technical Implementation Guide: 2022 [95]
+• K1. Organization of the reusable requirements: Structure and orga- Open Web Application Security Project (OWASP) Top 10 34
+
+nize the requirements to facilitate their reuse and reduce search time. Web Application Security Risks:2021 [96]
+CWE/SANS TOP 25 Most Dangerous Software Errors: 2021 19
+
+• K2. Search engine for reusable requirements: Facilitates an intuitive [97]
+search to meet the needs of engineers.
+
+• K3. Requirement selection and reuse with different granularity
+levels: Allows specific requirements to be reused.
+
+• K4. Requirement attributes reuse: Defines a common set of attributes
+based on the IEEE standard, allowing changes and the addition of
+new attributes.
+
+• K5. Traceability relationships reuse: Connect entities within the
+same artifacts, managing variability through parent and child
+requirements.
+
+• K6. Parameterized requirements management: Allows requirements
+values to be parameterized according to the specific application.
+
+• K7. Repository improvement: Supports the creation of new cate-
+gories and requirements.
+
+• K8. CARE support to reuse: Provides data necessary for entry into any
+chosen application, with support from tools.
+
+Additionally, for the articles obtained from Section “2.1 Research
+Review”, the requirements extraction was also based on various laws,
+guidelines, and standards2 according to the specialized knowledge in Fig. 3. Security Catalog Creation Process.
+software security that the authors have. OECD Privacy Principles, GDPR,
+privacy legislation in the United Kingdom and Canada, and other re- 1. They acquired knowledge: Study of the relevant norms, standards,
+sources oriented toward privacy will not be considered since this work and procedures, and analysis of their structure and terminology to
+focuses on security. A summary of the requirements for each source define selection criteria.
+document is presented in Table 2 below. 2. Identification of Information: Identification of the information
+
+The catalog creation process involves four stages: step one begins by from the documents to be combined and organized was identified.
+identifying the appropriate sources, literature research, and standards. 3. Correspondence Process: Homogenization through an objective
+Next, the requirements for security are extracted from the sources. The pairing of the information and the elements of the model process
+catalog SEC-CAT is generated based on the extracted criteria. A fourth about each of the aspects of the OWASP Top 10 structure.
+step is followed to maintain and develop the catalog. Fig. 3 illustrates the
+catalog creation process. Comparison technique: It allows the identification of differences
+
+SEC-CAT is supported in the ISO/IEC/IEEE 29148:2018 structure and similarities between the regulatory documents [100]. The process
+[69] and presents the requirements classified in the OWASP Top 10 Web followed was:
+Application Security Risks: 2021 scheme [96]. Table 3 provides an
+overview of the catalog’s structure. 1. Expert Analysis: Two experts in secure software development
+
+A requirement may have more than one source since various docu- analyzed each requirement obtained from the documents.
+ments referred to and studied have been considered. To avoid over- 2. Identification of Differences and Similarities: A comparison was
+lapping concepts in the requirements contained in the SEC-CAT, the carried out to identify how the requirements of the analyzed docu-
+authors performed a harmonization of the source documents by ments align or do not align with the OWASP Top 10 structure pro-
+applying a process adapted from the framework proposed by C. Pardo et posed in the SRS, discarding requirements that are essentially the
+al [98]. This process includes two main techniques: homogenization and same.
+comparison. 3. Level of Coverage: The experts determined the level of coverage of
+
+Homogenization Technique: The objective of homogenization is to the sources.
+prepare the documents for later comparative analysis [99]. The steps 4. Review of Results: At the end of each comparison iteration, the
+followed were: experts reviewed the results again to verify their reliability and that
+
+of the comparison process.
+2 https://bit.ly/3SB0CNI.
+
+5 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+Table 3 Financial Reporting) to ensure consistent processing and reliable
+Table of contents (IEEE 29148:2018). transactions and data manipulation [102]; SOC 2, which provides in-
+Introduction formation and assurance about security controls, availability, processing
+SRS overview integrity, confidentiality and privacy in a service organization [103];
+Purpose and SOC 3, similar to SOC 2 but less detailed and general purpose,
+Scope allowing its free distribution [104]. Some tools have been proposed to
+Product perspective
+Product functions support SOC: Vanta,4 Drata,5 Tugboat Logic,6 Strike Graph,7 Audit-
+User characteristics Board8 and Secureframe.9 Compared to these tools, our catalog-based
+Limitations audit method offers greater flexibility to adapt the audit method
+Limitations framework, with a finer control to select, refine, extend, and narrow
+Assumptions and dependencies
+Apportioning of requirements down the security requirements for which compliance will be verified.
+Requirements Organizations can easily adopt our lightweight audit method, adaptable
+Specified requirements to any process, and develop their own catalogs by using any evolving
+External Interfaces source of security requirements.
+Functions This section outlines an audit methodology designed to assess the
+Usability requirements
+Performance Requirements security of e-Health software, characterized by objectivity, usability,
+Logical database requirements agility, systematicity, and repeatability. The SEC-AM is an adaptation of
+Design constraints methodologies proposed in similar audit methods [105,106,107],
+Standards compliance tailored specifically for security considerations in requirements engi-
+Software system attributes
+Reliability neering. This proposed audit method builds upon the CISA standard
+Availability framework, aiming to enhance “Domain 1: Information Systems Audit-
+Security ing Process” by refining the planning and execution phases of the audit.
+Broken Access Control The objective and scope of the security audit are comprehensively
+Cryptographic Failures detailed in section “2.3.3 Phases and Activities of SEC-AM” of the article,
+Injection
+Insecure Design particularly within the subsections “a. Context Analysis” and “b. SEC-
+Security Misconfiguration CAT* Generation.” A unique contribution of SEC-AM is the incorpora-
+Vulnerable and Outdated Components tion of a specialized team that analyzes the relevant information security
+Identification and Authentication Failures conditions of the software product under evaluation, as depicted in
+Software and Data Integrity Failures
+Security Logging and Monitoring Failures Fig. 4.
+Server-Side Request Forgery (SSRF)
+Verification 2.3.1. Artifacts of SEC-AM
+Supporting Information As a consequence of the interaction of the different actors involved in
+References the Security Audit Process, the following artifacts are generated:
+
+In our security requirements catalog, according to IEEE 830–1998 • SEC-CAT: The catalog of security requirements outlined in the above
+[81], each requirement includes attributes such as Unique ID (PUID), section is the base element of the audit method since it collects
+description, source, rationale, verification method, validation criteria, knowledge about standards, guides, regulations, and research
+priority, justification, etc., enabling traceability relationships to be inherent in security.
+defined and parameterizable to adapt to different applications, ensuring • SEC-CAT*: Generally, it is an adaptation of SEC-CAT to the appli-
+reuse. A catalog of security requirements elicited from the main norms, cation where the audit method will be applied, containing a subset of
+standards, guides and procedures allows for communication at the requirements but retaining all the properties specified within each
+managerial and operational level. Stakeholders do not need technical requirement.
+knowledge to understand the system functionality. Only PUID, • Checklist: This is a list of elements that will be verified against the e-
+description, and rationale are mandatory attributes. A requirement may Health system in the study. It is generated based on the SEC-CAT*
+have more than one source since various documents referred to and artifact and can take on the form most appropriate to the audited
+studied have been taken into account. software. It may consist of a web-based questionnaire or any other
+
+The authors present 142 security requirements distributed in 10 electronic or paper format. In our case, the Checklist is in paper
+subcategories according to the OWASP top ten 2021 [101], detailed in format.
+Section “2.9.3. Security” of the ”Software Requirements Specification • Audit report: This is the result of the audit process and may
+for Security on e-Health applications“3 document. Table 4 presents an comprise preliminary, in-depth reports and a final report that in-
+example of the requirements catalog with its base sources, extracted cludes the security deficiencies, areas to improve in the audited
+from the requirements document mentioned above: subsection 2.9.3.1 application, the audit team’s recommendations, and a summary of
+Broken Access Control, page 16. the primary vulnerabilities.
+
+2.3.2. Roles of SEC-AM
+2.3. Audit method The audit technique is carried out by the players or roles listed
+
+below:
+Software security audit and risk management methods have been
+
+proposed for generating certifications to increase user confidence,
+considering the impact of IT on financial statements [102]. One of the
+most used is the SOC (Systems and Organization Controls), developed by 4 https://www.vanta.com/demo.
+the AICPA (American Institute of Certified Public Accountants), which 5 https://drata.com/.
+includes: SOC 1, which evaluates the ICFR (Internal Control over 6 https://tugboatlogic.com/.
+
+7 https://www.strikegraph.com/.
+8 https://www.auditboard.com/.
+
+3 https://bit.ly/4fMJhLV. 9 https://secureframe.com/.
+
+6 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+Table 4
+Example of a requirement. The source field has two items.
+PUID: [SEC-CAT-BAC-003]
+
+Requirement description: The application must implement security measures to prevent the elevation of privileges. Prevent situations where a user can act without being
+authenticated or an administrator can act as a regular user after logging in.
+
+Source:
+A01:2021 – Broken Access Control: Avoid elevation of privilege. Acting as a user without being logged in or acting as an admin when logged in as a user [3].
+CWE-306: Missing Authentication for Critical Function: The product does not perform any authentication for functionality that requires a provable user identity or consumes a
+significant amount of resources [14].
+
+• Client: Any individual or business needing an audit to assess the with backgrounds as requirements engineers or analysts are
+security characteristics of an e-Health system. preferred.
+
+• Engineering Team (EN): The group responsible for developing,
+installing, setting up, or managing the e-Health system. 2.3.3. Phases and activities of SEC-AM
+
+• Security Team (SE): The team is tasked with analyzing and The following are the tasks included in the security audit process:
+formulating security policies and configurations, assessing vulnera-
+bilities, conducting penetration tests, and providing detailed insights a. Context analysis: The EN Team thoroughly examines the opera-
+into the vulnerabilities within the e-Health system. tional settings and conditions of the targeted e-Health system for the
+
+• Audit Team: The person or group in charge of completing the audit audit. It involves thoroughly assessing its context, encompassing
+should ideally have previous expertise in auditing e-Health systems; background information, environment, purpose, scope, user profiles,
+however, this is not mandatory. and other pertinent factors. Subsequently, leveraging the functional
+
+• Requirement Engineering Team (RE): Group or people who context provided by the EN Team, the SE Team formulates security
+elaborated and maintained the SEC-CAT and SEC-CAT*. Individuals policies, defines configurations, outlines the execution environment,
+
+Fig. 4. Security Audit Method (SEC-AM).
+
+7 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+identifies risks, and specifies the desirable behavior for the applica- • CMS Reporting
+tion under audit. • Lab Integration
+
+b. SEC-CAT* generation: The RE equipment, considering the context • Clinical Decision Rules
+analysis described in the previous step, defines a new adapted cat- • Advanced Security
+alog from the requirements specified in the SEC-CAT. • Multilanguage Support
+
+c. Generate Checklist: The audit team establishes the Checklist for
+conducting the audit, using the SEC-CAT* as a basis. This comprehensive evaluation was performed by Oct. 19, 2023,
+
+d. Execute the audit: The Security Team (SE) experts thoroughly extracting pertinent information from the official website [120]. Further
+examine the application under audit, utilizing a thorough checklist. details regarding OpenEMR can be accessed in Table 5.
+Nowadays, for the analysis and audit of vulnerabilities, there are
+some approaches: 3.2. Generate SEC-CAT*
+
+Starting from the context analysis, the RE Equipment generated the
+SEC-CAT*10 adapted from the SEC-CAT11 proposed in our research.
+
+• SAST (Static Application Security Testing) to detect problems in the Since OpenEMR is not released to a specific user group, the default
+source code before its implementation. [108] values have been taken to those requirements containing configurable
+
+• DAST (Dynamic Application Security Testing) to evaluate security parameters.
+while the application is being executed in a real environment. [109]
+
+• IAST (Interactive Application Security Testing) evaluates the appli-
+cation while running and analyzes the source code simultaneously. 3.3. Generate Checklist
+[110]
+
+• Manual testing is used to assess specific requirements compliance In this phase, a Checklist will be produced from the SEC-CAT*, which
+with the application. [111] was utilized by the audit team to assess the OpenEMR application. In the
+
+specific instance of this audit, the Checklist document,12 consisted of
+A combination of three approaches has been selected because of the 142 items, and each check element will possess the subsequent potential
+
+comprehensive battery of tests to detect bad practices and possible response alternatives:
+vulnerabilities in applications that combine SAST (HP Fortify SCA
+V4.40) [112], DAST (with Acunetix v 23.7.230728157) [113] and a • “Yes” if the condition is consistently met.
+manual assessment for specific security requirements [114]. • “No” if the condition is not consistently met.
+
+• “N/a” when the condition is not applicable.
+e. Generate audit report: This phase encompasses the prospective
+establishment of interim audit reports, succeeded by the subsequent Partial responses were disregarded due to their lack of contribution
+compilation of the conclusive audit report. During this stage, the to the security requirements. Non-compliance is inferred from the
+audit team assembles comprehensive outcomes from the audit violation of a single-premise argument. The security coverage of the
+technique, integrating thorough information and suggestions into application was then assessed in terms of the total percentage score
+the final report. obtained, which was subsequently discretized into a 5-interval scale
+
+using an unsupervised global discretization method [121]. This
+3. Results approach is a modified version of equal width interval binning [122],
+
+where the lower and upper bins are smaller than the others, aiming to
+To validate the SEC-CAT presented in this research, a comprehensive differentiate between extreme scores and categorize each assessment
+
+audit was conducted on an actual open-source e-Health application, into:
+leveraging access to the source code for a thorough examination. The
+selected application was OpenEMR v7.0 [115], acknowledged as the • Very high coverage
+premier open-source platform for electronic medical records and med- • High coverage
+ical practice management, and it holds ONC 2015 Cures Update certi- • Moderate coverage
+fication. OpenEMR boasts widespread global usage, with over 100,000 • Low coverage
+medical professionals in more than 100 countries providing healthcare • Very low coverage
+services to a patient population exceeding 90 million people globally
+[116,117,118]. The insights derived from this audit aim to benefit the The score boundaries for every group are specified in Table 6.
+application’s present and future users.
+
+The audited software is available for Docker, AWS Cloud, Windows, Table 5
+and Linux Systems [119]. OpenEMR was analyzed employing the SEC- Information on OpenEMR v7.0 from its official website.
+AM. The complete process is detailed as follows. Name: OpenEMR
+
+3.1. Context analysis Developer: Open-emr.org
+Category EHR and medical practice management solution
+Supported platforms Windows, Linux, Mac OS X
+
+The initial stage of the SEC-AM method involves examining the Version 7.0.0
+application, users, software attributes, potential deployment settings, Last update 11/12/2023
+functionality, and components. The audited application has the Compatible idioms More than thirty
+
+Source Open source
+following functionality: License GNU General Public License
+
+Main language PHP + MySQL
+• Patient Demographics
+• Patient Scheduling
+• EMR 10 https://bit.ly/3SBypWV.
+• e-Prescribing 11 https://bit.ly/4fMJhLV.
+• Medical Billing 12 https://bit.ly/3SHjwm3.
+
+8 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+3.4. Audit execution and audit report
+
+The outcomes following the meticulous application of the SEC-AM
+detailed process to the OpenEMR application are depicted in Fig. 5.
+Additionally, the audit team conducted a thorough analysis, intricately
+documenting comprehensive details of the code files affected by each
+vulnerability uncovered during the DAST and SAST scans. This
+exhaustive examination involved scrutinizing all recorded results in the
+Checklist, ultimately leading to the development of the final report.13
+
+4. Discussion
+
+Upon reviewing all checklist items, the security coverage percentage
+of the OpenEMR application is calculated to be 66.97 %. Of the 142
+items assessed, 88 were deemed compliant (“YES”), while 35 did not
+meet the specified criteria. Furthermore, 19 items were marked as “N/
+A”. Alternatively, if we focus solely on the 123 items applicable to the
+application (either “YES” or “NO”), the security level of OpenEMR
+stands at 71.54 %. Consequently, the application is classified by the Fig. 5. Checklist responses.
+percentage obtained in the “High coverage” category. The most common
+vulnerabilities in OpenEMR were DDOs, XSS, JSONi, and CMDi. Table 7 formation, focused attention becomes crucial by requiring users to
+presents the details of the vulnerabilities detected according to the accept the terms and conditions before accessing the application in
+method used. adherence to the applicable legal measures [126].
+
+Effective access control is crucial for minimizing the risk of security Four items on the Checklist are flagged as “No” due to inherent
+breaches, enhancing operational efficiency, and reducing the potential vulnerabilities arising from an insecure design, encompassing issues
+for users to initiate DOs or DDOs attacks that could overwhelm server such as the lack of isolation between user and management function-
+resources [123]. However, OpenEMR has been found to have a defi- alities, the consolidation of all functions within a general-purpose
+ciency in access control, specifically in the lack of implementation or server, the inclusion of authentication data in code files, and potential
+enforcement of dual access control measures before deleting medical manipulation of routes. This non-compliance escalates the risk of un-
+and user records, leading to a “No” assessment. Failure to adhere to this authorized access, undermining the certainty that system management
+requirement exposes the system to the possibility that a single user could functions are exclusively executed by authorized personnel and devi-
+carry out critical or sensitive actions without additional supervision, ating from established data protection practices. Approximately 74 % of
+thereby increasing the risk of privilege abuse and malicious activities. security breaches are linked to human factors like errors, privilege
+This deficiency also directly threatens the integrity and confidentiality misuse, stolen credentials, or social engineering [127].
+of stored information, allowing a single user to access sensitive data Four additional items in the Checklist are marked as “No” and are
+without the necessary oversight. linked to security misconfigurations. These include (i) lack of security
+
+Three identified issues, marked as “No”, are linked to deficiencies in configurations, (ii) insufficient anti-DDOs security settings, (iii) disclo-
+data entry validation measures, posing potential vulnerabilities to XSS, sure of technical details to users in case of errors, and (iv) no secure flag
+XSLT, JSON, and CMDi. Previous research anticipates a rising trend in configuration in cookies. In contemporary cybersecurity, mis-
+security breaches within medical care devices and software [124]. Ac- configuration is one of the most formidable risks [128].
+cording to Static Application Security Testing (SAST), OpenEMR ex-
+hibits susceptibility to 20 XSS-related vulnerabilities in its PHP files,
+primarily within the administrator and medical history reviewer mod- Table 7
+
+Vulnerabilities found.
+ules. Recent studies highlight that code or command injection is a severe
+threat capable of disrupting program execution, potentially leading to Vulnerability Detection Flaws
+
+data loss, corruption, accountability issues, or denial of access [125]. method number
+
+User notification before granting access is not complied with by Authentication and password problems Manual 8
+OpenEMR, so one check is assessed as “No”. Consequently, users do not Log weaknesses 7
+
+Account management 1
+know the property of the system, the monitoring, recording, and No notification before granting access 1
+auditing of use, the penalties for unauthorized use, and the acceptance of Separation of system and user functionality 1
+these conditions. In systems dealing with confidential and critical in- Application housed on a general-purpose 1
+
+server
+No notifications or alerts for product updates 1
+
+Table 6 XSS SAST 20
+Path manipulation 7
+
+Security coverage score groups. JSON injection 7
+Security Coverage Group Interval score Misconfiguration 4
+
+DDOs 3
+Very high coverage (87.5 % − 100 %] Password Management 2
+High coverage (62.5 % − 87.5 %] Command Injection 2
+Moderate coverage (37.5 % − 62.5 %] Header manipulation 1
+Low coverage (12.5 % − 37.5 %] XSLT 1
+Very low coverage [0 % − 12.5 %] Variable override 1
+
+Vulnerable packages dependencies DAST 21
+Misconfiguration 13
+Display of sensitive information 6
+Outdated libraries 5
+Weak cryptography 2
+
+13 https://bit.ly/4d78UVZ. Hardcoded passwords 1
+
+9 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+Three Checklist requirements concerning Vulnerable and Outdated Another security flaw in OpenEMR is the lack of robust security
+Components have been identified as “No”. OpenEMR lacks notifications logging and monitoring. Security records lack specific information,
+or updates regarding product updates; instead, it contains outdated li- automatic backup of audited records is not conducted, and audit records
+braries, some of which may even lack support. Insufficient allocation of are not retained for a designated period. Additionally, there is no con-
+time and resources by organizations for the timely updating of software figurable mechanism to transfer audit records to a different system for
+and ensuring system security has resulted in critical vulnerabilities [31]. further analysis, audit records when a concurrent session is not pro-
+Outdated systems become fertile ground for attackers to inject malware duced, and there is no option to alert the ISSO and the SA in case of a
+into EMR systems, potentially leading to the execution of malicious code failure in audit processing. When different actions and application
+and compromising the system functionality, causing disruptions in pa- configurations are not audited, identifying attempted attacks will be
+tient care and medical operations. Unauthorized access by attackers challenging, and there will be no audit trail for forensic investigation of
+further jeopardizes patient data confidentiality, integrity, and avail- actions taken after the fact [95].
+ability. Beyond security breaches, attackers seek healthcare data for One check was marked as “N/a” because OpenEMR is not only an API
+financial gain, exploiting insurance credentials and swiftly accumu- that offers methods: PUT, POST, DELETE, or GET linked to a flexible
+lating profits through fraudulent activities [31]. The heightened risk of access flow. So, the requirement is not applicable. Another check was
+data breaches exposes sensitive patient information to unauthorized evaluated as “N/a” because it relates to message encryption when the
+parties and carries significant legal, financial, and reputational impli- SessionIndex is linked to privacy data. However, OpenEMR does not link
+cations for healthcare providers. The presence of vulnerable or outdated SessionIndex to privacy data. Twelve more checks are classified as “ N/a
+components also threatens regulatory compliance, such as with HIPAA ” because they are related to elements and ways of communication using
+in the United States, resulting in legal consequences and penalties. SAML assertions in SOAP messages. However, audited software does not
+Additionally, manipulating or altering medical records due to known implement SOAP messages as described in the requirements. Four
+vulnerabilities in outdated components directly threatens patient safety, identification and authentication failure checks qualified as “N/a”
+emphasizing the urgency for healthcare organizations to implement because audited OpenEMR does not implement PKI-based authentica-
+robust security practices; it includes regular software updates, patching, tion. Finally, one requirement is “N/a” related to non-signed or non-
+comprehensive vulnerability assessments, and adherence to industry encrypted serialized data not sent to non-reliable customers without
+best practices in healthcare cybersecurity to proactively uphold the integrity verification or digital signature. The audit team has reviewed
+integrity of EMR systems and safeguard sensitive information. the software documentation, and there is no information about this
+
+Seven requirements associated with identification and Authentica- feature; consequently, it does not apply.
+tion Failures are checked as “No”. It was due to (i) a lack of safe login In OWASP Top 10 [96] and the DISA ASD STIG [95], there are
+procedures that protect against login attempts by brute force, (ii) several recommendations to solve the safety gaps and identified re-
+missing reauthentication before executing critical actions, (iii) flaws in quirements promptly in the SV-222624R864409_RULE of DISA ASD
+password and account management, and (iv) lack in restrict the duration STIG, the importance of automated Fuzzing tests with manual corrob-
+of connections to application services. These seven identified flaws oration is based.
+significantly contribute to the vulnerability of EMR systems, creating an
+environment conducive to brute-force attacks. In such attacks, malicious 4.1. Lessons learnt
+actors persistently try to gain unauthorized access, compromising the
+system integrity. The absence of reauthentication requirements before The features met in the proposed framework foster applicability,
+executing critical actions, such as modifying medical records or auditability, reusability and traceability:
+accessing sensitive information, further exacerbates these security risks.
+Weak or easily exploitable passwords become potential targets for at- 1. Applicability: Meets industry standards, ensuring relevance for
+tackers, undermining the confidentiality and security of patient infor- various e-Health applications. The SIREN methodology supports this
+mation within OpenEMR. Extended connection durations present a vast by providing structured and standardized requirements.
+opportunity for attackers to exploit vulnerabilities, potentially leading 2. Auditability: Uses a comprehensive audit methodology that com-
+to unauthorized access, data manipulation, or service disruptions. It is bines DAST, SAST and manual assessments, with the SEC-CAT tool
+imperative to counter these security consequences in EMR systems by facilitating compliance assessment and detailed audit reports.
+adopting robust login procedures, enforcing reauthentication measures 3. Reusability: Includes a repository of reusable requirements, struc-
+for critical actions, enhancing password and account management tured for easy adaptation to different applications, supported by the
+practices, and implementing appropriate session duration restrictions. A SIREN methodology and allowing parameterization.
+captcha mechanism can mitigate force attacks [129,130]. 4. Traceability: Requirements are organized in catalogs according to
+
+Five checklist items associated with software and data integrity were ISO/IEC/IEEE 29148:2018 and OWASP Top 10 Web Application
+marked as “No”. The audit team cannot prove that OpenEMR libraries Security Risks: 2021, with detailed attributes that allow tracking
+and components are exclusively obtained from official sources, thereby throughout their lifecycle.
+lacking secure mechanisms for the software supply chain. Likewise, it
+has not been demonstrated that the coding reviewing process through Through the audit of security requirements in e-Health applications,
+continuous integration channels/deployment to prevent the inclusion of we have identified several valuable lessons that can benefit both re-
+malicious code or configurations is satisfied. The absence of assurance in searchers and professionals in the field of computer security and health
+these aspects poses tangible risks, as acquiring software from unofficial applications. Below are the most notable lessons from our research:
+repositories exposes it to potential malware, leading to infections in both
+the central system and clients’ devices [131]. Malware can spread across 1. Use of Checklists for Combined Assessments: The proposed audit
+the entire hospital network, resulting in unavailability, disruptions, and methodology, which includes a checklist, made it possible to eval-
+data loss [132]. To address these critical vulnerabilities within EMR uate the quality of the application under test through a combination
+systems, enforcing stringent policies mandating the exclusive sourcing of DAST (Dynamic Application Security Testing), SAST (Static
+of libraries and components from reputable, official channels is imper- Application Security Testing) approaches and manual evaluations.
+ative. Furthermore, implementing a robust and continuous code review This combined approach provides a comprehensive and detailed
+process through integration channels becomes pivotal in averting the view of application security, improving audit accuracy.
+inclusion of malicious code, thereby safeguarding the security, integrity, 2. SRS Enrichment for Health Applications: The security re-
+and reliable operation of the EMR system. quirements audit revealed that the SRS (Software Requirements
+
+10 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+Specification) product within the framework of this research can provide a comprehensive catalog of safety requirements for e-Health
+significantly clarify and enrich the landscape of desired security re- software with rationale and validation criteria that are continually
+quirements for health-related applications. This will help developers improvable, unambiguous, complete, consistent, verifiable, modifiable,
+and auditors to better understand the expectations and standards and traceable over time.
+necessary to ensure the security of these applications. Security requirements engineering in e-Health must adapt to current
+
+3. Facilitation of Compliance with SEC-CAT: The SEC-CAT tool challenges, incorporating solid practices and advanced technologies to
+facilitated the compliance assessment of existing or newly developed protect patient data and ensure system reliability. Requirements should
+applications, providing a clear understanding of the situational sta- be based on existing regulations, guides, standards, and best practices to
+tus of the software product through the audit report. This tool is improve regulatory compliance and software quality. This approach
+crucial to ensure that applications meet established security increases productivity, security, and quality throughout the software
+requirements. development.
+
+4. Involvement of Security Experts: In the proposed framework (SEC- Similarly, this work presents an SEC-AM audit method to evaluate
+AM), the participation of computer security experts is essential to safety in e-Health applications through a requirement catalog. The
+ensure proper audit scope and effective identification of vulnerabil- catalog and the audit method were validated in OpenEMR, one of the
+ities. The experience and knowledge of a specialized security team most popular applications for managing electronic medical records. The
+are vital to effectively identify and mitigate potential vulnerabilities. proposed audit method measures the security of an application
+
+5. Expansion of Recommendations with SEC-CAT: SEC-CAT can following the criteria of the security catalog adapted to the application
+enrich and expand established recommendations and controls, (SEC-CAT*). The security classification obtained after applying the SEC-
+serving as a technical complement to the requirements for test cases AM places the software in the “secure” category. Considering that
+in the security of health applications, especially those aimed at Checklist is based on closed response options: “Yes”, “No”, or “N/a”,
+meaningful use of data. This tool provides an additional layer of rigor SEC-AM was a simple process and did not present any difficulty for the
+and detail in security assessment. auditor’s team.
+
+6. Complement to IT Governance: Security analysis work from the The SEC-AM, designed as an iterative method, exhibits complexity
+operational level complements and strengthens IT governance, ac- and execution time correlating with the number of requirements to be
+curate decision-making and cyber-attack prevention by corporate evaluated. In our specific scenario, SEC-CAT comprises 142 re-
+leaders, senior managers, IT cybersecurity professionals and experts, quirements that necessitate assessment through a comprehensive
+and specialists in cybersecurity interested in strategic issues. Inte- approach involving SAST, DAST, and manual verification.
+grating operational analytics improves cyber resilience and incident Therefore, organizations interested in the security of e-Health ap-
+response capabilities. plications and the certification of EHR systems can leverage SEC-CAT to
+
+7. Importance of Effective Leadership: Effective leadership is crucial evaluate, audit, or enhance the safety measures for testing software
+to ensuring corporate attention to information security, fostering a products better before introducing them to the market.
+culture of cyber resilience and developing a comprehensive approach The authors of this scientific work have reported the vulnerabilities
+to security. This includes involvement and support of senior man- detected in the OpenEMR v7.0.0 software to the OpenEMR community,
+agement in cybersecurity strategies to improve governance, inte- ensuring that the issues are known and validated and that risk mitigation
+gration and transformational support in digital business practices are implemented to enhance the security of this vital health-
+environments [133]. care application; the vulnerabilities were submitted via email, as spec-
+
+8. Improvements in Process Automation: Tooling support can ified on the official software portal.
+improve the audit process thus saving time and reducing error-prone As part of future work, the research team could develop a method-
+activities. As a result, the effectiveness and efficiency of the process ology for manual verification and exploitation of possible vulnerabilities
+are enhanced. Since we currently lack a specific support tool for the in e-Health software for training purposes. A guide and recommenda-
+method, our research group is making efforts to adapt another NFR tions with practical examples to help software developers avoid and
+audit tool focused on usability to the security domain [134]. solve safety bugs can be proposed.
+
+To complete the audit method outlined in this research, an open-
+Finally, the lessons learned from this research improve our under- source computer tool supported by artificial intelligence could be
+
+standing of security in e-Health applications and provide valuable developed to automate the assessment of organizational security con-
+guidance for future research and practice. trols, encompassing policy controls, versioning, infrastructure, and
+
+deployment. This automation will draw upon periodically published
+4.2. Threats to validity vulnerabilities from the NVD and a customized catalog of security re-
+
+quirements. On the other hand, a more fine-grained measure of a sys-
+Two kinds of threats to validity are discussed below: tem’s vulnerability should be provided. Obviously, a higher percentage
+Construct validity: Threats to validity in a mapping study concern of vulnerability coverage means greater security. However, a simple
+
+identifying primary studies [135,136]. A sensitivity analysis of the percentage does not take account of specific potential risks of the system
+publications retrieved from the Scopus database was conducted to assess for each uncovered vulnerability. The precise percentage required to
+the accuracy of the results of the search. Among 108 publications, none ensure “reasonable security” against real-world vulnerabilities cannot
+provided security requirements with a formal structure or format, thus currently be defined with certainty. When evaluating an application’s
+mitigating this validity threat. security, it is essential to adopt a comprehensive approach that ad-
+
+Internal validity: Internal validity focuses on the process of dresses perceived security, privacy policy transparency, and the security
+extracting and analyzing data [135,136]. To avoid overlapping concepts of service delivery [120]. A holistic evaluation encompassing these as-
+in the requirements contained in the SEC-CAT, the authors have carried pects can help determine if an application has “reasonable coverage,”
+out harmonization of the base documents using a process adapted from ensuring user trust and regulatory compliance [137]. This challenge will
+the framework proposed by C. Pardo et al. [98]. be the subject of future work.
+
+As future work, the use of managerial-level security coverage metrics
+5. Conclusions and future work obtained through the application of the SEC-AM audit method can be
+
+considered. Each vulnerability linked to a requirement that is not met
+This research reviews the literature related to security requirements may be reported. This non-compliance would be reflected in a health
+
+for e-Health from 1991 to July 9, 2023. It served as a starting point to information system security dashboard. Integrated into the DevSecOps
+
+11 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+approach, this dashboard would provide early and real-time feedback of (continued )
+the evaluated systems, facilitating informed decision making and the Term Definition
+establishment of terms of reference for the development and acquisition systems and software products (including
+of IT solutions. This integration would improve the efficiency and services) throughout the life cycle; provides
+effectiveness of the audit process, ensuring that e-Health systems meet guidelines for applying the requirements and
+high security standards on an ongoing basis and promoting a culture of requirements related processes described in
+constant improvement and regulatory compliance. ISO/IEC/IEEE 15,288 and ISO/IEC/IEEE
+
+12207; specifies the required information
+Moreover, as a new contribution to strengthening the study and items produced through the implementation of
+
+definition of security requirements in mobile health applications, we the requirements processes; specifies the
+propose developing a security requirements catalog for m-health ap- required contents of the required information
+plications. This catalog can be implemented and evaluated through a items; provides guidelines for the format of the
+
+continuous audit method aligned with continuous integration method- required and related information items. (…)”
+[69]
+
+ologies like DevSecOps. ISO 27002:2022 This document, intended for organizations
+As a future effort, a comprehensive catalog of privacy requirements of all types and sizes, is a reference for
+
+for e-Health applications, aligned with norms, standards, guidelines, and determining and implementing controls for
+academic works, could be developed to address the identified gaps. This information security risk treatment in an
+
+ISMS based on ISO/IEC 27001. It also
+catalog will improve privacy protection in these applications by guides implementing commonly accepted
+providing precise, actionable requirements that integrate with frame- information security controls and
+works such as OECD Privacy Principles, GDPR, privacy legislation in the developing industry and organization-
+United Kingdom and Canada, ISO/IEC 27701, NIST Privacy Framework, specific information security management
+
+and other resources oriented toward privacy. Thus, e-Health applica- guidelines tailored to their specific risk
+environments, with additional controls
+
+tions will meet regulatory standards, build user trust, and effectively determined through risk assessment as
+protect personal health information. needed. [60]
+
+ISO 27799:2016 This International Standard offers
+6. Summary table healthcare organizations and custodians of
+
+personal health information guidance on
+protecting its confidentiality, integrity, and
+
+What was already known on the topic availability, extending the general
+guidance of ISO/IEC 27002:2013 to
+
+• E-Health applications have advantages but face security breaches, address the unique information security
+
+leading to financial, social, and legal risks and even endangering management needs of the health sector
+[90]
+
+patients’ lives. HIPAA The Health Insurance Portability and
+• Cases of information security incidents are increasing, exposing the Accountability Act of 1996 (HIPAA) is a
+personal health information of millions of patients per year. federal law establishing national standards
+
+• Improving e-Health security by addressing software application to protect sensitive patient health
+information from unauthorized disclosure.
+
+vulnerabilities and deficiencies is critical. The US Department of Health and Human
+Services (HHS) issued the HIPAA Privacy
+
+What this study added to our knowledge Rule to implement HIPAA’s requirements.
+This rule applies to all HIPAA-covered
+
+• A security catalog (SEC-CAT) with reusable, traceable, applicable, entities and certain federal agencies,
+mandating the confidentiality, integrity,
+
+and auditable requirements developed by e-Health experts facilitates and availability of EPHI based on their
+the developing and auditing of more secure, efficient, interoperable, functions and use of such information.
+and reliable e-Health applications. [91,139]
+
+• A flexible, technical and objective criteria to measure the percentage HIPAA Security rules The HIPAA Security Rule mandates the
+protection of electronically protected
+
+of compliance in implementing and developing e-Health applications health information (EPHI) by requiring all
+by an audit method. HIPAA-covered entities, including some
+
+• A layer of abstraction that enhances synergy between technical se- federal agencies, to safeguard the
+curity and IT governance, strengthening decision-making and cyber- confidentiality, integrity, and availability
+
+attack prevention for corporate leaders, managers, IT security pro- of EPHI. This rule ensures that EPHI
+created, received, maintained, or
+
+fessionals, technology experts, cybersecurity specialists, and transmitted by these entities is protected
+academics. against reasonably anticipated threats,
+
+Term Definition hazards, and unauthorized uses or
+disclosures. [92,140]
+
+e-Health “(…) e-Health is the cost-effective and secure GDPR The GDPR (General Data Protection
+use of information and communication Regulation) is an EU regulation that
+technologies (ICT) in support of health and mandates stringent data protection and
+health-related fields. It encompasses multiple privacy measures for individuals within the
+interventions, including telehealth, EU and EEA, ensuring secure handling and
+telemedicine, mobile health (mHealth), control of personal data while protecting
+electronic medical or health records (eMR/ fundamental rights and allowing free
+eHR), big data, wearables, and even artificial movement of data within the Union
+intelligence. The role of e-Health has been without restrictions due to privacy
+recognized as pivotal in attaining overarching concerns. [141]
+health priorities such as universal health NIST SP 800–53 rev. 5 Establishes the security and privacy
+coverage (UHC) and the Sustainable controls for information systems and
+Development Goals (SDGs). (…)” [138] organizations, which may be used
+
+ISO 29148:2018 “(…) This document specifies the required voluntarily by nongovernmental
+processes implemented in the engineering organizations and is not subject to
+activities that result in requirements for copyright in the United States. This
+
+(continued on next column) (continued on next page)
+
+12 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+(continued ) [4] C. Antunes, C. Coutinho, Employment of Artificial Intelligence Mechanisms for e-
+Health Systems in Order to Obtain Vital Signs Improving the Processes of Online
+
+Term Definition Consultations and Diagnosis, in: 2022 International Symposium on Sensing and
+document is developed by the National Instrumentation in 5G and IoT Era (ISSI), 2022, pp. 109–114, https://doi.org/
+Institute of Standards and Technology 10.1109/ISSI55442.2022.9963223.
+under the Federal Information Security [5] S. Ouhbi, J.L. Fernández-Alemán, J.M. Carrillo-de-Gea, A. Toval, A. Idri, E-health
+Modernization Act (FISMA). [93] internationalization requirements for audit purposes, Comput Methods Programs
+
+Privacy & Security Requirements and It addresses the privacy and security Biomed 144 (2017) 49–60, https://doi.org/10.1016/j.cmpb.2017.03.014.
+[6] J. D. Young and A. I. Anton, A Method for Identifying Software Requirements
+
+Considerations for Digital Health challenges of new digital health solutions, Based on Policy Commitments, in: 2010 18th IEEE International Requirements
+Solutions such as remote patient monitoring and Engineering Conference, 2010, pp. 47–56. https://doi.org/10.1109/RE.2010.17.
+
+consumer health solutions, and emerging [7] H. S. Gardiyawasam Pussewalage and V. A. Oleshchuk, Privacy preserving
+technologies, such as cloud computing and mechanisms for enforcing security and privacy requirements in E-health
+mobile devices [94] solutions, Int. J. Inf. Manage., vol. 36, no. 6, Part B, pp. 1161–1173, 2016,
+
+DISA ASD STIG: 2022 This Security Technical Implementation https://doi.org/10.1016/j.ijinfomgt.2016.07.006.
+Guide, based on NIST 800–53 and related [8] J.L. Fernández-Alemán, A.B.S. García, G. García-Mateos, A. Toval, Technical
+documents, is designed to enhance the solutions for mitigating security threats caused by health professionals in clinical
+security of Department of Defense (DOD) settings, in: 2015 37th Annual International Conference of the IEEE Engineering
+information systems. [95] in Medicine and Biology Society (EMBC), 2015, pp. 1389–1392, https://doi.org/
+
+OWASP Top 10 Web Application The OWASP Top 10 is a widely recognized 10.1109/EMBC.2015.7318628.
+Security Risks:2021 standard awareness document that outlines [9] J.L. Fernández-Alemán, A. Sánchez-Henarejos, A. Toval, A.B. Sánchez-García,
+
+the most critical security risks to web I. Hernández-Hernández, L. Fernandez-Luque, Analysis of health professional
+security behaviors in a real clinical setting: An empirical study, Int. J. Med.
+
+applications, providing essential guidance Inform. 84 (6) (2015) 454–467, https://doi.org/10.1016/j.ijmedinf.2015.01.010.
+for developers and web application [10] B. Zapata, J. Fernández-Alemán, A. Toval, Security in Cloud Computing: a
+security.[93,142] Mapping Study, Comput. Sci. Inf. Syst. 12 (Jan. 2015) 161–184, https://doi.org/
+
+CWE/SANS TOP 25: 2021 The CWE™ Top 25 list identifies the most 10.2298/CSIS140205086C.
+dangerous software weaknesses, which are [11] D. Mairiza, D. Zowghi, N. Nurmuliani, An Investigation into the Notion of Non-
+easy to exploit and can lead to severe Functional Requirements, in Proceedings of the 2010 ACM Symposium on
+vulnerabilities, serving as a critical Applied Computing, in SAC ’10, Association for Computing Machinery, New
+resource for software professionals to York, NY, USA, 2010, pp. 311–317.
+mitigate risks. [97,143] [12] T. M. K. Kumar, A Road Map to the Software Engineering Security, in:
+
+Proceedings of the 2009 Second International Conference on Computer and
+Electrical Engineering - Volume 02, in ICCEE ’09. USA: IEEE Computer Society,
+2010, pp. 306–310. https://doi.org/10.1109/ICCEE.2009.62.
+
+[13] N. R. Jennings, Agent-Oriented Software Engineering, in: Proceedings of the 9th
+European Workshop on Modelling Autonomous Agents in a Multi-Agent World:
+
+CRediT authorship contribution statement MultiAgent System Engineering, in MAAMAW ’99. Berlin, Heidelberg: Springer-
+Verlag, 1999, pp. 1–7.
+
+[14] G. Marquez, H. Astudillo, C. Taramasco, Security in Telehealth Systems from a
+Carlos M. Mejía-Granda: Writing – original draft, Methodology, Software Engineering Viewpoint: A Systematic Mapping Study, IEEE Access 8
+
+Investigation, Conceptualization, Data curation, Formal analysis, Soft- (2020) 10933–10950, https://doi.org/10.1109/ACCESS.2020.2964988.
+[15] H.T. Neprash, et al., Trends in Ransomware Attacks on US Hospitals, Clinics, and
+
+ware, Visualization, Writing – review & editing. José L. Fernández- Other Health Care Delivery Organizations, 2016-2021, JAMA Health Forum 3
+Alemán: Supervision, Resources, Project administration, Conceptuali- (12) (2022) E224873, https://doi.org/10.1001/jamahealthforum.2022.4873.
+zation, Funding acquisition, Investigation, Methodology, Validation, [16] S.P. Keehan, et al., National health expenditure projections, 2019–28: Expected
+
+Writing – original draft, Writing – review& editing. JuanM. Carrillo de rebound in prices drives rising spending growth, Health Aff. 39 (4) (2020)
+704–714, https://doi.org/10.1377/HLTHAFF.2020.00094.
+
+Gea: Writing – review & editing, Investigation, Methodology, Supervi- [17] B. Aljedaani, A. Ahmad, M. Zahedi, M.A. Babar, End-users’ knowledge and
+sion, Validation, Writing – original draft. José A. García-Berná: Visu- perception about security of clinical mobile health apps: A case study with two
+alization, Data curation, Investigation, Methodology, Supervision, Saudi Arabian mHealth providers, J. Syst. Softw. 195 (2023), https://doi.org/
+
+10.1016/j.jss.2022.111519.
+Validation, Writing – original draft, Writing – review & editing. [18] J.C. Maxwell, A.I. Antón, in: The Production Rule Framework: Developing a
+
+Canonical Set of Software Requirements for Compliance with Law, Association for
+Declaration of competing interest Computing Machinery, New York, NY, USA, 2010, pp. 629–636, https://doi.org/
+
+10.1145/1882992.1883092.
+[19] T. Breaux, A. Antón, Analyzing Regulatory Rules for Privacy and Security
+
+The authors declare that they have no known competing financial Requirements, IEEE Trans. Softw. Eng. 34 (1) (2008) 5–20, https://doi.org/
+interests or personal relationships that could have appeared to influence 10.1109/TSE.2007.70746.
+
+[20] F.T. Chimuco, J.B.F. Sequeiros, C.G. Lopes, T.M.C. Simões, M.M. Freire, P.R.
+the work reported in this paper. M. Inácio, Secure cloud-based mobile apps: attack taxonomy, requirements,
+
+mechanisms, tests and automation, Int. J. Inf. Secur. 22 (4) (2023) 833–867,
+Acknowledgments https://doi.org/10.1007/s10207-023-00669-z.
+
+[21] J.D. Young, Commitment analysis to operationalize software requirements from
+privacy policies, Requir. Eng. 16 (1) (2011) 33–46, https://doi.org/10.1007/
+
+This study is a component of the OASSIS-UMU (PID2021-122554OB- s00766-010-0108-6.
+C32) project and the Network of Excellence in Software Quality and [22] A.K. Massey, P.N. Otto, L.J. Hayward, A.I. Antón, Evaluating existing security and
+
+Sustainability (RED2022-134656-T), all of which are funded by the privacy requirements for legal compliance, Requir. Eng. 15 (1) (2010) 119–137,
+https://doi.org/10.1007/s00766-009-0089-5.
+
+Spanish Ministry of Science, Innovation, and Universities. Additionally, [23] G. McGraw, Software Security: Building Security In, Addison-Wesley
+the European Regional Development Fund established these initiatives Professional, 2006.
+(ERDF). [24] B. Smith, et al., Challenges for Protecting the Privacy of Health Information:
+
+Required Certification Can Leave Common Vulnerabilities Undetected, in:
+Proceedings of the Second Annual Workshop on Security and Privacy in Medical
+
+References and Home-Care Systems, in SPIMACS ’10, Association for Computing Machinery,
+New York, NY, USA, 2010, pp. 1–12.
+
+[1] P. Singh, E-Health Application for E-Blood Analysis, E-Diagnosis, and Digital Diet [25] E.R. Aruna, A.R.M. Reddy, K.V.N. Sunitha, in: elicitation and Analysis of Security
+Guidance, Adv. Exp. Med. Biol. vol. 1194 (2020) 343–350, https://doi.org/ Requirements and Patterns for IoT Based Health Monitor, in: Advances in
+10.1007/978-3-030-32622-7_32. Cybernetics, Cognition, and Machine Learning for Communication Technologies,
+
+[2] S. Roy, U. Roy, D. Sinha, R.K. Pal, Imbalanced ensemble learning in determining Springer Singapore, Singapore, 2020, pp. 49–56, https://doi.org/10.1007/978-
+Parkinson’s disease using Keystroke dynamics, Expert. Syst. Appl. 217 (2023), 981-15-3125-5_6.
+https://doi.org/10.1016/j.eswa.2023.119522. [26] Vulnerabilities | OWASP Foundation. [Online]. Available: https://owasp.
+
+[3] H. Van Uytsel, et al., Effect of the e-health supported INTER-ACT lifestyle org/www-community/vulnerabilities/.
+intervention on postpartum weight retention and body composition, and [27] M. Alqaradaghi, M. Z. I. Nazir, and T. Kozsik, Design and Implement an Accurate
+associations with lifestyle behavior: A randomized controlled trial, Prev. Med Automated Static Analysis Checker to Detect Insecure Use of SecurityManager,
+(baltim) 164 (2022), https://doi.org/10.1016/j.ypmed.2022.107321. Computers, vol. 12, no. 12, 2023, https://doi.org/10.3390/computers12120247.
+
+13 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+[28] A. Agrawal, et al., Evaluating the Security Impact of Healthcare Web Applications Prospective Solutions, IEEE Access 9 (2021) 7152–7169, https://doi.org/
+Through Fuzzy Based Hybrid Approach of Multi-Criteria Decision-Making 10.1109/ACCESS.2020.3048839.
+Analysis, IEEE Access 8 (2020) 135770–135783, https://doi.org/10.1109/ [52] E. A. P. Rincón and L. G. Moreno-Sandoval, Design of an architecture contributing
+ACCESS.2020.3010729. to the protection and privacy of the data associated with the electronic health
+
+[29] N. Kshetri, J. Voas, Ransomware as a Business (RaaB), IT Prof. 24 (2) (2022) record, Information (Switzerland), vol. 12, no. 8, 2021, https://doi.org/10.3390/
+83–87, https://doi.org/10.1109/MITP.2022.3157208. info12080313.
+
+[30] FinCEN Analysis Reveals Ransomware Reporting in BSA Filings Increased [53] A. Sengupta and H. Subramanian, User Control of Personal mHealth Data Using a
+Significantly During the Second Half of 2021 | FinCEN.gov. [Online]. Available: Mobile Blockchain App: Design Science Perspective, JMIR Mhealth Uhealth, vol.
+https://www.fincen.gov/news/news-releases/fincen-analysis-reveals-ransomwar 10, no. 1, 2022, https://doi.org/10.2196/32104.
+e-reporting-bsa-filings-increased-significantly. [54] A. Farouk, A. Alahmadi, S. Ghose, A. Mashatan, Blockchain platform for
+
+[31] L. Coventry, D. Branley, Cybersecurity in healthcare: A narrative review of trends, industrial healthcare: Vision and future opportunities, Comput. Commun. 154
+threats and ways forward, Maturitas 113 (Apr. 2018) 48–52, https://doi.org/ (2020) 223–235, https://doi.org/10.1016/j.comcom.2020.02.058.
+10.1016/j.maturitas.2018.04.008. [55] H. Subramanian and S. Subramanian, Improving Diagnosis through Digital
+
+[32] S.B. Weber, S. Stein, M. Pilgermann, T. Schrader, Attack Detection for Medical Pathology: Proof-of-Concept Implementation Using Smart Contracts and
+Cyber-Physical Systems-A Systematic Literature Review, IEEE Access 11 (2023) Decentralized File Storage, J Med Internet Res, vol. 24, no. 3, 2022, https://doi.
+41796–41815, https://doi.org/10.1109/ACCESS.2023.3270225. org/10.2196/34207.
+
+[33] P. J. Escamilla Ambrosio et al., Securing mHealth applications using IoTsecM [56] K. Miyachi and T. K. Mackey, hOCBS: A privacy-preserving blockchain framework
+security modelling, Computacion y Sistemas, vol. 23, no. 4, pp. 1139–1158, 2019, for healthcare data leveraging an on-chain and off-chain system design, Inf.
+https://doi.org/10.13053/CyS-23-4-3093. Process Manag., vol. 58, no. 3, 2021, https://doi.org/10.1016/j.ipm.2021.10
+
+[34] B. Aljedaani, A. Ahmad, M. Zahedi, M.A. Babar, End-users’ knowledge and 2535.
+perception about security of clinical mobile health apps: A case study with two [57] Z. Nie, Y. Long, S. Zhang, and Y. Lu, A controllable privacy data transmission
+Saudi Arabian mHealth providers, J. Syst. Softw. 195 (2023) 111519, https://doi. mechanism for Internet of things system based on blockchain, Int. J. Distrib. Sens.
+org/10.1016/j.jss.2022.111519. Netw., vol. 18, no. 3, 2022, https://doi.org/10.1177/15501329221088450.
+
+[35] R. Jáuregui-Velarde, D. H. Celis, C. Y. Arias, and L. Andrade-Arenas, A critical [58] F. Rezaeibagha, K.T. Win, W. Susilo, A Systematic Literature Review on Security
+review of the state of computer security in the health sector, Bulletin of Electrical and Privacy of Electronic Health Record Systems: Technical Perspectives, Health
+Engineering and Informatics, vol. 12, no. 6, pp. 3805–3816, 2023, https://doi. Inform. Manage. J. 44 (3) (Oct. 2015) 23–38, https://doi.org/10.1177/
+org/10.11591/eei.v12i6.5394. 183335831504400304.
+
+[36] R.U. Rasool, H.F. Ahmad, W. Rafique, A. Qayyum, J. Qadir, Security and privacy [59] ISO/IEC 27001 Standard – Information Security Management Systems, (2022).
+of internet of medical things: A contemporary review in the age of surveillance, https://www.iso.org/standard/27001 (accessed March 9, 2024).
+botnets, and adversarial ML, J. Netw. Comput. Appl. 201 (2022), https://doi.org/ [60] ISO/IEC 27002 Standard – Information security, cybersecurity and privacy
+10.1016/j.jnca.2022.103332. protection — Information security controls, (2022). https://www.iso.org/
+
+[37] D. Noori, H. Shakeri, M. Niazi Torshiz, An elliptic curve cryptosystem-based standard/75652.html (accessed March 9, 2024).
+secure RFID mutual authentication for Internet of things in healthcare [61] O. Olukoya, Assessing frameworks for eliciting privacy & security requirements
+environment, EURASIP J. Wirel. Commun. Netw. 1 (2022) 2022, https://doi.org/ from laws and regulations, Comput. Secur. 117 (2022), https://doi.org/10.1016/
+10.1186/s13638-022-02146-y. j.cose.2022.102697.
+
+[38] M.-D. Cano, A. Cañavate-Sanchez, K. Sha, Preserving Data Privacy in the Internet [62] C. Ilioudis, G. Pangalos, A Framework for an Institutional High Level Security
+of Medical Things Using Dual Signature ECDSA, Sec. Commun. Netw. 2020 (Jan. Policy for the Processing of Medical Data and their Transmission through the
+2020), https://doi.org/10.1155/2020/4960964. Internet, J. Med. Internet Res. 3 (2) (2001) e14.
+
+[39] A.M. Norouzzadeh Gil Molk, M.R. Aref, R. Ramazani Khorshiddoust, Leveled [63] P.N. Otto and A.I. Anton, Addressing Legal Requirements in Requirements
+Design of Cryptography Algorithms Using Cybernetic Methods for Using in Engineering, in: 15th IEEE International Requirements Engineering Conference
+Telemedicine Applications, Comput. Intell. Neurosci. (2021), https://doi.org/ (RE 2007), 2007, pp. 5–14. https://doi.org/10.1109/RE.2007.65.
+10.1155/2021/3583275. [64] T.D. Breaux, D.L. Baumer, J. Doyle, E.H. Spafford, and M.A. Vouk, Legal
+
+[40] R. K. N.V., M. K. P., Application of SDN for secure communication in IoT Requirements Acquisition for the Specification of Legally Compliant Information
+environment, Comput. Commun. 151 (2020) 60–65, https://doi.org/10.1016/j. Systems, (2009). https://repository.lib.ncsu.edu/handle/1840.16/3376
+comcom.2019.12.046. (accessed March 9, 2024).
+
+[41] T. Tervoort, M.T. De Oliveira, W. Pieters, P. Van Gelder, S.D. Olabarriaga, [65] F.A. Al-Zahrani, Evaluating the Usable-Security of Healthcare Software Through
+H. Marquering, Solutions for Mitigating Cybersecurity Risks Caused by Legacy Unified Technique of Fuzzy Logic, ANP and TOPSIS, IEEE Access 8 (2020)
+Software in Medical Devices: A Scoping Review, IEEE Access 8 (2020) 109905–109916, https://doi.org/10.1109/ACCESS.2020.3001996.
+84352–84361, https://doi.org/10.1109/ACCESS.2020.2984376. [66] P. Llorens-Vernet and J. Miró, Standards for mobile health-related apps:
+
+[42] A.J. Ghazali, W. Al-Nuaimy, A. Al-Ataby, M.A. Al-Taee, Building IPv6 based Systematic review and development of a guide, JMIR Mhealth Uhealth, vol. 8, no.
+tunneling mechanisms for VoIP security, in: 2016 13th International Multi- 3, 2020, https://doi.org/10.2196/13057.
+Conference on Systems, Signals & Devices (SSD), 2016, pp. 171–176, https://doi. [67] C. Pardo, F. Pino, F. García, F. R. Romero, M. Piattini, and M. T. Baldassarre,
+org/10.1109/SSD.2016.7473737. HProcessTOOL: A Support Tool in the Harmonization of Multiple Reference
+
+[43] W. Iqbal, H. Abbas, M. Daneshmand, B. Rauf, Y.A. Bangash, An In-Depth Analysis Models, in: Computational Science and Its Applications - ICCSA 2011, B.
+of IoT Security Requirements, Challenges, and Their Countermeasures via Murgante, O. Gervasi, A. Iglesias, D. Taniar, and B. O. Apduhan, Eds., Berlin,
+Software-Defined Security, IEEE Internet Things J. 7 (10) (2020) 10250–10276, Heidelberg: Springer Berlin Heidelberg, 2011, pp. 370–382.
+https://doi.org/10.1109/JIOT.2020.2997651. [68] C. Pardo, F. Pino, F. Garcia, M. Piattini, M. Baldassarre, A Process for Driving the
+
+[44] R. Rawat, V. Mahor, B. Garg, M. Chouhan, K. Pachlasiya, S. Telang, in: chapter Harmonization of Models, ACM Int. Conf. Proceeding Ser (Jun. 2010), https://
+Fifteen - Modeling of Cyber Threat Analysis and Vulnerability in IoT-Based doi.org/10.1145/1961258.1961271.
+Healthcare Systems during COVID, in Lessons from COVID-19, Academic Press, [69] IEEE/ISO/IEC 29148 Standard – Systems and software engineering – Life cycle
+2022, pp. 405–425, https://doi.org/10.1016/B978-0-323-99878-9.00016-9. processes – Requirements engineering, (2018). https://standards.ieee.
+
+[45] S. S. Ambarkar and N. Shekokar, Toward Smart and Secure IoT Based Healthcare org/ieee/29148/6937/ (accessed March 9, 2024).
+System, in Internet of Things, Smart Computing and Technology: A Roadmap [70] A. Toval, J. Nicolás Ros, B. Moros Valle, and F. Garcia, Requirements Reuse for
+Ahead, N. Dey, Parikshit. N. Mahalle, P. M. Shafi, V. V Kimabahune, and A. E. Improving Information Systems Security: A Practitioner’s Approach, Requir. Eng.,
+Hassanien, Eds., Cham: Springer International Publishing, 2020, pp. 283–303. vol. 6, pp. 205–219, Jan. 2002, https://doi.org/10.1007/PL00010360.
+https://doi.org/10.1007/978-3-030-39047-1_13. [71] P. Mongeon, A. Paul-Hus, The journal coverage of Web of Science and Scopus: a
+
+[46] S. Kaddoura, R. A. Haraty, K. Al Kontar, and O. Alfandi, A Parallelized Database comparative analysis, Scientometrics 106 (1) (2016) 213–228, https://doi.org/
+Damage Assessment Approach after Cyberattack for Healthcare Systems, Future 10.1007/s11192-015-1765-5.
+Internet, vol. 13, no. 4, 2021, https://doi.org/10.3390/fi13040090. [72] M.M. Pellegrini, F. Ciampi, G. Marzi, B. Orlando, The relationship between
+
+[47] A. Sharma, H. Babbar, A.K. Vats, Detection of Attacks in Smart Healthcare knowledge management and leadership: mapping the field and providing future
+deploying Machine Learning Algorithms*, in: 2023 4th International Conference research avenues, J. Knowl. Manag. 24 (6) (2020) 1445–1492, https://doi.org/
+for Emerging Technology (INCET), 2023, pp. 1–6, https://doi.org/10.1109/ 10.1108/JKM-01-2020-0034.
+INCET57972.2023.10170367. [73] J.A. García-Berná, et al., Green IT and sustainable technology development:
+
+[48] M. Habiba, M.R. Islam, S.M. Muyeen, A.B.M.S. Ali, Edge intelligence for network Bibliometric overview, Sustain. Dev. 27 (4) (Jul. 2019) 613–636, https://doi.org/
+intrusion prevention in IoT ecosystem, Comput. Electr. Eng. 108 (2023) 108727, 10.1002/SD.1927.
+https://doi.org/10.1016/j.compeleceng.2023.108727. [74] J. Yuen, Comparison of Impact Factor, Eigenfactor Metrics, and SCImago Journal
+
+[49] I. Singh and S.-W. Lee, SRE_BBC: A Self-Adaptive Security Enabled Requirements Rank Indicator and h-index for Neurosurgical and Spinal Surgical Journals, World
+Engineering Approach for SLA Smart Contracts in Blockchain-Based Cloud Neurosurg. 119 (2018) e328–e337, https://doi.org/10.1016/j.
+Systems, Sensors (Basel), vol. 22, no. 10, 2022, https://doi.org/10.3390/ wneu.2018.07.144.
+s22103903. [75] P.W. Stone, Popping the (PICO) question in research and evidence-based practice,
+
+[50] D. Lee, M. Song, MEXchange: A Privacy-Preserving Blockchain-Based Framework Appl. Nurs. Res. 15 (3) (2002) 197–198, https://doi.org/10.1053/
+for Health Information Exchange Using Ring Signature and Stealth Address, IEEE apnr.2002.34181.
+Access 9 (2021) 158122–158139, https://doi.org/10.1109/ [76] N.J. van Eck, L. Waltman, Software survey: VOSviewer, a computer program for
+ACCESS.2021.3130552. bibliometric mapping, Scientometrics 84 (2) (2010) 523–538, https://doi.org/
+
+[51] M. Hijji, G. Alam, A Multivocal Literature Review on Growing Social Engineering 10.1007/s11192-009-0146-3.
+Based Cyber-Attacks/Threats during the COVID-19 Pandemic: Challenges and
+
+14 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+[77] D. Moher et al., Preferred reporting items for systematic reviews and meta- Stand. Interfaces 32 (4) (2010) 166–178, https://doi.org/10.1016/j.
+analyses: the PRISMA statement, PLoS Med, vol. 6, no. 7, 2009, https://doi.org csi.2010.01.001.
+/10.1371/JOURNAL.PMED.1000097. [106] M.A. Aguilar, A. Toval, M. Campos, Requirements Engineering to Audit Privacy
+
+[78] M.J. Page, et al., The PRISMA 2020 statement: an updated guideline for reporting Issues in, Medical and Health Software, 2008.
+systematic reviews, BMJ 372 (Mar. 2021) n71, https://doi.org/10.1136/bmj.n71. [107] B. Cruz Zapata, J.L. Fernández-Alemán, A. Toval, A. Idri, Reusable Software
+
+[79] W. G. Cochran, Sampling techniques, 3rd ed. in: Wiley series in probability and Usability Specifications for mHealth Applications, J. Med. Syst. 42 (3) (2018) 45,
+mathematical statistics. New York [etc: John Wiley & Sons, 1977. https://doi.org/10.1007/s10916-018-0902-0.
+
+[80] G. Kotonya, I. Sommerville, Requirements Engineering: Processes and Techniques, 1st [108] P. Krishnan, C. Cifuentes, L. Li, T.F. Bissyande, J. Klein, Why Is Static Application
+ed., Wiley Publishing, 1998. Security Testing Hard to Learn? IEEE Secur. Priv. 21 (5) (2023) 68–72, https://
+
+[81] IEEE 830 Standard – Recommended Practice for Software Requirements doi.org/10.1109/MSEC.2023.3287206.
+Specifications, (1998). https://standards.ieee.org/ieee/830/1222/ (accessed [109] C. Cifuentes, F. Gauthier, B. Hassanshahi, P. Krishnan, D. McCall, The role of
+March 9, 2024). program analysis in security vulnerability detection: Then and now, Comput.
+
+[82] S. Ouhbi, J.L. Fernández-Alemán, J.R. Pozo, M. El Bajta, A. Toval, A. Idri, Secur. 135 (2023), https://doi.org/10.1016/j.cose.2023.103463.
+Compliance of Blood Donation Apps with Mobile OS Usability Guidelines, J. Med. [110] F. M. Tudela, J. R. B. Higuera, J. B. Higuera, J. A. S. Montalvo, and M. I. Argyros,
+Syst. 39 (6) (2015) 63, https://doi.org/10.1007/s10916-015-0243-1. On Combining Static, Dynamic and Interactive Analysis Security Testing Tools to
+
+[83] J.A. García-Berná, et al., Energy efficiency in software: A case study on Improve OWASP Top Ten Security Vulnerability Detection in Web Applications,
+sustainability in personal health records, J. Clean. Prod. 282 (2021) 124262, Appl. Sci.-Basel, vol. 10, no. 24, 2020, https://doi.org/10.3390/app10249119.
+https://doi.org/10.1016/j.jclepro.2020.124262. [111] V. Casola, A. De Benedictis, C. Mazzocca, V. Orbinato, Secure software
+
+[84] J.M. Carrillo de Gea, J. Nicolás Ros, J. Fernández-Alemán, A. Toval, Automated development and testing: A model-based methodology, Comput. Secur. 137
+support for reuse-based requirements engineering in global software engineering, (2024) 103639, https://doi.org/10.1016/j.cose.2023.103639.
+J. Softw. Evol. Process 29 (2017) May, https://doi.org/10.1002/smr.1873. [112] CyberRes, Static Code Analyzer - Static Code Analysis Security, (2024). https
+
+[85] J. Nicolás, J. Lasheras, A. Toval, F.J. Ortiz, B. Álvarez, An integrated domain ://www.microfocus.com/en-us/cyberres/application-security/static-code-
+analysis approach for teleoperated systems, Requir. Eng. 14 (1) (2009) 27–46, analyzer (accessed March 9, 2024).
+https://doi.org/10.1007/s00766-008-0072-6. [113] Acunetix, Vulnerability Scanner - Web Application Security, (2024). https://
+
+[86] A. Toval, B. Moros Valle, J. Nicolás Ros, J. Lasheras, Eight key issues for an www.acunetix.com/vulnerability-scanner/ (accessed March 9, 2024).
+effective reuse-based requirements process, Comput. Syst. Sci. Eng. 23 (2008) [114] C. M. Mejía-Granda, Desarrollo de servicios web REST ‘inseguros’ para auto-
+373–385. aprendizaje en la explotación de vulnerabilidades, (2018). https://reunir.unir.
+
+[87] D.L. Hamilton, “Identification and evaluation of the security requirements in net/handle/123456789/7435 (accessed March 28, 2023).
+medical applications,” in, Proceedings Fifth Annual IEEE Symposium on [115] OpenEMR, (2020). https://www.open-emr.org/ (accessed June 6, 2020).
+Computer-Based Medical Systems 1992 (1992) 129–137, https://doi.org/ [116] Y. Wang, P. Tran, and J. Wojtusiak, From Wearable Device to OpenEMR: 5G Edge
+10.1109/CBMS.1992.244954. Centered Telemedicine and Decision Support System, in: International Conference
+
+[88] H.J. Baur, U. Engelmann, F. Saurbier, A. Schröter, U. Baur, H.P. Meinzer, How to on Health Informatics, (2022). https://api.semanticscholar.org/CorpusID:
+deal with security issues in teleradiology, Comput. Methods Programs Biomed. 53 247114293 (accessed March 28, 2023).
+(1) (1997) 1–8, https://doi.org/10.1016/S0169-2607(96)01798-1. [117] Y. He, E. Zamani, I. Yevseyeva, and C. Luo, Artificial Intelligence–Based Ethical
+
+[89] A. Strielkina, O. Illiashenko, M. Zhydenko, D. Uzun, Cybersecurity of healthcare Hacking for Health Information Systems: Simulation Study, J. Med. Internet Res.,
+IoT-based systems: Regulation and case-oriented assessment, in: 2018 IEEE 9th vol. 25, p. e41748, 2023, https://doi.org/10.2196/41748.
+International Conference on Dependable Systems, Services and Technologies [118] M.M. Moncy, M. Pilli, M. Somasundaram, S. Purkayastha, and C.R. Fulton,
+(DESSERT), 2018, pp. 67–73, https://doi.org/10.1109/DESSERT.2018.8409101. Evaluation of accessibility of open-source EHRs for visually impaired users, in:
+
+[90] ISO 27799 Standard — Health informatics — Information security management AMIA Annual Symposium Proceedings, vol. 2023, pp. 1165–1174, (2024). https
+in health using ISO/IEC 27002, (2016). https://www.iso.org/standard/62777. ://www.ncbi.nlm.nih.gov/pubmed/38222344 (accessed March 9, 2024).
+html (accessed March 9, 2024). [119] OpenEMR, OpenEMR Downloads - OpenEMR Project Wiki, (2024). https://www.
+
+[91] N. Archives and R. A. O. of the Federal Register, Public Law 104 - 191 - Health open-emr.org/wiki/index.php/OpenEMR_Downloads (accessed March 9, 2024).
+Insurance Portability and Accountability Act of 1996, (1996). https://www.go [120] M. Siavvas, D. Kehagias, D. Tzovaras, E. Gelenbe, A hierarchical model for
+vinfo.gov/app/details/PLAW-104publ191 (accessed March 9, 2024). quantifying software security based on static analysis alerts and software metrics,
+
+[92] eCFR :: 45 CFR Part 164 Subpart C – Security Standards for the Protection of Softw. Qual. J. 29 (2) (2021) 431–507, https://doi.org/10.1007/s11219-021-
+Electronic Protected Health Information. Accessed: Sep. 27, 2023. [Online]. 09555-0.
+Available: https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/ [121] J. Dougherty, R. Kohavi, and M. Sahami, Supervised and Unsupervised
+part-164/subpart-C. Discretization of Continuous Features, in: International Conference on Machine
+
+[93] J. T. Force, Security and Privacy Controls for Information Systems and Learning, (1995). https://api.semanticscholar.org/CorpusID:2527609 (accessed
+Organizations, Jul. 2020, https://doi.org/10.6028/NIST.SP.800-53R5. March 9, 2024).
+
+[94] Canada Health Infoway, Privacy and Security Requirements and Considerations [122] J.M. Carrillo De Gea, J. Nicolás, J.L. Fernández Alemán, A. Toval, C. Ebert,
+for Digital Health Solutions, (2014). https://www.infoway-inforoute.ca/en/co A. Vizcaíno, Requirements engineering tools: Capabilities, survey and assessment,
+mponent/edocman/resources/technical-documents/architecture/2154-privacy- Inf. Softw. Technol. 54 (10) (2012) 1142–1157, https://doi.org/10.1016/j.
+and-security-requirements-and-considerations-for-digital-health-solutions infsof.2012.04.005.
+(accessed March 9, 2024). [123] J. Ning, X. Huang, W. Susilo, K. Liang, X. Liu, Y. Zhang, Dual Access Control for
+
+[95] Unified Compliance Framework, Application Security and Development Security Cloud-Based Data Storage and Sharing, IEEE Trans. Dependable Secure Comput.
+Technical Implementation Guide, (2024). https://www.stigviewer.com/sti 19 (2) (2022) 1036–1048, https://doi.org/10.1109/TDSC.2020.3011525.
+g/application_security_and_development/ (accessed March 9, 2024). [124] C.M. Mejía-Granda, J.L. Fernández-Alemán, J.M. Carrillo-de-Gea, J.A. García-
+
+[96] OWASP Foundation, OWASP Top 10, (2021). https://owasp.org/Top10/en/ Berná, Security vulnerabilities in healthcare: an analysis of medical devices and
+(accessed March 9, 2024). software, Med. Biol. Eng. Comput. 62 (1) (2024) 257–273, https://doi.org/
+
+[97] SANS Institute, Top 25 Software Errors, (2021). https://www.sans.org/top 10.1007/s11517-023-02912-0.
+25-software-errors/ (accessed March 9, 2024). [125] D. Chauhan, C. Singh, D. Kudande, Y.-C. Hu, Cyber Security for IoT-Enabled
+
+[98] C. Pardo, F. Pino, F. Garcia, M. Piattini, and J. Rosado, Armonizando ISO/IEC Industry 4.0, IGI Global (2022) 89–124, https://doi.org/10.4018/978-1-6684-
+20000 e ISO/IEC 27001 para integrar la gestión de servicios y la seguridad de la 6444-1.ch006.
+información. 2010. [126] M.Y.P.M. Yusof, C.H. Teo, C.J. Ng, Electronic informed consent criteria for
+
+[99] C. Pardo, F. Pino, F. Garcia, and M. Piattini, Homogenization of Models to research ethics review: a scoping review, BMC Med. Ethics 23 (1) (2022) 117,
+Support Multi-model Processes in Improvement Environments., vol. 1. 2009. https://doi.org/10.1186/s12910-022-00849-x.
+
+[100] F.J. Pino, M.T. Baldassarre, M. Piattini, G. Visaggio, Harmonizing maturity levels [127] S. Mikuletič, S. Vrhovec, B. Skela-Savič, and B. Žvanut, Security and privacy
+from CMMI-DEV and ISO/IEC 15504, J. Softw. Maint. Evol. Res. Pract. 22 (4) oriented information security culture (ISC): Explaining unauthorized access to
+(Jun. 2010) 279–296, https://doi.org/10.1002/spip.437. healthcare data by nursing employees, Comput. Secur., vol. 136, p. 103489, 2024,
+
+[101] OWASP Foundation, OWASP Top Ten, (2024). https://owasp.org/www-project https://doi.org/10.1016/j.cose.2023.103489.
+-top-ten/ (accessed March 9, 2024). [128] D.G. Arce, Cybersecurity and platform competition in the cloud, Computers &
+
+[102] AICPA & CIMA, T. A. I. of CPAs, Information for service organization Security, 93, 101774, (2020). https://doi.org/10.1016/j.cose.2020.101774.
+management in a SOC 1® engagement, (2023). https://www.aicpa-cima.com/ [129] A. A. Süzen, UNI-CAPTCHA: A Novel Robust and Dynamic User-Non-Interaction
+resources/download/information-for-service-organization-management-in-a-so CAPTCHA Model Based on Hybrid biLSTM+Softmax, Journal of Information
+c-1-engagement (accessed March 9, 2024). Security and Applications, vol. 63, p. 103036, 2021, https://doi.org/10.1016/j.
+
+[103] AICPA & CIMA, T. A. I. of CPAs, SOC 2® - SOC for Service Organizations: Trust jisa.2021.103036.
+Services Criteria, (2023). https://www.aicpa-cima.com/topic/audit-assurance/ [130] M. Guerar, A. Merlo, M. Migliardi, F. Palmieri, Invisible CAPPCHA: A usable
+audit-and-assurance-greater-than-soc-2 (accessed March 9, 2024). mechanism to distinguish between malware and humans on the mobile IoT,
+
+[104] AICPA & CIMA, T. A. I. of CPAs, SOC 3® - SOC for Service Organizations: Trust Comput. Secur. 78 (2018) 255–266, https://doi.org/10.1016/j.cose.2018.06.007.
+Services Criteria for General Use Report, (2023). https://www.aicpa-cima.com/t [131] M. Azeem, D. Khan, S. Iftikhar, S. Bawazeer, and M. Alzahrani, Analyzing and
+opic/audit-assurance/audit-and-assurance-greater-than-soc-3 (accessed March 9, comparing the effectiveness of malware detection: A study of machine learning
+2024). approaches, Heliyon, vol. 10, no. 1, p. e23574, 2024, https://doi.org/10.1016/j.
+
+[105] M.A. Martínez, J. Lasheras, E. Fernández-Medina, A. Toval, M. Piattini, heliyon.2023.e23574.
+A Personal Data Audit Method through Requirements Engineering, Comput. [132] K. Habib, W. Leister, Threats identification for the smart Internet of Things in
+
+eHealth and adaptive security countermeasures, in: 2015 7th International
+
+15 
+
+
+
+C.M. Mejía-Granda et al. International Journal of Medical Informatics 194 (2025) 105699 
+
+Conference on New Technologies, Mobility and Security (NTMS), 2015, pp. 1–5, José L. Fernández Alemán is an associate professor with the
+https://doi.org/10.1109/NTMS.2015.7266525. Software Engineering Research Group, Faculty of Computer
+
+[133] J. Loonam, J. Zwiegelaar, V. Kumar, C. Booth, Cyber-Resiliency for Digital Science, University of Murcia, Murcia, ES-30100, Spain. Con-
+Enterprises: A Strategic Leadership Perspective, IEEE Trans. Eng. Manag. 69 (6) tact him at aleman@um.es
+(2022) 3757–3770, https://doi.org/10.1109/TEM.2020.2996175.
+
+[134] R. Sobrino-Duque, J. M. Carrillo-de-Gea, J. J. López-Jiménez, J. Nicolás Ros, and
+J. L. Fernández-Alemán, Usevalia: Managing Inspection-Based Usability Audits,
+Int. J. Hum. Comput. Interact., vol. 40, no. 3, pp. 719–743, Feb. 2024, https://
+doi.org/10.1080/10447318.2022.2121879.
+
+[135] A. Ampatzoglou, S. Charalampidou, I. Stamelos, Research state of the art on GoF
+design patterns: A mapping study, J. Syst. Softw. 86 (7) (2013) 1945–1964,
+https://doi.org/10.1016/j.jss.2013.03.063.
+
+[136] F. Elberzhager, J. Münch, V.T.N. Nha, A systematic mapping study on the
+combination of static and dynamic quality assurance techniques, Inf. Softw.
+Technol. 54 (1) (2012) 1–15, https://doi.org/10.1016/j.infsof.2011.06.003.
+
+[137] M. Hatamian, Engineering Privacy in Smartphone Apps: A Technical Guideline
+Catalog for App Developers, IEEE Access. 8 (2020) 35429–35445, https://doi. Juan M. Carrillo de Gea is an associate professor with the
+org/10.1109/ACCESS.2020.2974911. Software Engineering Research Group, Faculty of Computer
+
+[138] World Health Organization, Guiding optimal development and use of digital Science, University of Murcia, Murcia, ES-30100, Spain. Con-
+health towards improved health outcomes, (2024). https://www.who.int/west tact him at jmcdg1@um.es.
+ernpacific/activities/guiding-optimal-development-and-use-of-digital-health-tow
+ards-improved-health-outcomes (accessed March 9, 2024).
+
+[139] U.S. Centers for Disease Control and Prevention, Health Insurance Portability and
+Accountability Act of 1996 (HIPAA) | Public Health Law | CDC, (1996). htt
+ps://www.cdc.gov/phlp/php/resources/health-insurance-portability-and-a
+ccountability-act-of-1996-hipaa.html (accessed March 9, 2024).
+
+[140] J. A. Marron, HIPAA Security Rule | NIST, 2022, 10.6028/NIST.SP.800-66R2.IPD.
+[141] I. T. G. P. TEAM, EU General Data Protection Regulation (GDPR) – An
+
+implementation and compliance guide, fourth edition. IT Governance Publishing,
+2020. 10.2307/j.ctv17f12pc.
+
+[142] AICPA & CIMA, T. A. I. of CPAs, Learn about SOC for Cybersecurity – Resources,
+(2018). https://www.aicpa-cima.com/resources/download/learn-about-soc-for
+-cybersecurity (accessed March 9, 2024). José A. García-Berná is a researcher with the Software Engi-
+
+[143] Common Weakness Enumeration, CWE Top 25 Most Dangerous Software neering Research Group, Faculty of Computer Science, Uni-
+Weaknesses, (2022). https://cwe.mitre.org/top25/archive/2022/2022_cwe versity of Murcia, Murcia, ES-30100, Spain. Contact him at
+_top25.html (accessed March 9, 2024). josealberto.garcia1@um.es
+
+Carlos M. Mejía-Granda is a Ph.D. candidate in Informatics
+Engineering at the Faculty of Computer Science, University of
+Murcia, Murcia, ES-30100, Spain. Contact him at carlosmi-
+chael.mejiag@um.es
+
+16
